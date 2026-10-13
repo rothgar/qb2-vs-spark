@@ -97,6 +97,7 @@ DGX Spark,gpt-oss-120b,MoE,MXFP4,117,5.1,power,1024,512,1,37.13,35.66,595.3,119.
 QuietBox 2,gpt-oss-120b,MoE,MXFP4,117,5.1,power,1024,512,16,17.15,247.64,3212.0,873.0,0.284
 DGX Spark,gpt-oss-120b,MoE,MXFP4,117,5.1,power,1024,512,16,9.26,144.01,1477.2,133.3,1.081
 2x DGX Spark,gpt-oss-120b,MoE,MXFP4,117,5.1,power,1024,512,16,15.25,236.18,1075.0,291.1,0.811
+QuietBox 2,gpt-oss-120b,MoE,MXFP4,117,5.1,power,1024,512,32,18.96,520.53,4519.8,864.5,0.602
 QuietBox 2,gpt-oss-120b,MoE,MXFP4,117,5.1,codegen,1024,1024,1,64.72,63.01,446.1,,
 DGX Spark,gpt-oss-120b,MoE,MXFP4,117,5.1,codegen,1024,1024,1,36.75,36.2,445.0,123.4,0.293
 2x DGX Spark,gpt-oss-120b,MoE,MXFP4,117,5.1,codegen,1024,1024,1,56.02,54.76,437.7,254.6,0.215
@@ -212,6 +213,7 @@ DGX Spark,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,power,1024,512,1,
 QuietBox 2,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,power,1024,512,16,20.08,235.01,9403.0,850.4,0.276
 DGX Spark,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,power,1024,512,16,24.06,360.0,1472.1,134.3,2.68
 QuietBox 2,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,power,1024,512,32,18.91,362.34,18193.4,849.6,0.426
+DGX Spark,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,power,1024,512,32,16.03,481.38,2020.4,139.2,3.458
 QuietBox 2,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,codegen,1024,1024,1,23.66,23.15,1000.6,,
 DGX Spark,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,codegen,1024,1024,1,80.8,79.38,238.7,121.6,0.653
 QuietBox 2,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,codegen,1024,1024,4,23.14,87.6,2556.4,,
@@ -331,6 +333,7 @@ DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,users,1024,256,32,5.6,168.32,2701.9,125.
 QuietBox 2,qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,1,38.16,34.92,1270.8,469.0,0.074
 DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,1,31.09,29.98,639.0,115.7,0.259
 DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,16,8.73,134.91,1997.4,117.5,1.148
+DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,32,5.82,177.44,3785.5,119.8,1.482
 QuietBox 2,qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,1,38.21,36.52,1270.2,,
 DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,1,31.03,30.56,533.8,118.8,0.257
 DGX Spark,qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,4,19.58,76.97,946.4,117.9,0.653
