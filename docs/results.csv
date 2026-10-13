@@ -291,6 +291,7 @@ QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-turn,8192,512
 DGX Spark,NVIDIA,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-turn,8192,512,4,13.69,50.91,2848.7,,
 QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-long,32768,256,1,43.08,24.16,4677.8,,
 DGX Spark,NVIDIA,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-long,32768,256,1,21.9,11.55,10526.9,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,power,1024,512,32,4.95,151.51,4522.5,300.9,0.504
 QuietBox 2,Tenstorrent,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,1,23.98,23.39,309.6,,
 DGX Spark,NVIDIA,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,1,4.49,4.48,285.6,,
 QuietBox 2,Tenstorrent,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,4,19.95,71.51,1536.7,,
