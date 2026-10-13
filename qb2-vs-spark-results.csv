@@ -132,6 +132,7 @@ QuietBox 2,gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,1,46.64,45.2,370.8,479.5,
 DGX Spark,gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,1,50.91,50.33,135.3,120.6,0.417
 QuietBox 2,gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,16,11.88,175.82,3457.3,492.4,0.357
 DGX Spark,gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,16,20.54,318.04,813.8,132.8,2.396
+QuietBox 2,gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,32,12.52,353.53,5518.8,492.0,0.719
 QuietBox 2,gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,1024,1,46.64,45.92,366.1,,
 DGX Spark,gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,1024,1,51.01,50.72,131.6,122.6,0.414
 QuietBox 2,gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,1024,4,23.25,90.58,1219.6,,
@@ -152,6 +153,7 @@ QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,users,1024,256,16,35.34,4
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,users,1024,256,32,34.7,803.15,2819.1,,
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,1,87.28,82.24,370.6,759.6,0.108
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,16,36.42,502.76,2209.5,830.9,0.605
+QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,power,1024,512,32,37.24,985.07,2910.1,847.6,1.162
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,1024,1,87.16,85.03,306.4,,
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,1024,4,59.13,225.38,873.7,,
 QuietBox 2 (4-chip build),gpt-oss-20b,MoE,MXFP4,21,3.6,agent-turn,8192,512,1,85.56,72.65,1074.9,,
@@ -178,6 +180,7 @@ DGX Spark,muse-glimmer-30b,Dense,BF16,29.8,29.8,power,1024,512,1,4.26,4.23,1005.
 QuietBox 2,muse-glimmer-30b,Dense,BF16,29.8,29.8,power,1024,512,16,41.16,561.75,2167.4,899.3,0.625
 DGX Spark,muse-glimmer-30b,Dense,BF16,29.8,29.8,power,1024,512,16,3.8,58.54,4935.5,136.5,0.429
 QuietBox 2,muse-glimmer-30b,Dense,BF16,29.8,29.8,power,1024,512,32,39.79,939.03,4604.3,916.1,1.025
+DGX Spark,muse-glimmer-30b,Dense,BF16,29.8,29.8,power,1024,512,32,3.24,97.61,8988.9,151.1,0.646
 QuietBox 2,muse-glimmer-30b,Dense,BF16,29.8,29.8,codegen,1024,1024,1,41.25,41.03,155.4,,
 DGX Spark,muse-glimmer-30b,Dense,BF16,29.8,29.8,codegen,1024,1024,1,4.28,4.27,824.1,,
 QuietBox 2,muse-glimmer-30b,Dense,BF16,29.8,29.8,codegen,1024,1024,4,41.24,162.1,462.1,,
@@ -240,6 +243,7 @@ DGX Spark,ornith-1.5-35b-a3b,MoE,BF16,35,3,power,1024,512,1,30.99,29.88,641.2,11
 QuietBox 2,ornith-1.5-35b-a3b,MoE,BF16,35,3,power,1024,512,16,18.07,255.55,3772.7,843.8,0.303
 DGX Spark,ornith-1.5-35b-a3b,MoE,BF16,35,3,power,1024,512,16,8.76,134.96,2142.5,120.3,1.121
 QuietBox 2,ornith-1.5-35b-a3b,MoE,BF16,35,3,power,1024,512,32,16.43,425.63,7392.5,833.9,0.51
+DGX Spark,ornith-1.5-35b-a3b,MoE,BF16,35,3,power,1024,512,32,6.01,182.73,3964.7,121.1,1.509
 QuietBox 2,ornith-1.5-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,1,76.06,74.56,283.8,,
 DGX Spark,ornith-1.5-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,1,30.88,30.37,586.6,119.1,0.255
 QuietBox 2,ornith-1.5-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,4,35.4,136.74,1058.5,,
@@ -345,6 +349,7 @@ QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,users,1024,256,16,18.07,
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,users,1024,256,32,16.18,354.83,7322.6,,
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,1,94.31,89.8,282.8,774.4,0.116
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,16,18.07,255.3,3802.0,838.4,0.305
+QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,power,1024,512,32,16.12,419.76,7332.2,836.1,0.502
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,1,90.55,88.41,285.1,,
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,4,35.4,136.72,1062.4,,
 QuietBox 2 (4-chip build),qwen3.6-35b-a3b,MoE,BF16,35,3,agent-turn,8192,512,1,81.85,67.16,1380.4,,
