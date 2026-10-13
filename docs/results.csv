@@ -292,7 +292,22 @@ QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-turn,8192,512
 DGX Spark,NVIDIA,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-turn,8192,512,4,13.69,50.91,2848.7,40164.3,0.0994,,
 QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-long,32768,256,1,43.08,24.16,4677.8,10597.1,0.0944,,
 DGX Spark,NVIDIA,qwen3-coder-30b-a3b,MoE,BF16,30.5,3.3,agent-long,32768,256,1,21.9,11.55,10526.9,22170.1,0.0451,,
-2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,power,1024,512,32,4.95,151.51,4522.5,107754.6,0.2959,300.9,0.504
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,chat,128,256,1,33.16,31.51,434.1,8124.4,0.1231,244.0,0.129
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,chat,128,256,4,17.46,66.86,706.9,15308.3,0.2612,270.9,0.247
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,1,32.81,31.17,442.2,8213.6,0.1217,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,2,24.35,45.81,695.0,11165.4,0.179,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,4,16.77,63.0,1022.1,16231.9,0.2461,289.6,0.218
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,8,11.37,84.77,1694.5,24116.4,0.3311,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,16,7.22,108.07,2497.3,37804.3,0.4221,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,users,1024,256,32,4.72,141.28,3642.2,57723.6,0.5519,308.3,0.458
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,power,1024,512,1,32.83,31.98,442.3,16009.7,0.0625,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,power,1024,512,16,7.64,117.39,2747.3,69650.8,0.2293,299.7,0.392
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,power,1024,512,32,4.85,148.81,4355.4,109722.6,0.2907,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,codegen,1024,1024,1,33.12,32.34,774.7,31660.8,0.0316,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,codegen,1024,1024,4,17.92,70.22,1236.8,58318.9,0.0686,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-turn,8192,512,1,32.44,26.89,3285.3,19039.4,0.0525,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-turn,8192,512,4,14.98,52.24,5023.4,39135.4,0.102,,
+2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-long,32768,256,1,31.1,12.6,12110.5,20311.2,0.0492,312.6,0.04
 QuietBox 2,Tenstorrent,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,1,23.98,23.39,309.6,10944.1,0.0914,,
 DGX Spark,NVIDIA,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,1,4.49,4.48,285.6,57102.1,0.0175,,
 QuietBox 2,Tenstorrent,qwen3.6-27b,Dense,BF16,27.8,27.8,chat,128,256,4,19.95,71.51,1536.7,14319.0,0.2793,,
