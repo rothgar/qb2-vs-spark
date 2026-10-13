@@ -68,4 +68,5 @@ sampled, and `meta.json` with the software and hardware versions. Server logs st
 ## Adding your machine
 
 Have an M5 Mac mini, a single Tenstorrent card, or something else? See [CONTRIBUTING.md](CONTRIBUTING.md) for how
-much memory each model needs on a Mac, how to add a machine, and how to send results in a pull request.
+much memory each model needs on a Mac, how to add a machine, and how to send results in a pull request. Mac results
+are especially wanted: see [issue #1](https://github.com/rothgar/qb2-vs-spark/issues/1).

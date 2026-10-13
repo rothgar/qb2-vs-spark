@@ -1,6 +1,8 @@
 <style>
   .qx { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); }
   .qx-head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .qx-links { margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; font-size: 1rem; }
+  .qx-links a { color: var(--color-text-link, inherit); font-weight: 600; }
   .qx h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
   .qx-lede { margin: 0; color: var(--color-fg-muted); max-width: 64ch; font-size: var(--cds-font-size-heading); line-height: 1.5; }
   .qx .qx-lede b { font-weight: 600; color: var(--color-fg); font-variant-numeric: tabular-nums; }
@@ -57,6 +59,11 @@
       <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=16">—</b>× the tokens per second with 16 users and
       <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=1">—</b>× with one,
       over the models that ran on both.
+    </p>
+    <p class="qx-links">
+      <a href="https://github.com/rothgar/qb2-vs-spark">Code and data on GitHub</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/rothgar/qb2-vs-spark/issues/1">Have a Mac? Add your results</a>
     </p>
   </header>
 
