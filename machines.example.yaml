@@ -1,0 +1,22 @@
+# Copy to machines.yaml (not committed) and fill in how to reach your machines. Entries merge over the machines in
+# bench.yaml, so only connection details belong here.
+machines:
+  qb2:
+    ssh: qb2                          # an ssh target (a Host in ~/.ssh/config, or user@host)
+    power_plugs: [192.0.2.10]         # Shelly Gen2+ plugs the machine is plugged into (optional; summed)
+  p150:
+    ssh: user@workstation
+    power_plugs: [192.0.2.13]         # the workstation's wall power (the card can't be measured on its own)
+  spark:
+    ssh: user@spark-1
+    power_plugs: [192.0.2.11]
+  spark-pair:
+    ssh: user@spark-1                 # rank 0 serves the API
+    workers: [user@spark-2]
+    power_plugs: [192.0.2.11, 192.0.2.12]
+    node_ips: [192.168.100.1, 192.168.100.2]   # the direct link's addresses, head first
+    node_if: enp1s0f0np0                        # the direct link's interface
+    nccl_hca: rocep1s0f0,roceP2p1s0f0           # RDMA devices for NCCL
+  mac:
+    ssh: local                        # run on this Mac; or an ssh target
+    power_plugs: []                   # leave empty without a plug: speed results only

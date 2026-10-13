@@ -1,0 +1,841 @@
+<style>
+  .qx { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); }
+  .qx-head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .qx h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .qx-lede { margin: 0; color: var(--color-fg-muted); max-width: 64ch; font-size: var(--cds-font-size-heading); line-height: 1.5; }
+  .qx .qx-lede b { font-weight: 600; color: var(--color-fg); font-variant-numeric: tabular-nums; }
+  .qx-bar { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; justify-content: space-between; }
+  .qx-seg { display: inline-flex; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+  .qx-seg button { font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-sm) var(--cds-pad-lg); background: transparent; color: var(--color-fg-muted); border: 0; cursor: pointer; }
+  .qx-seg button + button { border-left: 1px solid var(--color-border-line); }
+  .qx-seg button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .qx-seg button:focus-visible, .qx-select:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-lg); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
+  .qx-legend span { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+  .qx-legend i { width: 0.8rem; height: 0.8rem; border-radius: 50%; display: inline-block; }
+  .qx-legend svg { display: block; }
+  .qx .qx-legend .qx-fam { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); margin-left: var(--cds-gap-sm); }
+  .qx .qx-legend .qx-fam:first-child { margin-left: 0; }
+  .qx-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); }
+  .qx-section > h2 { font-size: var(--cds-font-size-title); font-family: var(--font-anthropic-serif); font-weight: 400; font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .qx-grid { display: grid; grid-template-columns: 1fr; gap: var(--cds-gap-lg); }
+  .qx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+  .qx-card h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; font-size: calc(var(--cds-font-size-heading) * 1.15); }
+  .qx-card p, .qx-card li { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.5; max-width: 80ch; }
+  .qx-card ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+  .qx-card-top { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; justify-content: space-between; }
+  .qx-select { font: inherit; font-size: var(--cds-font-size-body); color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); }
+  .qx-chart { position: relative; min-height: 360px; }
+  .qx-field { display: inline-flex; align-items: center; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
+  .qx-field input { font: inherit; width: 6.5rem; color: var(--color-fg); background: var(--color-bg); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-variant-numeric: tabular-nums; }
+  .qx-field input:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-chart svg { display: block; overflow: visible; }
+  .qx-chart text { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); fill: var(--color-fg-muted); }
+  .qx-chart text.qx-strong { fill: var(--color-fg); }
+  .qx-chart text.qx-ref { fill: var(--cds-chart-reference); }
+  .qx-chart .qx-hit { cursor: default; }
+  .qx-fail { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); color: var(--color-fg-muted); font-size: var(--cds-font-size-body); }
+  .qx-fail i { width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--color-bad); }
+  .qx-tip { position: absolute; z-index: 2; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-sm) var(--cds-pad-md); font-size: var(--cds-font-size-body); display: flex; flex-direction: column; gap: 3px; min-width: 13rem; font-variant-numeric: tabular-nums; }
+  .qx-tip[hidden] { display: none; }
+  .qx-tip-h { color: var(--cds-text-secondary); }
+  .qx-tip-r { display: flex; align-items: center; gap: var(--cds-gap-xs); }
+  .qx-tip-r b { margin-left: auto; padding-left: var(--cds-gap-md); font-weight: var(--cds-font-weight-medium); }
+  .qx-tip-r i { width: 0.5rem; height: 0.5rem; border-radius: 50%; display: inline-block; }
+  [data-dash-source-state="empty"] { color: transparent; }
+  [data-dash-source-state="refreshing"] { opacity: 0.5; transition: opacity var(--cds-dur-slow); }
+</style>
+
+<div class="qx">
+  <header class="qx-head">
+    <h1>QuietBox 2 vs DGX Spark</h1>
+    <p class="qx-lede">
+      Per joule of wall power, one DGX Spark produced a median
+      <b class="dash-skeleton" data-source="head_to_head" data-field="eff_ratio" data-where="users=16">—</b>× the tokens QuietBox 2 did with 16 users, and
+      <b class="dash-skeleton" data-source="head_to_head" data-field="eff_ratio" data-where="users=1">—</b>× with one user.
+      QuietBox 2 was faster: a median
+      <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=16">—</b>× the tokens per second with 16 users and
+      <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=1">—</b>× with one,
+      over the models that ran on both.
+    </p>
+  </header>
+
+  <div class="qx-bar">
+    <div class="qx-legend" id="legend" aria-label="Systems and architectures"></div>
+    <div class="qx-seg" role="group" aria-label="Users in the power test">
+      <button type="button" data-users="1" aria-pressed="false">1 user</button>
+      <button type="button" data-users="16" aria-pressed="true">16 users</button>
+      <button type="button" data-users="32" aria-pressed="false">32 users</button>
+    </div>
+  </div>
+
+  <section class="qx-section" id="efficiency">
+    <h2>Energy efficiency</h2>
+    <div class="qx-card" id="eff-card">
+      <h3>Output tokens per joule, by model</h3>
+      <p>Power test (1,024 tokens in, 512 out) with <span class="qx-users-label">16 users</span>. Wall power from a Shelly plug on each machine, averaged over the run. Further right is more efficient; log scale.</p>
+      <div class="qx-chart dash-skeleton" id="eff-chart" data-source="results"></div>
+    </div>
+    <div class="qx-grid">
+      <div class="qx-card" id="scatter-card">
+        <h3>Throughput against wall power</h3>
+        <p>Each mark is one model on one system, <span class="qx-users-label">16 users</span>. Diagonals are equal tokens per joule; up and to the left is better.</p>
+        <div class="qx-chart dash-skeleton" id="scatter-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="arch-card">
+        <h3>Tokens per joule by architecture</h3>
+        <p>Every model as a dot, grouped by architecture and system, <span class="qx-users-label">16 users</span>. The bar marks each group's median.</p>
+        <div class="qx-chart dash-skeleton" id="arch-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="size-card">
+        <h3>Tokens per joule against model size</h3>
+        <p>Each mark is one model on one system, <span class="qx-users-label">16 users</span>, placed by the parameters it reads for each token (all of them for a dense model, only the active experts for MoE). Both scales are log.</p>
+        <div class="qx-chart dash-skeleton" id="size-chart" data-source="results"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="cost">
+    <h2>Running cost</h2>
+    <div class="qx-card" id="month-card">
+      <div class="qx-card-top">
+        <h3>Tokens per month and electricity cost, running flat out</h3>
+        <label class="qx-field" for="kwh-price">Electricity $/kWh <input id="kwh-price" type="number" min="0.01" max="2" step="0.01" inputmode="decimal"></label>
+      </div>
+      <p>Each bar is the output tokens one system could generate in a 30-day month at the measured throughput with <span class="qx-users-label">16 users</span>, running 24 hours a day. The label adds the month's electricity at the measured wall power and the cost per million tokens. Hardware isn't included.</p>
+      <div class="qx-chart dash-skeleton" id="month-chart" data-source="results"></div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="quality">
+    <h2>Model quality</h2>
+    <p class="qx-lede">Tokens per joule counts tokens, not how good they are. Larger and newer models usually score higher on benchmarks, so these charts add each model's Artificial Analysis Intelligence Index (v4.3.2, published scores; higher is better).</p>
+    <div class="qx-grid">
+      <div class="qx-card" id="aa-card">
+        <h3>Artificial Analysis Intelligence Index</h3>
+        <p>Composite of nine evaluations, for the variant Artificial Analysis scored (mostly reasoning mode). Marked "est." where Artificial Analysis lists an estimate. Dense models in grey, MoE in color. Ornith 1.5 isn't listed there.</p>
+        <div class="qx-chart dash-skeleton" id="aa-chart" data-source="aa_index results"></div>
+      </div>
+      <div class="qx-card" id="qe-card">
+        <h3>How efficient is each model, best scoring first?</h3>
+        <p>Models ranked by Intelligence Index, highest at the top (grey bar; * is an Artificial Analysis estimate). The dots show tokens per joule on each system with <span class="qx-users-label">16 users</span>; further right is cheaper to run. The best trade-offs sit near the top with dots far to the right.</p>
+        <div class="qx-chart dash-skeleton" id="qe-chart" data-source="aa_index results"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="speed">
+    <h2>Speed</h2>
+    <div class="qx-grid">
+      <div class="qx-card" id="decode-card">
+        <h3>Single-user decode speed</h3>
+        <p>Tokens per second one user sees while the reply streams (chat test: 128 tokens in, 256 out). Greedy sampling.</p>
+        <div class="qx-chart dash-skeleton" id="decode-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="scaling-card">
+        <div class="qx-card-top">
+          <h3>Throughput as users are added</h3>
+          <select class="qx-select" id="model-select" aria-label="Model" data-source="results"></select>
+        </div>
+        <p>Total output tokens per second across all users (1,024 in, 256 out each).</p>
+        <div class="qx-chart dash-skeleton" id="scaling-chart" data-source="results"></div>
+        <div class="qx-legend" id="scaling-legend"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="notes">
+    <h2>Reading these results</h2>
+    <div class="qx-card">
+      <ul>
+        <li>Wall power covers the whole machine: CPU, memory, fans and power-supply losses as well as the accelerators. QuietBox 2 draws several hundred watts even when idle, so its efficiency mostly follows its speed.</li>
+        <li>On the Sparks, the dense models (Qwen3.6 27B, Devstral, Gemma 4, Muse Glimmer) ran in BF16. An FP8 or NVFP4 build would read fewer bytes per token and likely be faster and more efficient there.</li>
+        <li>QuietBox 2 runs tt serve bundles; the Sparks run vLLM in NVIDIA's container; Macs run 4-bit MLX builds with mlx_lm.server. Same models, different builds, precisions and kernels.</li>
+        <li>The Intelligence Index scores come from Artificial Analysis’s published runs, not from these machines. Most are for reasoning mode, which writes more tokens per answer, so energy per answer is higher than energy per token suggests. These benchmarks used a fixed output length.</li>
+        <li>DeepSeek V4.1 Flash on QuietBox 2 and Gemma 4 with many users look slower than they should be and are under investigation.</li>
+        <li>Two DGX Sparks run one copy of gpt-oss-120b split across both machines over the direct QSFP link, and both plugs are summed.</li>
+        <li>The default QuietBox 2 builds of gpt-oss-20b and Qwen3.6 35B A3B run on one Blackhole chip; their 4-chip builds spread the same model over all four.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+  window.QB = (() => {
+    // systems in a fixed order and color; any other system in the data (a contributed Mac, say) follows them
+    const KNOWN = ['QuietBox 2', 'QuietBox 2 (4-chip build)', 'DGX Spark', '2x DGX Spark'];
+    const SYS_COLOR = { 'QuietBox 2': 0, 'QuietBox 2 (4-chip build)': 0, 'DGX Spark': 1, '2x DGX Spark': 2 };
+    // grouped by vendor family (Tenstorrent, NVIDIA, Apple, then any other), known systems first within a family
+    const FAMILIES = ['Tenstorrent', 'NVIDIA', 'Apple'];
+    const familyOf = (s) => {
+      const d = dash.data('results');
+      return (d.status === 'ok' && d.data.find((r) => r.system === s)?.family) || '';
+    };
+    const rank = (list, x) => (list.includes(x) ? list.indexOf(x) : list.length);
+    const SYS = () => {
+      const d = dash.data('results');
+      const seen = d.status === 'ok' ? [...new Set(d.data.map((r) => r.system))] : [];
+      return seen.sort((a, b) => rank(FAMILIES, familyOf(a)) - rank(FAMILIES, familyOf(b))
+        || rank(KNOWN, a) - rank(KNOWN, b) || a.localeCompare(b));
+    };
+    const hollow = (s) => s === 'QuietBox 2 (4-chip build)';   // same color as QuietBox 2, drawn as an outline
+    // fill, outline and outline width for a system's marks
+    const paint = (sel, sys) => sel
+      .attr('fill', (d) => (hollow(sys(d)) ? 'var(--color-panel)' : color(sys(d))))
+      .attr('stroke', (d) => (hollow(sys(d)) ? color(sys(d)) : 'var(--color-panel)'))
+      .attr('stroke-width', (d) => (hollow(sys(d)) ? 2.5 : 1.5));
+    const ARCH = ['Dense', 'MoE', 'Hybrid MoE'];
+    const color = (s) => dash.colors[SYS_COLOR[s] ?? (3 + Math.max(0, SYS().filter((x) => !KNOWN.includes(x)).indexOf(s))) % dash.colors.length];
+    const num = (v) => (v === '' || v == null ? null : +v);
+    const rows = () => {
+      const d = dash.data('results');
+      if (d.status !== 'ok') return null;
+      return d.data.map((r) => ({
+        ...r, users: +r.users, isl: +r.isl, osl: +r.osl,
+        decode: num(r.decode_tok_s_user), total: num(r.total_tok_s), ttft: num(r.ttft_ms),
+        watts: num(r.wall_w), tpj: num(r.tok_per_j), totalP: num(r.total_params_b), activeP: num(r.active_params_b),
+        label: r.model,
+      }));
+    };
+    const symbol = (a) => (a === 'Dense' ? d3.symbolSquare : a === 'Hybrid MoE' ? d3.symbolDiamond : d3.symbolCircle);
+    const fmtJ = (v) => d3.format(v >= 1 ? '.2f' : v >= 0.1 ? '.3f' : '.3f')(v);
+    const fmt1 = d3.format(',.1f');
+    const fmt0 = d3.format(',.0f');
+    const fmtP = (v) => `${d3.format(',')(v)}B`;
+    const size = (r) => (r.totalP === r.activeP ? fmtP(r.totalP) : `${fmtP(r.totalP)}, ${fmtP(r.activeP)} active`);
+    const users = () => +(dash.params().users ?? 16);
+    const logTicks = (lo, hi) => [0.001, 0.002, 0.005, 0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000]
+      .filter((t) => t >= lo && t <= hi);
+    const thin = (ticks, room) => {   // keep every other tick until they fit
+      let t = ticks;
+      while (t.length > Math.max(2, room)) t = t.filter((_, i) => i % 2 === 0);
+      return t;
+    };
+    function tip(box) {
+      const el = document.createElement('div');
+      el.className = 'qx-tip';
+      el.hidden = true;
+      box.appendChild(el);
+      return {
+        show(ev, title, lines) {
+          el.replaceChildren();
+          const h = document.createElement('div');
+          h.className = 'qx-tip-h';
+          h.textContent = title;
+          el.appendChild(h);
+          for (const [sw, k, v] of lines) {
+            const row = document.createElement('div');
+            row.className = 'qx-tip-r';
+            if (sw) { const i = document.createElement('i'); i.style.background = sw; row.appendChild(i); }
+            const a = document.createElement('span');
+            a.textContent = k;
+            const b = document.createElement('b');
+            b.textContent = v;
+            row.append(a, b);
+            el.appendChild(row);
+          }
+          el.hidden = false;
+          const r = box.getBoundingClientRect();
+          const x = ev.clientX - r.left, y = ev.clientY - r.top;
+          const w = el.offsetWidth, hh = el.offsetHeight;
+          el.style.left = Math.max(0, Math.min(r.width - w, x + 14 + w > r.width ? x - w - 14 : x + 14)) + 'px';
+          el.style.top = Math.max(0, y - hh - 12 < 0 ? y + 16 : y - hh - 12) + 'px';
+        },
+        hide() { el.hidden = true; },
+      };
+    }
+    // clears a chart box; returns false (after drawing the failed line) when the data isn't there
+    function begin(box) {
+      box.querySelector('svg')?.remove();
+      box.querySelector('.qx-fail')?.remove();
+      const d = dash.data('results');
+      if (d.status === 'ok') { box.classList.remove('dash-skeleton'); return true; }
+      if (d.status === 'error' || d.status === 'missing') {
+        box.classList.remove('dash-skeleton');
+        const f = document.createElement('div');
+        f.className = 'qx-fail';
+        f.append(document.createElement('i'), 'Failed to load');
+        box.appendChild(f);
+      }
+      return false;
+    }
+    const strip = (sel) => sel.attr('font-size', null).attr('font-family', null);
+    return { SYS, familyOf, ARCH, color, hollow, paint, rows, symbol, fmtJ, fmt1, fmt0, fmtP, size, users, logTicks, thin, tip, begin, strip };
+  })();
+</script>
+
+<script>
+  dash.calc('head_to_head', {
+    title: 'Spark vs QuietBox 2 medians',
+    description: 'Per user count in the power test: median of DGX Spark tok/J ÷ QuietBox 2 tok/J, and of QuietBox 2 tok/s ÷ DGX Spark tok/s, over models run on both (QuietBox 2 default builds, not the 4-chip builds).',
+    inputs: ['results'],
+    fn: (results) => {
+      const med = (a) => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
+      return ['1', '16', '32'].map((users) => {
+        const by = {};
+        for (const r of results) {
+          if (r.workload === 'power' && r.users === users && r.tok_per_j !== '') (by[r.model] ||= {})[r.system] = r;
+        }
+        const pairs = Object.values(by).filter((o) => o['QuietBox 2'] && o['DGX Spark']);
+        return {
+          users,
+          models: pairs.length,
+          eff_ratio: +med(pairs.map((o) => o['DGX Spark'].tok_per_j / o['QuietBox 2'].tok_per_j)).toFixed(1),
+          speed_ratio: +med(pairs.map((o) => o['QuietBox 2'].total_tok_s / o['DGX Spark'].total_tok_s)).toFixed(1),
+        };
+      });
+    },
+  });
+  dash.onData(() => {
+    const c = dash.data('head_to_head');
+    document.querySelectorAll('[data-source="head_to_head"]').forEach((el) => {
+      const row = c.status === 'ok' ? c.data.find((r) => r.users === el.dataset.where.split('=')[1]) : null;
+      el.textContent = row ? String(row[el.dataset.field]) : '—';
+      if (c.status !== 'loading') el.classList.remove('dash-skeleton');
+    });
+  });
+</script>
+
+<script>
+  // legend and the users toggle
+  const legend = document.getElementById('legend');
+  for (const a of QB.ARCH) {
+    const span = document.createElement('span');
+    const svg = d3.create('svg').attr('width', 12).attr('height', 12).attr('aria-hidden', 'true');
+    svg.append('path').attr('transform', 'translate(6,6)').attr('d', d3.symbol(QB.symbol(a), 60)()).attr('fill', 'var(--color-fg-muted)');
+    span.append(svg.node(), a);
+    legend.appendChild(span);
+  }
+  const seg = document.querySelector('.qx-seg');
+  seg.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-users]');
+    if (b) dash.setParams({ users: b.dataset.users });
+  });
+  dash.onData(() => {
+    legend.querySelectorAll('[data-sys]').forEach((x) => x.remove());
+    const systems = QB.SYS(), grouped = new Set(systems.map(QB.familyOf)).size > 1;
+    const first = legend.firstChild;
+    let fam = null;
+    for (const s of systems) {
+      if (grouped && QB.familyOf(s) !== fam) {
+        fam = QB.familyOf(s);
+        const h = document.createElement('b');
+        h.className = 'qx-fam';
+        h.dataset.sys = '';
+        h.textContent = fam || 'Other';
+        legend.insertBefore(h, first);
+      }
+      const span = document.createElement('span');
+      const i = document.createElement('i');
+      i.dataset.sys = s;
+      span.dataset.sys = s;
+      span.append(i, s);
+      legend.insertBefore(span, first);
+    }
+    legend.querySelectorAll('i[data-sys]').forEach((i) => {
+      const c = QB.color(i.dataset.sys);
+      i.style.background = QB.hollow(i.dataset.sys) ? 'transparent' : c;
+      i.style.boxShadow = QB.hollow(i.dataset.sys) ? `inset 0 0 0 2px ${c}` : 'none';
+    });
+    const u = String(QB.users());
+    seg.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.users === u)));
+    document.querySelectorAll('.qx-users-label').forEach((s) => { s.textContent = u === '1' ? '1 user' : `${u} users`; });
+  });
+</script>
+
+<script>
+  // tokens per joule, one row per model, a dot per system
+  const box = document.getElementById('eff-chart');
+  const tip = QB.tip(box);
+  dash.onData(() => {
+    if (!QB.begin(box)) return;
+    const u = QB.users();
+    const pts = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.tpj != null);
+    if (!pts.length) return;
+    const groups = d3.groups(pts, (r) => r.label).sort((a, b) => d3.max(b[1], (r) => r.tpj) - d3.max(a[1], (r) => r.tpj));
+    const W = box.clientWidth, rowH = 50, top = 8, bottom = 44;
+    const H = top + groups.length * rowH + bottom;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('role', 'img')
+      .attr('aria-label', 'Output tokens per joule by model and system');
+    const labels = svg.append('g');
+    const lab = labels.selectAll('g').data(groups).join('g');
+    lab.append('text').attr('class', 'qx-strong').attr('y', -2).text((d) => d[0]);
+    lab.append('text').attr('y', 17).text((d) => `${d[1][0].arch} · ${d[1][0].weights} · ${QB.size(d[1][0])}`);
+    const left = Math.min(W * 0.45, d3.max(lab.nodes(), (n) => n.getBBox().width) + 14);
+    const right = 12;
+    lab.attr('transform', (_, i) => `translate(0,${top + i * rowH + rowH / 2})`);
+    lab.selectAll('text').each(function () {   // clip labels that don't fit
+      const t = d3.select(this), full = t.text();
+      let s = full;
+      while (this.getComputedTextLength() > left - 14 && s.length > 4) { s = s.slice(0, -1); t.text(s + '…'); }
+    });
+    const lo = d3.min(pts, (r) => r.tpj), hi = d3.max(pts, (r) => r.tpj);
+    const x = d3.scaleLog([lo / 1.4, hi * 1.4], [left, W - right]);
+    const ticks = QB.thin(QB.logTicks(lo / 1.4, hi * 1.4), Math.floor((W - left - right) / 46));
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    const grid = svg.insert('g', ':first-child');
+    grid.selectAll('line').data(ticks).join('line')
+      .attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom)
+      .attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text')
+      .attr('x', x).attr('y', H - bottom + 20).attr('text-anchor', 'middle').text((t) => String(t));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('output tokens per joule (log)');
+    const row = svg.append('g').selectAll('g').data(groups).join('g')
+      .attr('transform', (_, i) => `translate(0,${top + i * rowH + rowH / 2})`);
+    row.append('line')
+      .attr('x1', (d) => x(d3.min(d[1], (r) => r.tpj))).attr('x2', (d) => x(d3.max(d[1], (r) => r.tpj)))
+      .attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 3).attr('stroke-linecap', 'round');
+    row.selectAll('path').data((d) => d[1]).join('path')
+      .attr('class', 'qx-hit')
+      .attr('transform', (r) => `translate(${x(r.tpj)},0)`)
+      .attr('d', (r) => d3.symbol(QB.symbol(r.arch), 200)())
+      .call(QB.paint, (r) => r.system)
+      .on('mousemove', (ev, r) => tip.show(ev, `${r.label} · ${r.system}`, [
+        [QB.color(r.system), 'Tokens per joule', QB.fmtJ(r.tpj)],
+        [null, 'Total output', `${QB.fmt1(r.total)} tok/s`],
+        [null, 'Wall power', `${QB.fmt0(r.watts)} W`],
+        [null, 'Parameters', QB.size(r)],
+      ]))
+      .on('mouseleave', () => tip.hide());
+  });
+</script>
+
+<script>
+  // throughput vs wall power, with equal-efficiency diagonals
+  const box = document.getElementById('scatter-chart');
+  const tip = QB.tip(box);
+  dash.onData(() => {
+    if (!QB.begin(box)) return;
+    const u = QB.users();
+    const pts = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.tpj != null && r.total > 0);
+    if (!pts.length) return;
+    const W = box.clientWidth, H = 460, top = 16, bottom = 46, right = 16;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H)
+      .attr('role', 'img').attr('aria-label', 'Total output tokens per second against wall watts');
+    const ylo = d3.min(pts, (r) => r.total) / 1.6, yhi = d3.max(pts, (r) => r.total) * 1.6;
+    const yt = QB.logTicks(ylo, yhi);
+    const probe = svg.append('g').selectAll('text').data(yt).join('text').text((t) => d3.format(',')(t));
+    const left = d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 10;
+    probe.remove();
+    const xmax = d3.max(pts, (r) => r.watts) * 1.08;
+    const x = d3.scaleLinear([0, xmax], [left, W - right]).nice();
+    const y = d3.scaleLog([ylo, yhi], [H - bottom, top]);
+    const xt = x.ticks(Math.max(2, Math.floor((W - left) / 70)));
+    const g = svg.append('g');
+    g.selectAll('line.h').data(yt).join('line').attr('x1', left).attr('x2', W - right).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
+    g.selectAll('text.y').data(yt).join('text').attr('x', left - 8).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => d3.format(',')(t));
+    g.selectAll('text.x').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => d3.format(',')(t));
+    svg.append('line').attr('x1', left).attr('x2', W - right).attr('y1', H - bottom).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-axis)');
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('wall watts');
+    svg.append('text').attr('x', left).attr('y', top - 2).attr('dy', '-0.2em').text('tok/s (log)');
+    // diagonals: tok/s = k × W
+    const [x0, x1] = x.domain();
+    const diag = svg.append('g');
+    for (const k of [0.03, 0.1, 0.3, 1, 3]) {
+      const a = Math.max(x0 + 1, ylo / k), b = Math.min(x1, yhi / k);
+      if (a >= b) continue;
+      diag.append('line').attr('x1', x(a)).attr('y1', y(k * a)).attr('x2', x(b)).attr('y2', y(k * b))
+        .attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 4');
+      const lx = x(b), ly = y(k * b);
+      diag.append('text').attr('class', 'qx-ref').attr('x', lx - 4).attr('y', ly).attr('dy', b < x1 ? '1.1em' : '-0.4em')
+        .attr('text-anchor', 'end').text(`${k} tok/J`);
+    }
+    svg.append('g').selectAll('path').data(pts).join('path')
+      .attr('class', 'qx-hit')
+      .attr('transform', (r) => `translate(${x(r.watts)},${y(r.total)})`)
+      .attr('d', (r) => d3.symbol(QB.symbol(r.arch), 180)())
+      .call(QB.paint, (r) => r.system)
+      .on('mousemove', (ev, r) => tip.show(ev, `${r.label} · ${r.system}`, [
+        [QB.color(r.system), 'Total output', `${QB.fmt1(r.total)} tok/s`],
+        [null, 'Wall power', `${QB.fmt0(r.watts)} W`],
+        [null, 'Tokens per joule', QB.fmtJ(r.tpj)],
+      ]))
+      .on('mouseleave', () => tip.hide());
+  });
+</script>
+
+<script>
+  // tokens per joule grouped by architecture, then system
+  const box = document.getElementById('arch-chart');
+  const tip = QB.tip(box);
+  dash.onData(() => {
+    if (!QB.begin(box)) return;
+    const u = QB.users();
+    const pts = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.tpj != null);
+    if (!pts.length) return;
+    const W = box.clientWidth, H = 440, top = 12, bottom = 66, right = 8;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H)
+      .attr('role', 'img').attr('aria-label', 'Tokens per joule by architecture and system');
+    const lo = d3.min(pts, (r) => r.tpj) / 1.4, hi = d3.max(pts, (r) => r.tpj) * 1.4;
+    const yt = QB.logTicks(lo, hi);
+    const probe = svg.append('g').selectAll('text').data(yt).join('text').text((t) => String(t));
+    const left = d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 10;
+    probe.remove();
+    const archs = QB.ARCH.filter((a) => pts.some((r) => r.arch === a));
+    const x0 = d3.scaleBand(archs, [left, W - right]).paddingInner(0.14).paddingOuter(0.04);
+    const y = d3.scaleLog([lo, hi], [H - bottom, top]);
+    svg.append('g').selectAll('line').data(yt).join('line').attr('x1', left).attr('x2', W - right).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(yt).join('text').attr('x', left - 8).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => String(t));
+    svg.append('line').attr('x1', left).attr('x2', W - right).attr('y1', H - bottom).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-axis)');
+    for (const a of archs) {
+      const sys = QB.SYS().filter((s) => pts.some((r) => r.arch === a && r.system === s));
+      const x1 = d3.scaleBand(sys, [x0(a), x0(a) + x0.bandwidth()]).padding(0.18);
+      svg.append('text').attr('class', 'qx-strong').attr('x', x0(a) + x0.bandwidth() / 2).attr('y', H - bottom + 46).attr('text-anchor', 'middle').text(a);
+      for (const s of sys) {
+        const ds = pts.filter((r) => r.arch === a && r.system === s).sort((p, q) => p.tpj - q.tpj);
+        const cx = x1(s) + x1.bandwidth() / 2, bw = x1.bandwidth();
+        const step = Math.min(14, bw / (ds.length + 1));
+        const med = d3.median(ds, (r) => r.tpj);
+        svg.append('line').attr('x1', cx - bw / 2).attr('x2', cx + bw / 2).attr('y1', y(med)).attr('y2', y(med))
+          .attr('stroke', QB.color(s)).attr('stroke-width', 3).attr('stroke-linecap', 'round').attr('opacity', 0.55);
+        svg.append('g').selectAll('path').data(ds).join('path')
+          .attr('class', 'qx-hit')
+          .attr('transform', (r, i) => `translate(${cx + (i - (ds.length - 1) / 2) * step},${y(r.tpj)})`)
+          .attr('d', (r) => d3.symbol(QB.symbol(r.arch), 150)())
+          .call(QB.paint, () => s)
+          .on('mousemove', (ev, r) => tip.show(ev, `${r.label} · ${r.system}`, [
+            [QB.color(r.system), 'Tokens per joule', QB.fmtJ(r.tpj)],
+            [null, `${a} median here`, QB.fmtJ(med)],
+          ]))
+          .on('mouseleave', () => tip.hide());
+        const short = { 'QuietBox 2': 'QB2', 'QuietBox 2 (4-chip build)': 'QB2 4c', 'DGX Spark': 'Spark', '2x DGX Spark': '2× Spark' }[s] ?? s.replace(/^Mac mini /, 'Mac ');
+        if (bw > 30) svg.append('text').attr('x', cx).attr('y', H - bottom + 20).attr('text-anchor', 'middle').text(short);
+      }
+    }
+  });
+</script>
+
+<script>
+  // tokens per joule against active parameters
+  const box = document.getElementById('size-chart');
+  const tip = QB.tip(box);
+  dash.onData(() => {
+    if (!QB.begin(box)) return;
+    const u = QB.users();
+    const pts = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.tpj != null && r.activeP != null);
+    if (!pts.length) return;
+    const W = box.clientWidth, H = 440, top = 16, bottom = 46, right = 16;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H)
+      .attr('role', 'img').attr('aria-label', 'Tokens per joule against active parameters');
+    const lo = d3.min(pts, (r) => r.tpj) / 1.5, hi = d3.max(pts, (r) => r.tpj) * 1.5;
+    const yt = QB.logTicks(lo, hi);
+    const probe = svg.append('g').selectAll('text').data(yt).join('text').text((t) => String(t));
+    const left = d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 10;
+    probe.remove();
+    const plo = d3.min(pts, (r) => r.activeP) / 1.4, phi = d3.max(pts, (r) => r.activeP) * 1.4;
+    const x = d3.scaleLog([plo, phi], [left, W - right]);
+    const y = d3.scaleLog([lo, hi], [H - bottom, top]);
+    const xt = QB.thin([1, 2, 3, 5, 10, 20, 30, 50, 100].filter((t) => t >= plo && t <= phi), Math.floor((W - left) / 50));
+    svg.append('g').selectAll('line').data(yt).join('line').attr('x1', left).attr('x2', W - right).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('line').data(xt).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(yt).join('text').attr('x', left - 8).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => String(t));
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => `${t}B`);
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('parameters read per token');
+    svg.append('text').attr('x', left).attr('y', top - 2).attr('dy', '-0.2em').text('tok/J (log)');
+    // models sharing a size sit side by side instead of on top of each other
+    const spread = d3.groups(pts, (r) => `${r.activeP}|${r.system}`).flatMap(([, v]) => v.map((r, i) => ({ r, dx: (i - (v.length - 1) / 2) * 12 })));
+    svg.append('g').selectAll('path').data(spread).join('path')
+      .attr('class', 'qx-hit')
+      .attr('transform', (d) => `translate(${x(d.r.activeP) + d.dx},${y(d.r.tpj)})`)
+      .attr('d', (d) => d3.symbol(QB.symbol(d.r.arch), 180)())
+      .call(QB.paint, (d) => d.r.system)
+      .on('mousemove', (ev, d) => tip.show(ev, `${d.r.label} · ${d.r.system}`, [
+        [QB.color(d.r.system), 'Tokens per joule', QB.fmtJ(d.r.tpj)],
+        [null, 'Parameters', QB.size(d.r)],
+        [null, 'Weights', d.r.weights],
+      ]))
+      .on('mouseleave', () => tip.hide());
+  });
+</script>
+
+<script>
+  // tokens per month at the measured throughput, with the electricity it takes
+  const box = document.getElementById('month-chart');
+  const price = document.getElementById('kwh-price');
+  const tip = QB.tip(box);
+  const MONTH_S = 30 * 24 * 3600, MONTH_H = 30 * 24;
+  const kwh = () => { const v = +(dash.params().price ?? 0.17); return v > 0 ? v : 0.17; };
+  price.addEventListener('change', () => { if (price.validity.valid && +price.value > 0) dash.setParams({ price: +price.value }); });
+  price.addEventListener('blur', () => { price.value = kwh(); });
+  const tok = (v) => (v >= 1e9 ? `${d3.format('.1f')(v / 1e9)}B` : `${d3.format('.0f')(v / 1e6)}M`);
+  const usd = (v) => (v >= 100 ? d3.format('$,.0f')(v) : d3.format('$,.2f')(v));
+  dash.onData(() => {
+    if (price !== document.activeElement) price.value = kwh();
+    if (!QB.begin(box)) return;
+    const u = QB.users(), p = kwh();
+    const pts = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.watts != null && r.total > 0)
+      .map((r) => {
+        const month = r.total * MONTH_S, cost = (r.watts / 1000) * MONTH_H * p;
+        return { ...r, month, cost, perM: cost / (month / 1e6), kwhMonth: (r.watts / 1000) * MONTH_H };
+      });
+    if (!pts.length) return;
+    const groups = d3.groups(pts, (r) => r.label)
+      .map(([k, v]) => [k, QB.SYS().map((s) => v.find((r) => r.system === s)).filter(Boolean)])
+      .sort((a, b) => d3.max(b[1], (r) => r.month) - d3.max(a[1], (r) => r.month));
+    const W = box.clientWidth, barH = 16, gap = 4, pad = 20, top = 4, bottom = 40;
+    const heights = groups.map(([, v]) => v.length * (barH + gap) - gap + pad);
+    const H = top + d3.sum(heights) + bottom;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', 'Tokens per month and electricity cost per month');
+    const label = (r) => `${tok(r.month)} · ${usd(r.cost)}/mo · ${usd(r.perM)}/M`;
+    const probe = svg.append('g');
+    const nameW = d3.max(probe.selectAll('text.n').data(groups).join('text').attr('class', 'qx-strong').text((d) => d[0]).nodes(), (n) => n.getComputedTextLength());
+    const valW = d3.max(probe.selectAll('text.v').data(pts).join('text').text(label).nodes(), (n) => n.getComputedTextLength());
+    probe.remove();
+    const left = Math.min(W * 0.32, nameW + 12), right = Math.min(W * 0.42, valW + 10);
+    const x = d3.scaleLinear([0, d3.max(pts, (r) => r.month)], [left, W - right]).nice();
+    const xt = x.ticks(Math.max(2, Math.floor((W - left - right) / 70)));
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    svg.append('g').selectAll('line').data(xt).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => (t ? tok(t) : '0'));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('output tokens per month');
+    let yy = top;
+    groups.forEach(([name, v], gi) => {
+      const g = svg.append('g').attr('transform', `translate(0,${yy + pad / 2})`);
+      const t = g.append('text').attr('class', 'qx-strong').attr('x', left - 10).attr('y', (v.length * (barH + gap) - gap) / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(name);
+      let s = name;
+      while (t.node().getComputedTextLength() > left - 14 && s.length > 4) { s = s.slice(0, -1); t.text(s + '…'); }
+      v.forEach((r, i) => {
+        const by = i * (barH + gap);
+        g.append('rect').attr('class', 'qx-hit').attr('x', left).attr('y', by).attr('height', barH)
+          .attr('width', Math.max(2, x(r.month) - left)).attr('rx', 4)
+          .attr('fill', QB.hollow(r.system) ? 'var(--color-panel)' : QB.color(r.system))
+          .attr('stroke', QB.hollow(r.system) ? QB.color(r.system) : 'none').attr('stroke-width', 2)
+          .on('mousemove', (ev) => tip.show(ev, `${r.label} · ${r.system}`, [
+            [QB.color(r.system), 'Tokens per month', tok(r.month)],
+            [null, 'Wall power', `${QB.fmt0(r.watts)} W`],
+            [null, 'Energy per month', `${QB.fmt0(r.kwhMonth)} kWh`],
+            [null, 'Electricity per month', usd(r.cost)],
+            [null, 'Per million tokens', usd(r.perM)],
+          ]))
+          .on('mouseleave', () => tip.hide());
+        g.append('text').attr('x', x(r.month) + 6).attr('y', by + barH / 2).attr('dy', '0.32em').text(label(r));
+      });
+      yy += heights[gi];
+    });
+  });
+</script>
+
+<script>
+  // Artificial Analysis Intelligence Index per model, and against tokens per joule
+  const aaRows = () => {
+    const d = dash.data('aa_index');
+    return d.status === 'ok' ? d.data.map((r) => ({ ...r, aa: +r.aa_index, est: r.aa_estimate === 'yes' })) : null;
+  };
+  const ready = (box) => {
+    box.querySelector('svg')?.remove();
+    box.querySelector('.qx-fail')?.remove();
+    const st = ['aa_index', 'results'].map((id) => dash.data(id).status);
+    if (st.every((x) => x === 'ok')) { box.classList.remove('dash-skeleton'); return true; }
+    if (st.some((x) => x === 'error' || x === 'missing')) {
+      box.classList.remove('dash-skeleton');
+      const f = document.createElement('div');
+      f.className = 'qx-fail';
+      f.append(document.createElement('i'), 'Failed to load');
+      box.appendChild(f);
+    }
+    return false;
+  };
+  const bars = document.getElementById('aa-chart');
+  const btip = QB.tip(bars);
+  const sc = document.getElementById('qe-chart');
+  const stip = QB.tip(sc);
+  dash.onData(() => {
+    if (ready(bars)) {
+      const aa = aaRows().sort((a, b) => b.aa - a.aa);
+      const res = QB.rows();
+      const info = (m) => res.find((r) => r.model === m);
+      const W = bars.clientWidth, barH = 18, gap = 12, top = 4, bottom = 40, right = 70;
+      const H = top + aa.length * (barH + gap) + bottom;
+      const svg = d3.select(bars).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', 'Intelligence Index by model');
+      const probe = svg.append('g').selectAll('text').data(aa).join('text').attr('class', 'qx-strong').text((r) => r.model);
+      const left = Math.min(W * 0.5, d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 12);
+      probe.remove();
+      const x = d3.scaleLinear([0, d3.max(aa, (r) => r.aa)], [left, W - right]).nice();
+      const xt = x.ticks(Math.max(2, Math.floor((W - left - right) / 60)));
+      svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+      svg.append('g').selectAll('line').data(xt).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+      svg.append('g').selectAll('text').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => String(t));
+      svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('Intelligence Index (v4.3.2)');
+      const g = svg.append('g').selectAll('g').data(aa).join('g').attr('transform', (_, i) => `translate(0,${top + i * (barH + gap) + gap / 2})`);
+      g.append('text').attr('class', 'qx-strong').attr('x', left - 10).attr('y', barH / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text((r) => r.model);
+      g.append('rect').attr('class', 'qx-hit').attr('x', left).attr('height', barH).attr('rx', 4)
+        .attr('width', (r) => Math.max(2, x(r.aa) - left))
+        .attr('fill', (r) => (info(r.model)?.arch === 'Dense' ? 'var(--cds-chart-muted)' : dash.colors[0]))
+        .on('mousemove', (ev, r) => {
+          const m = info(r.model);
+          btip.show(ev, r.model, [
+            [null, 'Intelligence Index', `${r.aa}${r.est ? ' (estimate)' : ''}`],
+            [null, 'Variant scored', r.aa_variant],
+            [null, 'Parameters', m ? QB.size(m) : '—'],
+            [null, 'Architecture', m ? m.arch : '—'],
+          ]);
+        })
+        .on('mouseleave', () => btip.hide());
+      g.append('text').attr('x', (r) => x(r.aa) + 6).attr('y', barH / 2).attr('dy', '0.32em').text((r) => `${r.aa}${r.est ? ' est.' : ''}`);
+    }
+    if (ready(sc)) {
+      // one row per model, highest Intelligence Index first: the score as a bar, then tokens per joule per system
+      const u = QB.users();
+      const res = QB.rows().filter((r) => r.workload === 'power' && r.users === u && r.tpj != null);
+      const models = aaRows().filter((a) => res.some((r) => r.model === a.model)).sort((a, b) => b.aa - a.aa);
+      if (!models.length) return;
+      const pts = res.filter((r) => models.some((a) => a.model === r.model));
+      const W = sc.clientWidth, rowH = 50, top = 30, bottom = 44, right = 12;
+      const H = top + models.length * rowH + bottom;
+      const svg = d3.select(sc).append('svg').attr('width', '100%').attr('role', 'img')
+        .attr('aria-label', 'Models ranked by Intelligence Index, with tokens per joule on each system');
+      const probe = svg.append('g').selectAll('text').data(models).join('text').attr('class', 'qx-strong').text((a) => a.model);
+      const nameW = Math.min(W * 0.32, d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 14);
+      probe.remove();
+      const scoreW = Math.min(110, W * 0.18);
+      const plotL = scoreW + 16 + nameW;
+      const sx = d3.scaleLinear([0, d3.max(models, (a) => a.aa)], [0, scoreW - 34]);
+      const lo = d3.min(pts, (r) => r.tpj) / 1.4, hi = d3.max(pts, (r) => r.tpj) * 1.4;
+      const x = d3.scaleLog([lo, hi], [plotL, W - right]);
+      const ticks = QB.thin(QB.logTicks(lo, hi), Math.floor((W - plotL - right) / 46));
+      svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+      // column headings
+      svg.append('text').attr('x', 0).attr('y', 14).text('Intelligence Index');
+      svg.append('text').attr('x', plotL).attr('y', 14).text('tokens per joule on each system →');
+      svg.append('g').selectAll('line').data(ticks).join('line')
+        .attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+      svg.append('g').selectAll('text').data(ticks).join('text')
+        .attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => String(t));
+      svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('more efficient →');
+      const row = svg.append('g').selectAll('g').data(models).join('g')
+        .attr('transform', (_, i) => `translate(0,${top + i * rowH + rowH / 2})`);
+      row.filter((_, i) => i % 2 === 0).append('rect').attr('x', 0).attr('y', -rowH / 2).attr('width', W).attr('height', rowH)
+        .attr('fill', 'var(--color-bg)').attr('opacity', 0.5);
+      row.append('rect').attr('x', 0).attr('y', -7).attr('height', 14).attr('rx', 4)
+        .attr('width', (a) => Math.max(2, sx(a.aa))).attr('fill', 'var(--cds-chart-muted)');
+      row.append('text').attr('class', 'qx-strong').attr('x', (a) => sx(a.aa) + 6).attr('dy', '0.32em')
+        .text((a) => `${a.aa}${a.est ? '*' : ''}`);
+      row.append('text').attr('class', 'qx-strong').attr('x', scoreW + 16).attr('dy', '0.32em').text((a) => a.model);
+      row.each(function (a) {
+        const ds = pts.filter((r) => r.model === a.model);
+        const g = d3.select(this);
+        g.append('line').attr('x1', x(d3.min(ds, (r) => r.tpj))).attr('x2', x(d3.max(ds, (r) => r.tpj)))
+          .attr('stroke', 'var(--cds-chart-axis)').attr('stroke-width', 3).attr('stroke-linecap', 'round');
+        g.selectAll('path').data(ds).join('path')
+          .attr('class', 'qx-hit')
+          .attr('transform', (r) => `translate(${x(r.tpj)},0)`)
+          .attr('d', (r) => d3.symbol(QB.symbol(r.arch), 200)())
+          .call(QB.paint, (r) => r.system)
+          .on('mousemove', (ev, r) => stip.show(ev, `${r.label} · ${r.system}`, [
+            [QB.color(r.system), 'Tokens per joule', QB.fmtJ(r.tpj)],
+            [null, 'Intelligence Index', `${a.aa}${a.est ? ' (estimate)' : ''}`],
+            [null, 'Parameters', QB.size(r)],
+          ]))
+          .on('mouseleave', () => stip.hide());
+      });
+    }
+  });
+</script>
+
+<script>
+  // single-user decode tok/s, grouped bars per model
+  const box = document.getElementById('decode-chart');
+  const tip = QB.tip(box);
+  dash.onData(() => {
+    if (!QB.begin(box)) return;
+    const pts = QB.rows().filter((r) => r.workload === 'chat' && r.users === 1 && r.decode != null);
+    if (!pts.length) return;
+    const groups = d3.groups(pts, (r) => r.label)
+      .map(([k, v]) => [k, QB.SYS().map((s) => v.find((r) => r.system === s)).filter(Boolean)])
+      .sort((a, b) => d3.max(b[1], (r) => r.decode) - d3.max(a[1], (r) => r.decode));
+    const W = box.clientWidth, barH = 16, gap = 4, pad = 20, top = 4, bottom = 40, right = 56;
+    const heights = groups.map(([, v]) => v.length * (barH + gap) - gap + pad);
+    const H = top + d3.sum(heights) + bottom;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', 'Single-user decode tokens per second');
+    const probe = svg.append('g').selectAll('text').data(groups).join('text').attr('class', 'qx-strong').text((d) => d[0]);
+    const left = Math.min(W * 0.45, d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 12);
+    probe.remove();
+    const x = d3.scaleLinear([0, d3.max(pts, (r) => r.decode)], [left, W - right]).nice();
+    const xt = x.ticks(Math.max(2, Math.floor((W - left - right) / 60)));
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    svg.append('g').selectAll('line').data(xt).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => d3.format(',')(t));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('tok/s per user');
+    let yy = top;
+    groups.forEach(([label, v], gi) => {
+      const g = svg.append('g').attr('transform', `translate(0,${yy + pad / 2})`);
+      const t = g.append('text').attr('class', 'qx-strong').attr('x', left - 10).attr('y', (v.length * (barH + gap) - gap) / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(label);
+      let s = label;
+      while (t.node().getComputedTextLength() > left - 14 && s.length > 4) { s = s.slice(0, -1); t.text(s + '…'); }
+      v.forEach((r, i) => {
+        const by = i * (barH + gap);
+        g.append('rect').attr('class', 'qx-hit').attr('x', left).attr('y', by).attr('height', barH)
+          .attr('width', Math.max(2, x(r.decode) - left)).attr('rx', 4)
+          .attr('fill', QB.hollow(r.system) ? 'var(--color-panel)' : QB.color(r.system))
+          .attr('stroke', QB.hollow(r.system) ? QB.color(r.system) : 'none').attr('stroke-width', 2)
+          .on('mousemove', (ev) => tip.show(ev, `${r.label} · ${r.system}`, [
+            [QB.color(r.system), 'Decode, 1 user', `${QB.fmt1(r.decode)} tok/s`],
+            [null, 'Time to first token', `${QB.fmt0(r.ttft)} ms`],
+          ]))
+          .on('mouseleave', () => tip.hide());
+        g.append('text').attr('x', x(r.decode) + 5).attr('y', by + barH / 2).attr('dy', '0.32em').text(QB.fmt1(r.decode));
+      });
+      yy += heights[gi];
+    });
+  });
+</script>
+
+<script>
+  // total throughput vs concurrent users for one model
+  const box = document.getElementById('scaling-chart');
+  const sel = document.getElementById('model-select');
+  const leg = document.getElementById('scaling-legend');
+  const tip = QB.tip(box);
+  sel.addEventListener('change', () => dash.setParams({ model: sel.value }));
+  dash.onData(() => {
+    const all = QB.rows();
+    if (all) {
+      const models = [...new Set(all.filter((r) => r.workload === 'users').map((r) => r.model))].sort();
+      if (sel.options.length !== models.length) sel.replaceChildren(...models.map((m) => new Option(m, m)));
+      sel.value = dash.params().model ?? 'gpt-oss-120b';
+      if (!sel.value && models.length) sel.value = models[0];
+    }
+    leg.replaceChildren();
+    if (!QB.begin(box)) return;
+    const pts = all.filter((r) => r.workload === 'users' && r.model === sel.value && r.total != null);
+    if (!pts.length) return;
+    const series = d3.groups(pts, (r) => r.system)
+      .map(([name, v]) => ({ name, sys: name, dashed: QB.hollow(name), v: v.sort((a, b) => a.users - b.users) }))
+      .sort((a, b) => QB.SYS().indexOf(a.sys) - QB.SYS().indexOf(b.sys));
+    const W = box.clientWidth, H = 400, top = 16, bottom = 46, right = 16;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('height', H)
+      .attr('role', 'img').attr('aria-label', 'Total output tokens per second as users are added');
+    const y = d3.scaleLinear([0, d3.max(pts, (r) => r.total) * 1.08], [H - bottom, top]).nice();
+    const yt = y.ticks(5);
+    const probe = svg.append('g').selectAll('text').data(yt).join('text').text((t) => d3.format(',')(t));
+    const left = d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 10;
+    probe.remove();
+    const ux = [...new Set(pts.map((r) => r.users))].sort((a, b) => a - b);
+    const x = d3.scaleLog([ux[0], ux[ux.length - 1]], [left + 6, W - right - 6]).base(2);
+    svg.append('g').selectAll('line').data(yt).join('line').attr('x1', left).attr('x2', W - right).attr('y1', y).attr('y2', y).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(yt).join('text').attr('x', left - 8).attr('y', y).attr('dy', '0.32em').attr('text-anchor', 'end').text((t) => d3.format(',')(t));
+    svg.append('g').selectAll('text').data(ux).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => String(t));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text('concurrent users');
+    svg.append('text').attr('x', left).attr('y', top - 2).attr('dy', '-0.2em').text('total tok/s');
+    const line = d3.line().x((r) => x(r.users)).y((r) => y(r.total));
+    for (const s of series) {
+      svg.append('path').attr('d', line(s.v)).attr('fill', 'none').attr('stroke', QB.color(s.sys)).attr('stroke-width', 3)
+        .attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round').attr('stroke-dasharray', s.dashed ? '5 4' : null);
+      svg.append('g').selectAll('circle').data(s.v).join('circle')
+        .attr('class', 'qx-hit').attr('cx', (r) => x(r.users)).attr('cy', (r) => y(r.total)).attr('r', 6)
+        .call(QB.paint, () => s.sys)
+        .on('mousemove', (ev, r) => tip.show(ev, `${s.name} · ${r.users} user${r.users > 1 ? 's' : ''}`, [
+          [QB.color(s.sys), 'Total output', `${QB.fmt1(r.total)} tok/s`],
+          [null, 'Per user', `${QB.fmt1(r.decode)} tok/s`],
+          [null, 'Time to first token', `${QB.fmt0(r.ttft)} ms`],
+        ]))
+        .on('mouseleave', () => tip.hide());
+      const span = document.createElement('span');
+      const sw = d3.create('svg').attr('width', 18).attr('height', 8).attr('aria-hidden', 'true');
+      sw.append('line').attr('x1', 1).attr('x2', 17).attr('y1', 4).attr('y2', 4).attr('stroke', QB.color(s.sys)).attr('stroke-width', 2)
+        .attr('stroke-dasharray', s.dashed ? '4 3' : null);
+      span.append(sw.node(), s.name);
+      leg.appendChild(span);
+    }
+  });
+</script>

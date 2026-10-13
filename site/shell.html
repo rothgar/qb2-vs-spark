@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuietBox 2 vs DGX Spark</title>
+<meta name="description" content="Speed, wall-power efficiency and published quality scores for open-weight models on a Tenstorrent QuietBox 2 and NVIDIA DGX Spark.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<style>
+  /* stand-ins for the dashboard runtime's theme tokens */
+  :root {
+    color-scheme: light;
+    --font-anthropic-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-anthropic-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --color-fg: #1c2027; --color-fg-muted: #5a6170; --color-bg: #f5f6f8; --color-panel: #ffffff;
+    --color-border-line: #e1e4ea; --color-ok: #1f7a4d; --color-warn: #9a6200; --color-bad: #c0392b;
+    --cds-text-secondary: #6b7280; --cds-surface-popover: #ffffff; --cds-border: #dfe2e8;
+    --cds-shadow-popover: 0 6px 24px rgba(20, 24, 33, 0.12);
+    --cds-chart-grid: #e8eaef; --cds-chart-axis: #b7bcc6; --cds-chart-reference: #8b92a0; --cds-chart-muted: #b6bcc7;
+    --cds-chart-status-critical: #c0392b;
+    --cds-radius: 10px;
+    --cds-gap-xs: 0.25rem; --cds-gap-sm: 0.5rem; --cds-gap-md: 1rem; --cds-gap-lg: 1.5rem; --cds-gap-xl: 2.5rem;
+    --cds-pad-xs: 0.25rem; --cds-pad-sm: 0.5rem; --cds-pad-md: 0.75rem; --cds-pad-lg: 1.25rem; --cds-pad-xl: 2rem;
+    --cds-font-size-caption: 0.8125rem; --cds-font-size-body: 0.9375rem; --cds-font-size-heading: 1.0625rem;
+    --cds-font-size-title: 1.75rem; --cds-font-weight-medium: 600;
+    --cds-dur-slow: 300ms; --cds-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --color-fg: #e8eaee; --color-fg-muted: #a3a9b5; --color-bg: #12151a; --color-panel: #1b1f26;
+      --color-border-line: #2c323c; --color-ok: #4cc38a; --color-warn: #e0a83a; --color-bad: #ef6b5b;
+      --cds-text-secondary: #9aa1ad; --cds-surface-popover: #22272f; --cds-border: #353c47;
+      --cds-shadow-popover: 0 6px 24px rgba(0, 0, 0, 0.5);
+      --cds-chart-grid: #262b34; --cds-chart-axis: #4a515d; --cds-chart-reference: #7d8594; --cds-chart-muted: #59606c;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --color-fg: #e8eaee; --color-fg-muted: #a3a9b5; --color-bg: #12151a; --color-panel: #1b1f26;
+    --color-border-line: #2c323c; --color-ok: #4cc38a; --color-warn: #e0a83a; --color-bad: #ef6b5b;
+    --cds-text-secondary: #9aa1ad; --cds-surface-popover: #22272f; --cds-border: #353c47;
+    --cds-shadow-popover: 0 6px 24px rgba(0, 0, 0, 0.5);
+    --cds-chart-grid: #262b34; --cds-chart-axis: #4a515d; --cds-chart-reference: #7d8594; --cds-chart-muted: #59606c;
+  }
+  [hidden] { display: none !important; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans);
+         font-size: var(--cds-font-size-body); padding: 2rem max(16px, 4vw) 3rem; }
+  #dash-root { max-width: 1180px; margin-inline: auto; }
+  .dash-skeleton:empty { min-height: 1em; }
+  .qx-foot { margin-top: var(--cds-gap-xl); padding-top: var(--cds-gap-md); border-top: 1px solid var(--color-border-line);
+             color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); line-height: 1.6; display: flex;
+             flex-direction: column; gap: var(--cds-gap-sm); max-width: 90ch; }
+  .qx-foot a { color: inherit; }
+  .qx-foot ul { margin: 0; padding-left: 1.1rem; }
+</style>
+</head>
+<body>
+<script>
+(() => {
+  const RAW = __DATA__;
+  const PARAMS = {"users":"16","model":"gpt-oss-120b","price":0.17};
+  const calcs = {}, subs = [];
+  const colors = ['#2f6fdf', '#13a37a', '#d08a12', '#8a4fd8', '#d64f7a', '#5a6170', '#0f8fb8', '#9a7b1c'];
+  const run = () => subs.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
+  const data = (id) => {
+    if (RAW[id]) return { status: 'ok', data: RAW[id], columns: Object.keys(RAW[id][0] || {}), refreshing: false, meta: [] };
+    const c = calcs[id];
+    if (c) {
+      try { return { status: 'ok', data: c.fn(...c.inputs.map((i) => data(i).data)), refreshing: false, meta: [] }; }
+      catch (e) { console.error(e); return { status: 'error', data: [], message: String(e) }; }
+    }
+    return { status: 'missing', data: [] };
+  };
+  let params = { ...PARAMS };
+  window.dash = {
+    colors,
+    data,
+    calc: (id, spec) => { calcs[id] = spec; },
+    loader: () => {},
+    onData: (fn) => { subs.push(fn); try { fn(); } catch (e) { console.error(e); } },
+    params: () => ({ ...params }),
+    setParams: (p) => { params = { ...params, ...p }; run(); },
+    resetParams: () => { params = { ...PARAMS }; run(); },
+    refresh: () => run(),
+    setLink: (name) => { if (name) history.replaceState(null, '', '#' + name); },
+  };
+  let w = window.innerWidth, t;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === w) return;
+    w = window.innerWidth; clearTimeout(t); t = setTimeout(run, 150);
+  });
+})();
+</script>
+<div id="dash-root">
+__PAGE__
+<footer class="qx-foot">
+  <p><b>Method.</b> Every run sent random prompts with a fixed output length and greedy sampling (temperature 0)
+  through <code>vllm bench serve</code>, or on Macs the repo's <code>tools/loadgen.py</code>, which sends the same
+  requests and reports the same measurements. QuietBox 2 (2× p300c, 4 Tenstorrent Blackhole chips) served
+  <code>tt serve</code> bundles; DGX Sparks served vLLM in NVIDIA's container, and two Sparks ran one copy of a model
+  over a direct QSFP link; Macs served 4-bit MLX builds with <code>mlx_lm.server</code>. Wall power came from a smart
+  plug on each machine, sampled once a second and averaged over each run; tokens per joule is output tokens per second
+  divided by that average. Running cost assumes a 30-day month at full load, the measured wall power and an editable
+  electricity price (default $0.17/kWh); hardware isn't included. Systems: __SYSTEMS__.</p>
+  <p><b>Quality scores</b> are the Artificial Analysis Intelligence Index v4.3.2 as published at
+  <a href="https://artificialanalysis.ai">artificialanalysis.ai</a> on 2026-10-13, not measured on these machines:</p>
+  <ul>__QUALITY__</ul>
+  <p><b>Data and code:</b> <a href="results.csv">results.csv</a>, <a href="quality.csv">quality.csv</a>, and the
+  benchmark harness at <a href="https://github.com/rothgar/qb2-vs-spark">github.com/rothgar/qb2-vs-spark</a>, where
+  you can add results from your own machine. Built __DATE__.</p>
+</footer>
+</div>
+</body>
+</html>

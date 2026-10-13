@@ -1,0 +1,7 @@
+machines.yaml
+__pycache__/
+*.pyc
+# raw server logs and continuous plug logs stay local
+results/**/*.log
+results/power/
+results/summary.*

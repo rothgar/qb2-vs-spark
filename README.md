@@ -1,22 +1,71 @@
 # QuietBox 2 vs DGX Spark
 
-Speed, wall-power efficiency and published quality scores for open-weight models on a Tenstorrent QuietBox 2
-(2× p300c, 4 Blackhole chips) and NVIDIA DGX Spark (one and two machines).
+Speed, wall-power efficiency and running cost for open-weight models on Tenstorrent, NVIDIA and Apple hardware:
+a Tenstorrent QuietBox 2, one and two NVIDIA DGX Sparks, and any machine you add.
 
-**View it:** https://rothgar.github.io/qb2-vs-spark/
+**Results:** https://rothgar.github.io/qb2-vs-spark/
 
-| file | what it is |
+Every number on the page is measured with the harness in this repo, except the quality scores, which are the
+published [Artificial Analysis Intelligence Index](https://artificialanalysis.ai).
+
+## What it measures
+
+Each model is served on a machine and sent random prompts of a fixed length with greedy sampling (temperature 0),
+shaped like coding-agent traffic:
+
+| test | prompt tokens | output tokens | users at once |
+|---|---|---|---|
+| `chat` | 128 | 256 | 1, 4 |
+| `codegen` | 1,024 | 1,024 | 1, 4 |
+| `agent-turn` | 8,192 | 512 | 1, 4 |
+| `agent-long` | 32,768 | 256 | 1 |
+| `users` | 1,024 | 256 | 1, 2, 4, 8, 16, 32 |
+| `power` | 1,024 | 512 | 1, 16, 32 (runs only when asked for: `-w power`) |
+
+For each run it records time to first token, decode speed per user, total output tokens per second and, when the
+machine is plugged into a smart plug, average wall power and output tokens per joule.
+
+| machine | serves models with | client |
+|---|---|---|
+| Tenstorrent QuietBox 2 (2× p300c, 4 Blackhole chips) | `tt serve` (Tenstorrent catalog builds and tt-model bundles) | `vllm bench serve` |
+| Tenstorrent p150 (one Blackhole card) | `tt serve`, models with a p150 build | `vllm bench serve` |
+| NVIDIA DGX Spark, and two Sparks over QSFP | vLLM in NVIDIA's container | `vllm bench serve` in the same container |
+| Apple silicon Mac | `mlx_lm.server` with 4-bit MLX builds | `tools/loadgen.py` (vLLM has no macOS build) |
+
+## Running it
+
+You need [uv](https://docs.astral.sh/uv/) on the machine running `bench.py`. The machines being tested need:
+
+- **Tenstorrent:** the `tt` CLI, and a Python venv with `vllm` for the client (`bench_python` in `bench.yaml`).
+- **DGX Spark:** Docker with the NVIDIA runtime.
+- **Mac:** uv. Models download from Hugging Face on first use.
+
+```bash
+cp machines.example.yaml machines.yaml     # how to reach your machines and their plugs (not committed)
+./bench.py run spark --dry-run              # see what would run
+./bench.py run spark -m gpt-oss-20b         # every default test for one model
+./bench.py run spark -w power               # the power test for every model
+./bench.py report --latest                  # results/summary.md
+./bench.py site                             # rebuild docs/ (the published page)
+```
+
+Results land in `results/<machine>/<model>/<run>/`: one JSON per test, a `.power.json` beside it when a plug was
+sampled, and `meta.json` with the software and hardware versions. Server logs stay local.
+
+## Layout
+
+| path | what it is |
 |---|---|
-| `index.html` | the page: charts with the data built in |
-| `qb2-vs-spark-results.csv` | one row per system, model, workload and user count: decode and total tok/s, time to first token, average wall watts, output tokens per joule |
-| `aa-intelligence-index.csv` | Artificial Analysis Intelligence Index v4.3.2 per model, with the page each score came from |
+| `bench.py` | the harness: `run`, `report`, `site`, `ram` |
+| `bench.yaml` | machines (grouped by `family`), models with their build on each machine, and tests |
+| `machines.example.yaml` | template for `machines.yaml`: ssh targets and power plugs |
+| `tools/loadgen.py` | the benchmark client for machines without vLLM |
+| `tools/powerlog.py` | optional continuous plug logger |
+| `site/` | the page source; `./bench.py site` builds it into `docs/` |
+| `docs/` | the published page and its data (`results.csv`, `quality.csv`) |
+| `results/` | every run's results |
 
-## Method
+## Adding your machine
 
-- Every run used `vllm bench serve` with random prompts, a fixed output length and greedy sampling (temperature 0).
-- QuietBox 2 served `tt serve` bundles. The Sparks served vLLM in NVIDIA's container; two Sparks ran one copy of a
-  model over a direct QSFP link.
-- Wall power came from a Shelly plug on each machine, sampled once a second and averaged over each run. Tokens per
-  joule is output tokens per second divided by that average.
-- Quality scores are published by [Artificial Analysis](https://artificialanalysis.ai), not measured on these
-  machines.
+Have an M5 Mac mini, a single Tenstorrent card, or something else? See [CONTRIBUTING.md](CONTRIBUTING.md) for how
+much memory each model needs on a Mac, how to add a machine, and how to send results in a pull request.

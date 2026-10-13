@@ -1,0 +1,31 @@
+{
+  "machine": "qb2",
+  "hardware": "Tenstorrent QuietBox 2 (2x p300c, 4x Blackhole)",
+  "model": "qwen3.6-35b-a3b",
+  "hf_id": "Qwen/Qwen3.6-35B-A3B",
+  "params": "35B MoE / 3B active",
+  "serve": {
+    "serve": "Adartras/qwen3.6-a3b-blackhole",
+    "source": "community",
+    "chips": 1
+  },
+  "started": "20261012-143100",
+  "environment": {
+    "tt_version": "tt 1.1.0",
+    "device_info": {
+      "error": {
+        "what": "tt-smi exited with status 1.",
+        "why": null,
+        "next_step": "Re-run with --verbose for the full command line.",
+        "exit_code": 5,
+        "code": "TOOL_FAILED",
+        "reason": null,
+        "details": {
+          "tool": "tt-smi",
+          "returncode": 1
+        }
+      }
+    },
+    "kmd": "2.11.0"
+  }
+}

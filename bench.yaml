@@ -1,0 +1,253 @@
+# What gets benchmarked: machines (hardware and how models are served on them), models, and workloads.
+# How to reach your machines (ssh targets, power plugs, interconnect addresses) goes in machines.yaml, which is
+# merged over `machines` below and not committed: start from machines.example.yaml.
+
+machines:
+  qb2:
+    label: QuietBox 2
+    family: Tenstorrent               # systems are grouped by family on the page
+    hardware: "Tenstorrent QuietBox 2 (2x p300c, 4x Blackhole)"
+    launcher: tt                      # tt serve / tt model stop
+    bench_python: ~/bench/.venv/bin/vllm   # vllm CLI for `vllm bench serve` (a venv with vllm installed)
+    remote_dir: ~/bench
+    port: 8000
+  p150:                               # one p150 card in a workstation; models need a p150 build (per_machine.p150)
+    label: Tenstorrent p150
+    family: Tenstorrent
+    hardware: "Tenstorrent p150 (1x Blackhole, 32 GB GDDR6) in a workstation"
+    launcher: tt
+    bench_python: ~/bench/.venv/bin/vllm
+    remote_dir: ~/bench
+    port: 8000
+  spark:
+    label: DGX Spark
+    family: NVIDIA
+    hardware: "NVIDIA DGX Spark (GB10, 128 GB unified)"
+    launcher: vllm-docker             # vllm serve in NVIDIA's container; the client runs in the same container
+    image: nvcr.io/nvidia/vllm:26.09-py3
+    bench_python: ~/bench/vllm-client.sh
+    remote_dir: ~/bench
+    port: 8000
+  spark-pair:                         # two Sparks as one server over the direct QSFP cable (200 Gb/s)
+    label: 2x DGX Spark
+    family: NVIDIA
+    hardware: "2x NVIDIA DGX Spark (GB10), QSFP 200 Gb/s, tensor parallel 2"
+    launcher: vllm-docker
+    image: nvcr.io/nvidia/vllm:26.09-py3
+    tp: 2
+    bench_python: ~/bench/vllm-client.sh
+    remote_dir: ~/bench
+    port: 8000
+  mac:                                # any Apple silicon Mac; copy this entry for your model of Mac (see CONTRIBUTING.md)
+    label: Mac mini (M5 Pro)
+    family: Apple
+    hardware: "Apple Mac mini (M5 Pro, 64 GB unified memory)"
+    launcher: mlx                     # mlx_lm.server, run with uvx
+    client: builtin                   # tools/loadgen.py: vllm has no macOS build
+    models_from: mac                  # use the `mac` entries under each model's per_machine
+    remote_dir: ~/bench
+    port: 8080
+
+# One entry per model. `hf_id` is the canonical weights repo and the tokenizer the client builds prompts with.
+# arch, params_b and weights describe the model for the page; quality is the published Artificial Analysis
+# Intelligence Index (https://artificialanalysis.ai, v4.3.2, read 2026-10-13), not something measured here.
+# per_machine.<machine>.serve is what the launcher serves: a tt catalog name or tt-model bundle, a Hugging Face
+# repo for vLLM, or an MLX repo; weights_gb (Mac) is the MLX download, used to skip models that don't fit.
+models:
+  - id: qwen3.6-27b
+    hf_id: Qwen/Qwen3.6-27B
+    arch: Dense
+    params_b: { total: 27.8, active: 27.8 }
+    weights: BF16
+    quality: { aa_index: 21, variant: Reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-6-27b" }
+    per_machine:
+      qb2: { serve: Qwen3.6-27B, source: tt-inference-server }
+      spark: { serve: Qwen/Qwen3.6-27B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Qwen3.6-27B-4bit, weights: MLX 4-bit, weights_gb: 16.1 }
+
+  - id: qwen3-coder-30b-a3b
+    hf_id: Qwen/Qwen3-Coder-30B-A3B-Instruct
+    arch: MoE
+    params_b: { total: 30.5, active: 3.3 }
+    weights: BF16
+    quality: { aa_index: 10, variant: Non-reasoning, estimate: true, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-coder-30b-a3b-instruct" }
+    per_machine:
+      qb2: { serve: raahemnabeel/qwen3-coder-30b-a3b, profile: p300x2 }
+      spark: { serve: Qwen/Qwen3-Coder-30B-A3B-Instruct, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Qwen3-Coder-30B-A3B-Instruct-4bit, weights: MLX 4-bit, weights_gb: 17.2 }
+
+  - id: devstral-small-2-24b
+    hf_id: mistralai/Devstral-Small-2-24B-Instruct-2512
+    arch: Dense
+    params_b: { total: 24, active: 24 }
+    weights: BF16
+    quality: { aa_index: 8, variant: Non-reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/devstral-small-2" }
+    per_machine:
+      qb2: { serve: anirud/devstral-small-2-24b-instruct-2512, profile: p300x2 }
+      spark: { serve: mistralai/Devstral-Small-2-24B-Instruct-2512, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Devstral-Small-2-24B-Instruct-2512-4bit, weights: MLX 4-bit, weights_gb: 15.1 }
+
+  - id: gemma-4-31b
+    hf_id: google/gemma-4-31B-it
+    arch: Dense
+    params_b: { total: 31.3, active: 31.3 }
+    weights: BF16
+    quality: { aa_index: 15, variant: Reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/gemma-4-31b" }
+    per_machine:
+      qb2: { serve: gemma-4-31B-it, source: tt-inference-server }
+      spark: { serve: google/gemma-4-31B-it, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/gemma-4-31b-it-4bit, weights: MLX 4-bit, weights_gb: 18.4 }
+
+  - id: muse-glimmer-30b
+    hf_id: meta-models/Muse-Glimmer-30B
+    arch: Dense
+    params_b: { total: 29.8, active: 29.8 }
+    weights: BF16
+    quality: { aa_index: 17, variant: High (reasoning), version: v4.3.2, url: "https://artificialanalysis.ai/models/muse-glimmer" }
+    per_machine:
+      qb2: { serve: tt-hous/muse-glimmer-30b }
+      spark: { serve: meta-models/Muse-Glimmer-30B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Muse-Glimmer-30B-4bit, weights: MLX 4-bit, weights_gb: 19.4 }
+
+  - id: ornith-1.5-35b-a3b              # not listed by Artificial Analysis
+    hf_id: ornith-ai/Ornith-1.5-35B-A3B
+    arch: MoE
+    params_b: { total: 35, active: 3 }
+    weights: BF16
+    per_machine:
+      qb2: { serve: raahemnabeel/ornith-1.5-35b-a3b, profile: p300x2 }
+      spark: { serve: ornith-ai/Ornith-1.5-35B-A3B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Ornith-1.5-35B-A3B-OptiQ-4bit, weights: MLX 4-bit, weights_gb: 23.5 }
+
+  - id: nemotron-3.5-lightning-30b-a3b
+    hf_id: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4
+    arch: Hybrid MoE
+    params_b: { total: 30, active: 3 }
+    weights: NVFP4
+    quality: { aa_index: 13, variant: Reasoning (BF16 weights), version: v4.3.2, url: "https://artificialanalysis.ai/models/nemotron-3-5-lightning" }
+    per_machine:
+      qb2: { serve: ndaly/Nemotron-3.5-Lightning-30B-A3B-NVFP4-tt-p300x2-vllm026 }
+      spark: { serve: nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-NVFP4, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/NVIDIA-Nemotron-3.5-Lightning-30B-A3B-4bit, weights: MLX 4-bit, weights_gb: 17.8 }
+
+  - id: qwen3.6-35b-a3b
+    hf_id: Qwen/Qwen3.6-35B-A3B
+    arch: MoE
+    params_b: { total: 35, active: 3 }
+    weights: BF16
+    quality: { aa_index: 18, variant: Reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-6-35b-a3b" }
+    max_concurrency: 1                  # the qb2 bundle serves one sequence
+    per_machine:
+      qb2: { serve: Adartras/qwen3.6-a3b-blackhole, chips: 1 }    # single-chip build: 1 of qb2's 4 chips
+      p150: { serve: Adartras/qwen3.6-a3b-blackhole }
+      spark: { serve: Qwen/Qwen3.6-35B-A3B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
+      mac: { serve: mlx-community/Qwen3.6-35B-A3B-4bit, weights: MLX 4-bit, weights_gb: 20.4, max_concurrency: null }
+
+  - id: qwen3.6-35b-a3b-tp4             # the same model on all 4 qb2 chips (Ornith-1.5 engine, Qwen3.6 weights)
+    same_as: qwen3.6-35b-a3b
+    build: 4-chip build
+    hf_id: Qwen/Qwen3.6-35B-A3B
+    per_machine:
+      qb2: { serve: rothgar/qwen3.6-35b-a3b-p300x2, profile: p300x2 }
+
+  # gpt-oss on qb2: tt-hous builds target p150 cards; their p150x4 profiles run on qb2's 4 chips.
+  - id: gpt-oss-20b
+    hf_id: openai/gpt-oss-20b
+    arch: MoE
+    params_b: { total: 21, active: 3.6 }
+    weights: MXFP4
+    quality: { aa_index: 9, variant: High, version: v4.3.2, url: "https://artificialanalysis.ai/models/gpt-oss-20b" }
+    per_machine:
+      qb2: { serve: tt-hous/gpt-oss-20b-p150, profile: p150, chips: 1 }
+      p150: { serve: tt-hous/gpt-oss-20b-p150, profile: p150 }
+      spark: { serve: openai/gpt-oss-20b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
+      mac: { serve: mlx-community/gpt-oss-20b-MXFP4-Q4, weights: MXFP4 (MLX), weights_gb: 11.2 }
+
+  - id: gpt-oss-20b-tp4
+    same_as: gpt-oss-20b
+    build: 4-chip build
+    hf_id: openai/gpt-oss-20b
+    per_machine:
+      qb2: { serve: tt-hous/gpt-oss-20b-p150, profile: p150x4 }
+
+  - id: gpt-oss-120b
+    hf_id: openai/gpt-oss-120b
+    arch: MoE
+    params_b: { total: 117, active: 5.1 }
+    weights: MXFP4
+    quality: { aa_index: 12, variant: High, version: v4.3.2, url: "https://artificialanalysis.ai/models/gpt-oss-120b" }
+    per_machine:
+      qb2: { serve: tt-hous/gpt-oss-120b-p150x4 }
+      spark: { serve: openai/gpt-oss-120b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
+      spark-pair: { serve: openai/gpt-oss-120b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
+      mac: { serve: mlx-community/gpt-oss-120b-MXFP4-Q4, weights: MXFP4 (MLX), weights_gb: 62.3 }
+
+  - id: qwen3.5-122b-a10b               # too big for one Spark even in FP8
+    hf_id: Qwen/Qwen3.5-122B-A10B
+    arch: Hybrid MoE
+    params_b: { total: 125, active: 10 }
+    weights: FP8 on Spark
+    quality: { aa_index: 16, variant: Reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-5-122b-a10b" }
+    per_machine:
+      qb2: { serve: raahemnabeel/qwen3-5-122b-a10b-blackholex4, profile: p300x2-text }   # text only, like the Spark side
+      spark-pair: { serve: Qwen/Qwen3.5-122B-A10B-FP8, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80', --limit-mm-per-prompt, '{"image": 0, "video": 0}'] }
+      mac: { serve: mlx-community/Qwen3.5-122B-A10B-4bit, weights: MLX 4-bit, weights_gb: 69.6 }
+
+  - id: llama-3.3-70b                   # Tenstorrent's official build; BF16 (141 GB) needs two Sparks
+    hf_id: meta-llama/Llama-3.3-70B-Instruct
+    arch: Dense
+    params_b: { total: 70.6, active: 70.6 }
+    weights: BF16
+    quality: { aa_index: 8, variant: Non-reasoning, estimate: true, version: v4.3.2, url: "https://artificialanalysis.ai/models/llama-3-3-instruct-70b" }
+    per_machine:
+      qb2: { serve: Llama-3.3-70B-Instruct, source: tt-inference-server }
+      spark-pair: { serve: meta-llama/Llama-3.3-70B-Instruct, download_exclude: ['original/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
+      mac: { serve: mlx-community/Llama-3.3-70B-Instruct-4bit, weights: MLX 4-bit, weights_gb: 39.7 }
+
+  # DeepSeek-V4.1-Flash (552B MoE) runs on qb2 from bfp4 experts paged from NVMe, one sequence at a time
+  # (rothgar/deepseek-v4.1-flash-p300x2). Its decode cost grows with the served context, so the long-prompt test
+  # uses a separate entry with the 32K profile.
+  - id: deepseek-v4.1-flash
+    hf_id: deepseek-ai/DeepSeek-V4.1-Flash
+    arch: MoE
+    params_b: { total: 552, active: 16 }
+    weights: BFP4 experts
+    quality: { aa_index: 39, variant: Max (reasoning), version: v4.3.2, url: "https://artificialanalysis.ai/models/deepseek-v4-1-flash" }
+    max_concurrency: 1
+    workloads: [chat, codegen, agent-turn, power]
+    prompts_per_concurrency: 2
+    min_prompts: 2
+    per_machine:
+      qb2: { serve: rothgar/deepseek-v4.1-flash-p300x2, profile: p300x2 }
+
+  - id: deepseek-v4.1-flash-long
+    same_as: deepseek-v4.1-flash
+    chart: false
+    hf_id: deepseek-ai/DeepSeek-V4.1-Flash
+    max_concurrency: 1
+    workloads: [agent-long]
+    prompts_per_concurrency: 2
+    min_prompts: 2
+    per_machine:
+      qb2: { serve: rothgar/deepseek-v4.1-flash-p300x2, profile: p300x2-32k }
+
+# Prompt (ISL) and output (OSL) lengths in tokens, shaped like coding-agent traffic.
+workloads:
+  - { name: chat,        isl: 128,   osl: 256,  concurrency: [1, 4] }
+  - { name: codegen,     isl: 1024,  osl: 1024, concurrency: [1, 4] }
+  - { name: agent-turn,  isl: 8192,  osl: 512,  concurrency: [1, 4] }
+  - { name: agent-long,  isl: 32768, osl: 256,  concurrency: [1] }
+  # concurrent-user scaling: how per-user decode and total throughput trade off as users are added
+  - { name: users,       isl: 1024,  osl: 256,  concurrency: [1, 2, 4, 8, 16, 32], prompts_per_concurrency: 3 }
+  # tokens per joule: long enough (minutes) to average the plugs' 1 s samples; runs only when named (-w power)
+  - { name: power,       isl: 1024,  osl: 512,  concurrency: [1, 16, 32], prompts_per_concurrency: 2, enabled: false }
+
+defaults:
+  prompts_per_concurrency: 4          # num_prompts = max(min_prompts, this * concurrency)
+  min_prompts: 4
+  warmup_prompts: 2                   # discarded run at the start of each model
+  backend: openai                     # /v1/completions; use openai-chat for chat-only servers
+  temperature: 0                      # greedy, sent explicitly: vllm bench serve >= 0.30 sends none, so servers
+                                      # used their default (1.0, no top-k), which moves TT bundles to host sampling
+  serve_timeout_s: 14400              # the first serve downloads weights and compiles kernels
+  request_timeout_s: 3600
