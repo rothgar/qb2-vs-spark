@@ -21,9 +21,14 @@ shaped like coding-agent traffic:
 | `agent-long` | 32,768 | 256 | 1 |
 | `users` | 1,024 | 256 | 1, 2, 4, 8, 16, 32 |
 | `power` | 1,024 | 512 | 1, 16, 32 (runs only when asked for: `-w power`) |
+| `prefill` | 16,384 | 256 | 1, 4, 8 (only when asked for: `-w prefill`) |
+| `prefill-cached` | 16,384, all but the last 512 shared by every request | 256 | 1, 4, 8 (only when asked for) |
 
 For each run it records time to first token, decode speed per user, total output tokens per second and, when the
-machine is plugged into a smart plug, average wall power and output tokens per joule.
+machine is plugged into a smart plug, average wall power and output tokens per joule. The `prefill` tests are for
+long-prompt work (coding agents on a large codebase, research over documents): `prefill-cached` resends the same
+context with a new ending each time, like an agent's next turn, so servers that cache prompt prefixes can skip most
+of the prompt.
 
 | machine | serves models with | client |
 |---|---|---|

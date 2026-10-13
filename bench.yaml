@@ -241,6 +241,12 @@ workloads:
   - { name: users,       isl: 1024,  osl: 256,  concurrency: [1, 2, 4, 8, 16, 32], prompts_per_concurrency: 3 }
   # tokens per joule: long enough (minutes) to average the plugs' 1 s samples; runs only when named (-w power)
   - { name: power,       isl: 1024,  osl: 512,  concurrency: [1, 16, 32], prompts_per_concurrency: 2, enabled: false }
+  # long context, prefill-heavy (coding agents on a large codebase, research over documents), with wall power:
+  # `prefill` sends a fresh 16K-token prompt every time; `prefill-cached` sends the same 16K prompt with only the
+  # last 512 tokens new, the way an agent resends its context each turn, so servers that cache prefixes skip most
+  # of the prefill (the shared prefix is sent once, unmeasured, before the first point). Both run only when named.
+  - { name: prefill,        isl: 16384, osl: 256, concurrency: [1, 4, 8], prompts_per_concurrency: 2, enabled: false }
+  - { name: prefill-cached, isl: 16384, prefix: 15872, osl: 256, concurrency: [1, 4, 8], prompts_per_concurrency: 2, enabled: false }
 
 defaults:
   prompts_per_concurrency: 4          # num_prompts = max(min_prompts, this * concurrency)

@@ -427,7 +427,7 @@ def served_model_id(r: Remote, port: int, pm: dict) -> str:
 
 
 def bench_cmd(mc: dict, d: dict, model: dict, pm: dict, served: str, isl: int, osl: int, conc: int,
-              n: int, out_dir: str, fname: str, meta: dict) -> str:
+              n: int, out_dir: str, fname: str, meta: dict, prefix: int = 0) -> str:
     """`vllm bench serve` on the machine itself (so network latency never enters TTFT), or for `client: builtin`
     tools/loadgen.py, which takes the same flags and writes the same result fields."""
     backend = model.get("backend", d["backend"])
@@ -436,12 +436,14 @@ def bench_cmd(mc: dict, d: dict, model: dict, pm: dict, served: str, isl: int, o
     args = client + [
         "--backend", backend, "--base-url", f"http://127.0.0.1:{mc['port']}",
         "--model", served, "--tokenizer", pm.get("tokenizer", model["hf_id"]),
-        "--dataset-name", "random", "--random-input-len", str(isl), "--random-output-len", str(osl),
+        "--dataset-name", "random", "--random-input-len", str(isl - prefix), "--random-output-len", str(osl),
         "--random-range-ratio", "0", "--ignore-eos",
         "--num-prompts", str(n), "--max-concurrency", str(conc), "--request-rate", "inf",
         "--percentile-metrics", "ttft,tpot,itl,e2el", "--metric-percentiles", "50,90,99",
         "--save-result", "--result-dir", out_dir, "--result-filename", fname,
     ]
+    if prefix:   # the first `prefix` tokens of every prompt are the same (a resent agent context)
+        args += ["--random-prefix-len", str(prefix)]
     temp = model.get("temperature", d.get("temperature"))
     if temp is not None:
         args += ["--temperature", str(temp)]
@@ -517,6 +519,11 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
                                 "warmup.json", {}), timeout=d["request_timeout_s"], check=False)
             # per-model overrides: `workloads` (names to run), `prompts_per_concurrency`, `min_prompts`
             for w in [w for w in workloads if w["name"] in model.get("workloads", [w["name"]])]:
+                if w.get("prefix") and not (a.users and not set(a.users) & set(w["concurrency"])):
+                    # one request first so a server that caches prefixes has this one; it isn't measured
+                    log(f"   {w['name']}: priming the shared {w['prefix']}-token prefix")
+                    r.run(bench_cmd(mc, d, model, pm, served, w["isl"], 16, 1, 1, remote_out, "prime.json", {}, w["prefix"]),
+                          timeout=d["request_timeout_s"], check=False)
                 for conc in w["concurrency"]:
                     if (maxc and conc > maxc) or (a.users and conc not in a.users):
                         continue
@@ -528,7 +535,7 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
                     log(f"   {w['name']} isl={w['isl']} osl={w['osl']} c={conc} n={n}")
                     with PowerMeter([] if a.dry_run else mc.get("power_plugs", [])) as pmeter:
                         res = r.run(bench_cmd(mc, d, model, pm, served, w["isl"], w["osl"], conc, n,
-                                              remote_out, fname, meta), timeout=d["request_timeout_s"] * n, check=False)
+                                              remote_out, fname, meta, w.get("prefix", 0)), timeout=d["request_timeout_s"] * n, check=False)
                     pmeter.save(local / fname.replace(".json", ".power.json"))
                     (local / fname.replace(".json", ".log")).write_text(res.stdout or "")
                     if res.returncode != 0:
@@ -555,7 +562,7 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
 def load_results(latest: bool) -> list[dict]:
     rows = []
     for f in sorted(RESULTS.glob("*/*/*/*.json")):
-        if f.name in ("meta.json", "warmup.json") or f.name.endswith(".power.json"):
+        if f.name in ("meta.json", "warmup.json", "prime.json") or f.name.endswith(".power.json"):
             continue
         j = json.loads(f.read_text())
         if f.parts[-2].startswith("failed") or "mean_ttft_ms" not in j or not j.get("completed"):
@@ -574,6 +581,8 @@ def load_results(latest: bool) -> list[dict]:
             "tpot_ms_mean": round(tpot, 2),
             "decode_tok_s_user": round(1000 / tpot, 2) if tpot else None,
             "output_tok_s_total": round(j.get("output_throughput", 0), 2),
+            "e2e_ms_mean": round(j.get("mean_e2el_ms", 0), 1) or None,
+            "req_s": round(j.get("request_throughput", 0), 4) or None,
             "boot_s": j.get("boot_s"),
             "wall_w": watts,
             "out_tok_per_j": round(j.get("output_throughput", 0) / watts, 3) if watts else None,
@@ -627,7 +636,8 @@ def cmd_site(cfg: dict, a: argparse.Namespace) -> int:
             "total_params_b": base["params_b"]["total"], "active_params_b": base["params_b"]["active"],
             "workload": r["workload"], "isl": r["isl"], "osl": r["osl"], "users": r["concurrency"],
             "decode_tok_s_user": r["decode_tok_s_user"], "total_tok_s": r["output_tok_s_total"],
-            "ttft_ms": r["ttft_ms_mean"], "wall_w": r["wall_w"], "tok_per_j": r["out_tok_per_j"],
+            "ttft_ms": r["ttft_ms_mean"], "e2e_ms": r["e2e_ms_mean"], "req_s": r["req_s"],
+            "wall_w": r["wall_w"], "tok_per_j": r["out_tok_per_j"],
         })
     quality = [{"model": m["id"], "aa_index": q["aa_index"], "aa_variant": q["variant"],
                 "aa_estimate": "yes" if q.get("estimate") else "no", "index_version": q["version"],

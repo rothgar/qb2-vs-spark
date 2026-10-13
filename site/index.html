@@ -44,6 +44,21 @@
   .qx-tip-r { display: flex; align-items: center; gap: var(--cds-gap-xs); }
   .qx-tip-r b { margin-left: auto; padding-left: var(--cds-gap-md); font-weight: var(--cds-font-weight-medium); }
   .qx-tip-r i { width: 0.5rem; height: 0.5rem; border-radius: 50%; display: inline-block; }
+  .qx-nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 3; background: var(--color-bg);
+    border-bottom: 1px solid var(--color-border-line); padding: var(--cds-pad-sm) 0;
+    box-shadow: 0 0 0 100vmax var(--color-bg); clip-path: inset(0 -100vmax);
+    display: flex; gap: var(--cds-gap-xs) var(--cds-gap-md); overflow-x: auto; scrollbar-width: none; }
+  .qx-nav::-webkit-scrollbar { display: none; }
+  .qx-nav a { white-space: nowrap; color: var(--color-fg-muted); text-decoration: none; font-size: var(--cds-font-size-body);
+    padding: var(--cds-pad-xs) var(--cds-pad-sm); border-radius: var(--cds-radius); }
+  .qx-nav a:hover { color: var(--color-fg); background: var(--color-panel); }
+  .qx-nav a[aria-current="true"] { color: var(--color-fg); background: var(--color-panel); font-weight: var(--cds-font-weight-medium); }
+  .qx-nav a:focus-visible, .qx-anchor:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-section, .qx-card { scroll-margin-top: 4.5rem; }
+  .qx-anchor { margin-left: 0.4em; color: var(--color-fg-muted); text-decoration: none; font-weight: 400; opacity: 0; transition: opacity 0.15s; }
+  .qx-section > h2:hover .qx-anchor, .qx-card h3:hover .qx-anchor, .qx-anchor:focus-visible { opacity: 1; }
+  @media (hover: none) { .qx-anchor { opacity: 0.6; } }
+  .qx-pending { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); font-style: italic; }
   [data-dash-source-state="empty"] { color: transparent; }
   [data-dash-source-state="refreshing"] { opacity: 0.5; transition: opacity var(--cds-dur-slow); }
 </style>
@@ -64,6 +79,15 @@
       <a href="https://github.com/rothgar/qb2-vs-spark">Code and data on GitHub</a>
     </p>
   </header>
+
+  <nav class="qx-nav" aria-label="Sections">
+    <a href="#efficiency">Energy efficiency</a>
+    <a href="#cost">Running cost</a>
+    <a href="#quality">Model quality</a>
+    <a href="#speed">Speed</a>
+    <a href="#long-prompts">Long prompts</a>
+    <a href="#notes">Reading these results</a>
+  </nav>
 
   <div class="qx-bar">
     <div class="qx-legend" id="legend" aria-label="Systems and architectures"></div>
@@ -149,6 +173,41 @@
     </div>
   </section>
 
+  <section class="qx-section" id="long-prompts">
+    <h2>Long prompts</h2>
+    <p class="qx-lede">Coding agents on a large codebase, research over documents and agents with a lot of saved context send long prompts and get short answers back, so processing the prompt (prefill) can take longer than writing the reply. These charts use one user unless they say otherwise.</p>
+    <div class="qx-grid">
+      <div class="qx-card" id="prefill-card">
+        <div class="qx-card-top">
+          <h3>Prefill speed</h3>
+          <div class="qx-seg" id="ctx-seg" role="group" aria-label="Prompt length"></div>
+        </div>
+        <p>Prompt tokens processed per second for one user: prompt length divided by time to first token. Longer bars are better.</p>
+        <div class="qx-chart dash-skeleton" id="prefill-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="request-card">
+        <h3>Time for one long-prompt request</h3>
+        <p>How long one user waits for a whole answer with a <span class="qx-ctx-label">32K</span>-token prompt: the solid part is waiting for the first token (prefill), the faded part is writing the <span class="qx-osl-label">256</span>-token reply. Shorter is better.</p>
+        <div class="qx-chart dash-skeleton" id="request-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="ctx-energy-card">
+        <div class="qx-card-top">
+          <h3>Energy per long-prompt request</h3>
+          <div class="qx-seg" id="lc-users-seg" role="group" aria-label="Users in the long-prompt test"></div>
+        </div>
+        <p>Wall-power joules per request with a 16K-token prompt and a 256-token reply. Output tokens per joule gives no credit for prompt work, so this counts the whole request. Further left is more efficient; log scale.</p>
+        <p class="qx-pending" id="ctx-energy-pending" hidden>This test is queued; results appear here when it finishes.</p>
+        <div class="qx-chart dash-skeleton" id="ctx-energy-chart" data-source="results"></div>
+      </div>
+      <div class="qx-card" id="cached-card">
+        <h3>Repeated context: fresh prompt vs. cached</h3>
+        <p>An agent resends its whole context every turn. Here each request repeats the same 16K-token prompt except the last 512 tokens. A server that caches prompt prefixes only processes the new part, so time to first token drops; one that doesn't processes everything again. Hollow marks are a fresh prompt and filled marks a repeated one, with <span class="qx-lc-users-label">1 user</span>. Further left is better; log scale.</p>
+        <p class="qx-pending" id="cached-pending" hidden>This test is queued; results appear here when it finishes.</p>
+        <div class="qx-chart dash-skeleton" id="cached-chart" data-source="results"></div>
+      </div>
+    </div>
+  </section>
+
   <section class="qx-section" id="notes">
     <h2>Reading these results</h2>
     <div class="qx-card">
@@ -198,6 +257,7 @@
       return d.data.map((r) => ({
         ...r, users: +r.users, isl: +r.isl, osl: +r.osl,
         decode: num(r.decode_tok_s_user), total: num(r.total_tok_s), ttft: num(r.ttft_ms),
+        e2e: num(r.e2e_ms), reqs: num(r.req_s),
         watts: num(r.wall_w), tpj: num(r.tok_per_j), totalP: num(r.total_params_b), activeP: num(r.active_params_b),
         label: r.model,
       }));
@@ -267,6 +327,35 @@
     const strip = (sel) => sel.attr('font-size', null).attr('font-family', null);
     return { SYS, familyOf, ARCH, color, hollow, paint, rows, symbol, fmtJ, fmt1, fmt0, fmtP, size, users, logTicks, thin, tip, begin, strip };
   })();
+</script>
+
+<script>
+  // section links: a # beside each heading, the section on screen marked in the nav, and a linked section
+  // scrolled to again once fonts and charts have settled
+  const nav = document.querySelector('.qx-nav');
+  for (const h of document.querySelectorAll('.qx-section > h2, .qx-card[id] h3')) {
+    const id = (h.closest('.qx-card[id]') || h.closest('.qx-section')).id;
+    const a = document.createElement('a');
+    a.className = 'qx-anchor';
+    a.href = `#${id}`;
+    a.textContent = '#';
+    a.setAttribute('aria-label', `Link to “${h.textContent.trim()}”`);
+    h.appendChild(a);
+  }
+  const links = new Map([...nav.querySelectorAll('a')].map((a) => [a.getAttribute('href').slice(1), a]));
+  const mark = (id) => links.forEach((a, k) => {
+    a.setAttribute('aria-current', String(k === id));
+    if (k === id) nav.scrollTo({ left: a.offsetLeft - nav.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' });
+  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) mark(e.target.id); }),
+      { rootMargin: '-25% 0px -70% 0px' });
+    links.forEach((_, id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+  }
+  window.addEventListener('load', () => {
+    const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el) el.scrollIntoView();
+  });
 </script>
 
 <script>
@@ -841,6 +930,186 @@
         .attr('stroke-dasharray', s.dashed ? '4 3' : null);
       span.append(sw.node(), s.name);
       leg.appendChild(span);
+    }
+  });
+</script>
+
+<script>
+  // long prompts: prefill speed and time per request at 1 user (agent-turn, prefill and agent-long), energy per
+  // request (prefill) and fresh vs repeated-context time to first token (prefill vs prefill-cached)
+  const LONG = ['agent-turn', 'prefill', 'agent-long'];
+  const kTok = (n) => `${Math.round(n / 1024)}K`;
+  const sec = (ms) => `${d3.format(ms >= 10000 ? ',.0f' : '.1f')(ms / 1000)} s`;
+  const e2e = (r) => r.e2e ?? (r.ttft + ((r.osl - 1) * 1000) / r.decode);
+  const ctxSeg = document.getElementById('ctx-seg');
+  const usersSeg = document.getElementById('lc-users-seg');
+  function seg(el, values, current, label) {
+    if (el.dataset.v !== values.join()) {
+      el.replaceChildren(...values.map((v) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.dataset.v = v;
+        b.textContent = label(v);
+        return b;
+      }));
+      el.dataset.v = values.join();
+    }
+    el.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.v === current)));
+    el.hidden = values.length < 2;
+  }
+  ctxSeg.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) dash.setParams({ ctx: b.dataset.v }); });
+  usersSeg.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) dash.setParams({ lc_users: b.dataset.v }); });
+
+  // horizontal bars, one group per model and a bar per system; each bar is one or more [from, to, faded] segments
+  function hbars(box, tip, groups, { segs, end, text, axis, tipLines }) {
+    const all = groups.flatMap(([, v]) => v);
+    const W = box.clientWidth, barH = 16, gap = 4, pad = 20, top = 4, bottom = 40;
+    const heights = groups.map(([, v]) => v.length * (barH + gap) - gap + pad);
+    const H = top + d3.sum(heights) + bottom;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', axis);
+    const probe = svg.append('g');
+    const nameW = d3.max(probe.selectAll('text.n').data(groups).join('text').attr('class', 'qx-strong').text((d) => d[0]).nodes(), (n) => n.getComputedTextLength());
+    const valW = d3.max(probe.selectAll('text.v').data(all).join('text').text(text).nodes(), (n) => n.getComputedTextLength());
+    probe.remove();
+    const left = Math.min(W * 0.36, nameW + 12), right = Math.min(W * 0.36, valW + 10);
+    const x = d3.scaleLinear([0, d3.max(all, end)], [left, W - right]).nice();
+    const xt = x.ticks(Math.max(2, Math.floor((W - left - right) / 70)));
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    svg.append('g').selectAll('line').data(xt).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(xt).join('text').attr('x', x).attr('y', H - bottom + 22).attr('text-anchor', 'middle').text((t) => d3.format(',')(t));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text(axis);
+    let yy = top;
+    groups.forEach(([name, v], gi) => {
+      const g = svg.append('g').attr('transform', `translate(0,${yy + pad / 2})`);
+      const t = g.append('text').attr('class', 'qx-strong').attr('x', left - 10).attr('y', (v.length * (barH + gap) - gap) / 2).attr('dy', '0.32em').attr('text-anchor', 'end').text(name);
+      let s = name;
+      while (t.node().getComputedTextLength() > left - 14 && s.length > 4) { s = s.slice(0, -1); t.text(s + '…'); }
+      v.forEach((r, i) => {
+        const by = i * (barH + gap), c = QB.color(r.system), hollow = QB.hollow(r.system);
+        const bar = g.append('g').attr('class', 'qx-hit')
+          .on('mousemove', (ev) => tip.show(ev, `${r.label} · ${r.system}`, tipLines(r)))
+          .on('mouseleave', () => tip.hide());
+        for (const [a, b, faded] of segs(r)) {
+          bar.append('rect').attr('x', x(a)).attr('y', by).attr('height', barH).attr('width', Math.max(2, x(b) - x(a))).attr('rx', 4)
+            .attr('fill', hollow ? 'var(--color-panel)' : c).attr('fill-opacity', faded && !hollow ? 0.35 : 1)
+            .attr('stroke', hollow ? c : 'none').attr('stroke-width', 2).attr('stroke-opacity', faded ? 0.45 : 1);
+        }
+        g.append('text').attr('x', x(end(r)) + 6).attr('y', by + barH / 2).attr('dy', '0.32em').text(text(r));
+      });
+      yy += heights[gi];
+    });
+  }
+
+  // one row per model with a mark per system on a log axis; `marks` gives [value, filled] pairs joined by a line
+  function dots(box, tip, groups, { marks, axis, lowerBetter, tipLines }) {
+    const all = groups.flatMap(([, v]) => v.flatMap((r) => marks(r).map((m) => m[0])));
+    const W = box.clientWidth, sub = 18, pad = 22, top = 8, bottom = 44, right = 12;
+    const heights = groups.map(([, v]) => v.length * sub + pad);
+    const H = top + d3.sum(heights) + bottom;
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', axis);
+    const probe = svg.append('g').selectAll('text').data(groups).join('text').attr('class', 'qx-strong').text((d) => d[0]);
+    const left = Math.min(W * 0.4, d3.max(probe.nodes(), (n) => n.getComputedTextLength()) + 14);
+    probe.remove();
+    const lo = d3.min(all) / 1.4, hi = d3.max(all) * 1.4;
+    const x = d3.scaleLog([lo, hi], [left, W - right]);
+    const ticks = QB.thin(QB.logTicks(lo, hi), Math.floor((W - left - right) / 46));
+    svg.attr('viewBox', `0 0 ${W} ${H}`).attr('height', H);
+    svg.append('g').selectAll('line').data(ticks).join('line').attr('x1', x).attr('x2', x).attr('y1', top).attr('y2', H - bottom).attr('stroke', 'var(--cds-chart-grid)');
+    svg.append('g').selectAll('text').data(ticks).join('text').attr('x', x).attr('y', H - bottom + 20).attr('text-anchor', 'middle').text((t) => d3.format(',')(t));
+    svg.append('text').attr('x', W - right).attr('y', H - 2).attr('text-anchor', 'end').text(`${axis} (log)${lowerBetter ? ' · lower is better' : ''}`);
+    let yy = top;
+    groups.forEach(([name, v], gi) => {
+      const g = svg.append('g').attr('transform', `translate(0,${yy + pad / 2})`);
+      const t = g.append('text').attr('class', 'qx-strong').attr('x', 0).attr('y', (v.length * sub) / 2).attr('dy', '0.32em').text(name);
+      let s = name;
+      while (t.node().getComputedTextLength() > left - 14 && s.length > 4) { s = s.slice(0, -1); t.text(s + '…'); }
+      v.forEach((r, i) => {
+        const cy = i * sub + sub / 2, c = QB.color(r.system), ms = marks(r);
+        if (ms.length > 1) {
+          g.append('line').attr('x1', x(d3.min(ms, (m) => m[0]))).attr('x2', x(d3.max(ms, (m) => m[0]))).attr('y1', cy).attr('y2', cy)
+            .attr('stroke', c).attr('stroke-width', 2.5).attr('stroke-opacity', 0.5).attr('stroke-dasharray', QB.hollow(r.system) ? '4 3' : null);
+        }
+        for (const [val, filled] of ms) {
+          g.append('path').attr('class', 'qx-hit').attr('transform', `translate(${x(val)},${cy})`)
+            .attr('d', d3.symbol(QB.symbol(r.arch), 130)())
+            .attr('fill', filled && !QB.hollow(r.system) ? c : 'var(--color-panel)').attr('stroke', c).attr('stroke-width', 2)
+            .on('mousemove', (ev) => tip.show(ev, `${r.label} · ${r.system}`, tipLines(r)))
+            .on('mouseleave', () => tip.hide());
+        }
+      });
+      yy += heights[gi];
+    });
+  }
+  const bySystem = (v) => QB.SYS().map((s) => v.find((r) => r.system === s)).filter(Boolean);
+
+  const pBox = document.getElementById('prefill-chart'), pTip = QB.tip(pBox);
+  const rBox = document.getElementById('request-chart'), rTip = QB.tip(rBox);
+  const eBox = document.getElementById('ctx-energy-chart'), eTip = QB.tip(eBox);
+  const cBox = document.getElementById('cached-chart'), cTip = QB.tip(cBox);
+  dash.onData(() => {
+    const rows = QB.rows();
+    const one = rows ? rows.filter((r) => LONG.includes(r.workload) && r.users === 1 && r.ttft > 0) : [];
+    const lengths = [...new Set(one.map((r) => r.isl))].sort((a, b) => a - b);
+    const L = lengths.length ? (lengths.includes(+(dash.params().ctx ?? 32768)) ? +(dash.params().ctx ?? 32768) : lengths[lengths.length - 1]) : 0;
+    seg(ctxSeg, lengths, L, (v) => `${kTok(v)} prompt`);
+    const atL = one.filter((r) => r.isl === L).map((r) => ({ ...r, pf: r.isl / (r.ttft / 1000), all: e2e(r) }));
+    document.querySelectorAll('.qx-ctx-label').forEach((el) => { el.textContent = L ? kTok(L) : '—'; });
+    document.querySelectorAll('.qx-osl-label').forEach((el) => { el.textContent = atL.length ? d3.format(',')(atL[0].osl) : '—'; });
+
+    if (QB.begin(pBox) && atL.length) {
+      const groups = d3.groups(atL, (r) => r.label).map(([k, v]) => [k, bySystem(v)])
+        .sort((a, b) => d3.max(b[1], (r) => r.pf) - d3.max(a[1], (r) => r.pf));
+      hbars(pBox, pTip, groups, {
+        segs: (r) => [[0, r.pf, false]], end: (r) => r.pf, text: (r) => QB.fmt0(r.pf), axis: 'prompt tokens per second, 1 user',
+        tipLines: (r) => [[QB.color(r.system), 'Prefill', `${QB.fmt0(r.pf)} tok/s`], [null, 'Time to first token', sec(r.ttft)],
+          [null, 'Prompt', `${d3.format(',')(r.isl)} tokens`]],
+      });
+    }
+    if (QB.begin(rBox) && atL.length) {
+      const groups = d3.groups(atL, (r) => r.label).map(([k, v]) => [k, bySystem(v)])
+        .sort((a, b) => d3.min(a[1], (r) => r.all) - d3.min(b[1], (r) => r.all));
+      hbars(rBox, rTip, groups, {
+        segs: (r) => [[0, r.ttft / 1000, false], [r.ttft / 1000, r.all / 1000, true]], end: (r) => r.all / 1000,
+        text: (r) => `${sec(r.ttft)} + ${sec(r.all - r.ttft)} = ${sec(r.all)}`, axis: 'seconds for the whole answer, 1 user',
+        tipLines: (r) => [[QB.color(r.system), 'Whole answer', sec(r.all)], [null, 'Waiting for the first token', sec(r.ttft)],
+          [null, `Writing ${r.osl} tokens`, sec(r.all - r.ttft)], [null, 'Prefill', `${QB.fmt0(r.pf)} tok/s`],
+          [null, 'Decode', `${QB.fmt1(r.decode)} tok/s`]],
+      });
+    }
+
+    // energy per request and fresh vs cached, from the 16K tests
+    const fresh = rows ? rows.filter((r) => r.workload === 'prefill' && r.ttft > 0) : [];
+    const cached = rows ? rows.filter((r) => r.workload === 'prefill-cached' && r.ttft > 0) : [];
+    const us = [...new Set([...fresh, ...cached].map((r) => r.users))].sort((a, b) => a - b);
+    const U = us.includes(+(dash.params().lc_users ?? 1)) ? +(dash.params().lc_users ?? 1) : (us[0] ?? 1);
+    seg(usersSeg, us, U, (v) => (v === 1 ? '1 user' : `${v} users`));
+    document.querySelectorAll('.qx-lc-users-label').forEach((el) => { el.textContent = U === 1 ? '1 user' : `${U} users`; });
+    const energy = fresh.filter((r) => r.users === U && r.watts != null && r.reqs > 0).map((r) => ({ ...r, jr: r.watts / r.reqs }));
+    document.getElementById('ctx-energy-pending').hidden = energy.length > 0;
+    eBox.hidden = !energy.length;
+    if (QB.begin(eBox) && energy.length) {
+      const groups = d3.groups(energy, (r) => r.label).map(([k, v]) => [k, bySystem(v)])
+        .sort((a, b) => d3.min(a[1], (r) => r.jr) - d3.min(b[1], (r) => r.jr));
+      dots(eBox, eTip, groups, {
+        marks: (r) => [[r.jr, true]], axis: 'joules per request', lowerBetter: true,
+        tipLines: (r) => [[QB.color(r.system), 'Per request', `${QB.fmt0(r.jr)} J (${d3.format('.2f')(r.jr / 3.6)} Wh/1,000)`],
+          [null, 'Wall power', `${QB.fmt0(r.watts)} W`], [null, 'Requests', `${d3.format('.2f')(r.reqs * 60)} per minute`],
+          [null, 'Time to first token', sec(r.ttft)]],
+      });
+    }
+    const pairs = cached.filter((r) => r.users === U).map((c) => ({ ...c, fresh: fresh.find((f) => f.users === U && f.system === c.system && f.model === c.model) }))
+      .filter((r) => r.fresh);
+    document.getElementById('cached-pending').hidden = pairs.length > 0;
+    cBox.hidden = !pairs.length;
+    if (QB.begin(cBox) && pairs.length) {
+      const groups = d3.groups(pairs, (r) => r.label).map(([k, v]) => [k, bySystem(v)])
+        .sort((a, b) => d3.min(a[1], (r) => r.ttft) - d3.min(b[1], (r) => r.ttft));
+      dots(cBox, cTip, groups, {
+        marks: (r) => [[r.fresh.ttft / 1000, false], [r.ttft / 1000, true]], axis: 'seconds to first token', lowerBetter: true,
+        tipLines: (r) => [[QB.color(r.system), 'Repeated context', sec(r.ttft)], [null, 'Fresh prompt', sec(r.fresh.ttft)],
+          [null, 'Speed-up', `${d3.format('.1f')(r.fresh.ttft / r.ttft)}×`],
+          [null, 'Whole answer', `${sec(e2e(r))} vs ${sec(e2e(r.fresh))}`]],
+      });
     }
   });
 </script>

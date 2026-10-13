@@ -6,10 +6,10 @@
 """A small stand-in for `vllm bench serve --dataset-name random`, for machines vLLM doesn't install on (macOS).
 
 Takes the same flags bench.py passes to vllm and writes the same result fields: random prompts of exactly
---random-input-len tokens, --random-output-len tokens requested with ignore_eos, --max-concurrency requests in
-flight, streamed over an OpenAI-compatible API. TTFT is the time to the first streamed text; TPOT is
-(latency - TTFT) / (output tokens - 1) per request; output tokens come from the server's usage report when it
-sends one, else from the streamed chunks.
+--random-input-len tokens (after an optional shared --random-prefix-len), --random-output-len tokens requested
+with ignore_eos, --max-concurrency requests in flight, streamed over an OpenAI-compatible API. TTFT is the time
+to the first streamed text; TPOT is (latency - TTFT) / (output tokens - 1) per request; output tokens come from
+the server's usage report when it sends one, else from the streamed chunks.
 """
 
 import argparse
@@ -37,20 +37,30 @@ def load_tokenizer(names: list[str]):
     sys.exit(f"no tokenizer.json in {names}")
 
 
-def make_prompts(tok, n: int, isl: int, seed: int = 0) -> list[tuple[str, int]]:
-    rng = random.Random(seed)
+def random_text(tok, rng, vocab, n: int) -> str:
+    """Text that encodes to exactly n tokens (or as close as decode/re-encode allows)."""
+    ids = [rng.choice(vocab) for _ in range(n)]
+    for _ in range(8):  # decoding then re-encoding changes the count a little: settle on exactly n tokens
+        text = tok.decode(ids)
+        ids = tok.encode(text, add_special_tokens=False).ids
+        if len(ids) == n:
+            break
+        ids = ids[:n] + [rng.choice(vocab) for _ in range(n - len(ids))]
+    return tok.decode(ids)
+
+
+def make_prompts(tok, n: int, isl: int, prefix_len: int = 0, seed: int = 0) -> list[tuple[str, int]]:
+    """n prompts of prefix_len shared tokens then isl random ones. Each run (number of prompts, length) gets its
+    own random text, so a server that caches prompts can't reuse an earlier run's; the shared prefix is the same in
+    every run, like `vllm bench serve --random-prefix-len`."""
     special = set(getattr(tok, "get_added_tokens_decoder", dict)().keys())
     vocab = [i for i in range(tok.get_vocab_size()) if i not in special]
+    prefix = random_text(tok, random.Random(f"{seed}-prefix-{prefix_len}"), vocab, prefix_len) if prefix_len else ""
+    rng = random.Random(f"{seed}-{n}-{isl}-{prefix_len}")
     prompts = []
     for _ in range(n):
-        ids = [rng.choice(vocab) for _ in range(isl)]
-        for _ in range(8):  # decoding then re-encoding changes the count a little: settle on exactly isl tokens
-            text = tok.decode(ids)
-            ids = tok.encode(text, add_special_tokens=False).ids
-            if len(ids) == isl:
-                break
-            ids = ids[:isl] + [rng.choice(vocab) for _ in range(isl - len(ids))]
-        prompts.append((tok.decode(ids), len(tok.encode(tok.decode(ids), add_special_tokens=False).ids)))
+        text = prefix + random_text(tok, rng, vocab, isl)
+        prompts.append((text, len(tok.encode(text, add_special_tokens=False).ids)))
     return prompts
 
 
@@ -120,6 +130,7 @@ def main() -> None:
     p.add_argument("--random-input-len", type=int, required=True)
     p.add_argument("--random-output-len", type=int, required=True)
     p.add_argument("--random-range-ratio", default="0")
+    p.add_argument("--random-prefix-len", type=int, default=0)
     p.add_argument("--ignore-eos", action="store_true")
     p.add_argument("--num-prompts", type=int, required=True)
     p.add_argument("--max-concurrency", type=int, required=True)
@@ -136,7 +147,7 @@ def main() -> None:
     chat = a.backend == "openai-chat"
     url = a.base_url.rstrip("/") + (a.endpoint or ("/v1/chat/completions" if chat else "/v1/completions"))
     tok = load_tokenizer(a.tokenizer)
-    prompts = make_prompts(tok, a.num_prompts, a.random_input_len)
+    prompts = make_prompts(tok, a.num_prompts, a.random_input_len, a.random_prefix_len)
     pcts = [int(x) for x in a.metric_percentiles.split(",")]
 
     results, lock = [], threading.Lock()
