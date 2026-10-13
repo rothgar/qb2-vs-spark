@@ -1,0 +1,11 @@
+model,aa_index,aa_variant,aa_estimate,index_version,source_url
+qwen3.6-27b,21,Reasoning,no,v4.3.2,https://artificialanalysis.ai/models/qwen3-6-27b
+qwen3-coder-30b-a3b,10,Non-reasoning,yes,v4.3.2,https://artificialanalysis.ai/models/qwen3-coder-30b-a3b-instruct
+devstral-small-2-24b,8,Non-reasoning,no,v4.3.2,https://artificialanalysis.ai/models/devstral-small-2
+gemma-4-31b,15,Reasoning,no,v4.3.2,https://artificialanalysis.ai/models/gemma-4-31b
+muse-glimmer-30b,17,High (reasoning),no,v4.3.2,https://artificialanalysis.ai/models/muse-glimmer
+nemotron-3.5-lightning-30b-a3b,13,Reasoning (BF16 weights),no,v4.3.2,https://artificialanalysis.ai/models/nemotron-3-5-lightning
+qwen3.6-35b-a3b,18,Reasoning,no,v4.3.2,https://artificialanalysis.ai/models/qwen3-6-35b-a3b
+gpt-oss-20b,9,High,no,v4.3.2,https://artificialanalysis.ai/models/gpt-oss-20b
+gpt-oss-120b,12,High,no,v4.3.2,https://artificialanalysis.ai/models/gpt-oss-120b
+deepseek-v4.1-flash,39,Max (reasoning),no,v4.3.2,https://artificialanalysis.ai/models/deepseek-v4-1-flash
