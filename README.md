@@ -23,12 +23,21 @@ shaped like coding-agent traffic:
 | `power` | 1,024 | 512 | 1, 16, 32 (runs only when asked for: `-w power`) |
 | `prefill` | 16,384 | 256 | 1, 4, 8 (only when asked for: `-w prefill`) |
 | `prefill-cached` | 16,384, all but the last 512 shared by every request | 256 | 1, 4, 8 (only when asked for) |
+| `ctx-64k`, `ctx-128k` | 65,536 and 130,816 | 256 | 1 (only when asked for, on a server with 128K of context) |
+| `agent-64k`, `agent-128k` | the same, all but the last 1,024 shared by every request | 256 | 1, 4 (likewise) |
 
 For each run it records time to first token, decode speed per user, total output tokens per second and, when the
 machine is plugged into a smart plug, average wall power and output tokens per joule. The `prefill` tests are for
 long-prompt work (coding agents on a large codebase, research over documents): `prefill-cached` resends the same
 context with a new ending each time, like an agent's next turn, so servers that cache prompt prefixes can skip most
-of the prompt.
+of the prompt. The 64K and 128K tests follow [TraceLab](https://arxiv.org/abs/2606.30560)'s measurements of Claude Code and
+Codex traffic, where a typical step resends about 120K tokens of history and adds under 1K. They need a server with
+128K of context: `./bench.py run spark --max-model-len 131072 -w ctx-64k -w ctx-128k -w agent-64k -w agent-128k`.
+A model that doesn't have the memory for that on one machine can run on a bigger one with the same build
+(`./bench.py run spark-pair --models-from spark ...`), and the page says so.
+
+Every run sends its own random prompts (a seed per test and user count), so a server with prefix caching never
+answers a measured request from an earlier run's prompts.
 
 | machine | serves models with | client |
 |---|---|---|

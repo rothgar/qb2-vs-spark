@@ -258,6 +258,15 @@ workloads:
   # of the prefill (the shared prefix is sent once, unmeasured, before the first point). Both run only when named.
   - { name: prefill,        isl: 16384, osl: 256, concurrency: [1, 4, 8], prompts_per_concurrency: 2, enabled: false }
   - { name: prefill-cached, isl: 16384, prefix: 15872, osl: 256, concurrency: [1, 4, 8], prompts_per_concurrency: 2, enabled: false }
+  # Very long context, shaped by TraceLab (arxiv.org/abs/2606.30560): a median coding-agent step resends ~120K tokens
+  # of history, adds ~900 new and writes ~250. These need a server with 128K of context:
+  #   ./bench.py run spark --max-model-len 131072 -w ctx-64k -w ctx-128k -w agent-64k -w agent-128k
+  # ctx-*: a fresh prompt, after one unmeasured warm-up at that length; agent-*: the same history with 1K new tokens.
+  # 128K is 131072 - 256, so prompt and reply fit models whose limit is exactly 131072.
+  - { name: ctx-64k,    isl: 65536,  osl: 256, concurrency: [1], prompts_per_concurrency: 2, warmup: true, enabled: false }
+  - { name: ctx-128k,   isl: 130816, osl: 256, concurrency: [1], prompts_per_concurrency: 2, warmup: true, enabled: false }
+  - { name: agent-64k,  isl: 65536,  prefix: 64512,  osl: 256, concurrency: [1, 4], prompts_per_concurrency: 2, enabled: false }
+  - { name: agent-128k, isl: 130816, prefix: 129792, osl: 256, concurrency: [1, 4], prompts_per_concurrency: 2, enabled: false }
 
 defaults:
   prompts_per_concurrency: 4          # num_prompts = max(min_prompts, this * concurrency)

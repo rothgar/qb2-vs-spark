@@ -32,6 +32,7 @@ import sys
 import threading
 import time
 import urllib.request
+import zlib
 from pathlib import Path
 
 import yaml
@@ -57,10 +58,11 @@ def load_config(path: Path) -> dict:
     return cfg
 
 
-def machine_models(cfg: dict, machine: str) -> list[tuple[dict, dict]]:
+def machine_models(cfg: dict, machine: str, models_from: str | None = None) -> list[tuple[dict, dict]]:
     """(model, per-machine entry) for every model this machine can serve. A machine with `models_from: <key>`
-    (e.g. every Mac uses the `mac` entries) reads that key's entries instead of its own name."""
-    key = cfg["machines"][machine].get("models_from", machine)
+    (e.g. every Mac uses the `mac` entries) reads that key's entries instead of its own name; so does
+    `run --models-from` (the Spark's builds on two Sparks, when one hasn't the memory for a long context)."""
+    key = models_from or cfg["machines"][machine].get("models_from", machine)
     return [(m, m["per_machine"][key]) for m in cfg["models"] if key in m.get("per_machine", {})]
 
 
@@ -439,7 +441,7 @@ def served_model_id(r: Remote, port: int, pm: dict) -> str:
 
 
 def bench_cmd(mc: dict, d: dict, model: dict, pm: dict, served: str, isl: int, osl: int, conc: int,
-              n: int, out_dir: str, fname: str, meta: dict, prefix: int = 0) -> str:
+              n: int, out_dir: str, fname: str, meta: dict, prefix: int = 0, seed: int = 0) -> str:
     """`vllm bench serve` on the machine itself (so network latency never enters TTFT), or for `client: builtin`
     tools/loadgen.py, which takes the same flags and writes the same result fields."""
     backend = model.get("backend", d["backend"])
@@ -452,7 +454,7 @@ def bench_cmd(mc: dict, d: dict, model: dict, pm: dict, served: str, isl: int, o
         "--random-range-ratio", "0", "--ignore-eos",
         "--num-prompts", str(n), "--max-concurrency", str(conc), "--request-rate", "inf",
         "--percentile-metrics", "ttft,tpot,itl,e2el", "--metric-percentiles", "50,90,99",
-        "--save-result", "--result-dir", out_dir, "--result-filename", fname,
+        "--save-result", "--result-dir", out_dir, "--result-filename", fname, "--seed", str(seed),
     ]
     if prefix:   # the first `prefix` tokens of every prompt are the same (a resent agent context)
         args += ["--random-prefix-len", str(prefix)]
@@ -482,7 +484,7 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
     mc = {k: v.replace("~", home, 1) if isinstance(v, str) and v.startswith("~") else v for k, v in mc.items()}
     launcher = LAUNCHERS[mc["launcher"]](r, mc)
 
-    models = [(m, pm) for m, pm in machine_models(cfg, a.machine)
+    models = [(m, pm) for m, pm in machine_models(cfg, a.machine, a.models_from)
               if (m["id"] in a.model if a.model else m.get("enabled", True))]
     workloads = [w for w in cfg["workloads"] if (w["name"] in a.workload if a.workload else w.get("enabled", True))]
     if not models or not workloads:
@@ -501,6 +503,15 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
         if hasattr(launcher, "fits") and not launcher.fits(pm):
             log(f"== {model['id']}: skipped, needs {ram_needed(pm['weights_gb'])[0]} GB of unified memory")
             continue
+        if a.max_model_len and "args" in pm:   # a longer context than the model's usual config (the 128K tests)
+            args = list(pm["args"])
+            if "--max-model-len" in args:
+                args[args.index("--max-model-len") + 1] = str(a.max_model_len)
+            else:
+                args += ["--max-model-len", str(a.max_model_len)]
+            pm = {**pm, "args": args}
+        args = pm.get("args", [])
+        ctx = int(args[args.index("--max-model-len") + 1]) if "--max-model-len" in args else None
         local = (Path("/tmp/bench-dry-run") if a.dry_run else RESULTS / a.machine) / model["id"] / stamp
         local.mkdir(parents=True, exist_ok=True)
         remote_out = f"{mc['remote_dir']}/results/{model['id']}/{stamp}"
@@ -531,23 +542,37 @@ def cmd_run(cfg: dict, a: argparse.Namespace) -> int:
                                 "warmup.json", {}), timeout=d["request_timeout_s"], check=False)
             # per-model overrides: `workloads` (names to run), `prompts_per_concurrency`, `min_prompts`
             for w in [w for w in workloads if w["name"] in model.get("workloads", [w["name"]])]:
-                if w.get("prefix") and not (a.users and not set(a.users) & set(w["concurrency"])):
-                    # one request first so a server that caches prefixes has this one; it isn't measured
-                    log(f"   {w['name']}: priming the shared {w['prefix']}-token prefix")
-                    r.run(bench_cmd(mc, d, model, pm, served, w["isl"], 16, 1, 1, remote_out, "prime.json", {}, w["prefix"]),
+                if ctx and w["isl"] + w["osl"] > ctx:
+                    log(f"   {w['name']}: skipped, needs {w['isl'] + w['osl']} tokens of context (served with {ctx}; "
+                        "run with --max-model-len)")
+                    continue
+                if w.get("warmup"):   # one unmeasured request at this length, with its own prompt
+                    log(f"   {w['name']}: warm-up at {w['isl']} tokens")
+                    r.run(bench_cmd(mc, d, model, pm, served, w["isl"], 16, 1, 1, remote_out, "prime.json", {},
+                                    seed=zlib.crc32(f"warmup-{w['name']}".encode())),
                           timeout=d["request_timeout_s"], check=False)
                 for conc in w["concurrency"]:
                     if (maxc and conc > maxc) or (a.users and conc not in a.users):
                         continue
                     per = model.get("prompts_per_concurrency", w.get("prompts_per_concurrency", d["prompts_per_concurrency"]))
                     n = max(model.get("min_prompts", d["min_prompts"]), per * conc)
+                    # every run gets its own prompts: with one seed, each run would resend the previous run's
+                    # prompts and a server with prefix caching would answer those from cache
+                    seed = zlib.crc32(f"{w['name']}-{w['isl']}-{conc}".encode())
+                    if w.get("prefix"):
+                        # the shared prefix depends on the seed and the prompt count, so prime with both: n requests
+                        # of the prefix plus 16 tokens (the first one fills the cache), unmeasured
+                        log(f"   {w['name']} c={conc}: priming the shared {w['prefix']}-token prefix")
+                        r.run(bench_cmd(mc, d, model, pm, served, w["prefix"] + 16, 16, 1, n, remote_out, "prime.json",
+                                        {}, w["prefix"], seed), timeout=d["request_timeout_s"] * n, check=False)
                     fname = f"{w['name']}_isl{w['isl']}_osl{w['osl']}_c{conc}.json"
                     meta = {"machine": a.machine, "hardware": mc["hardware"], "model_id": model["id"],
-                            "workload": w["name"], "serve": pm["serve"], "boot_s": round(boot_s)}
+                            "workload": w["name"], "serve": pm["serve"], "boot_s": round(boot_s), "seed": seed,
+                            **({"max_model_len": ctx} if ctx else {})}
                     log(f"   {w['name']} isl={w['isl']} osl={w['osl']} c={conc} n={n}")
                     with PowerMeter([] if a.dry_run else mc.get("power_plugs", [])) as pmeter:
                         res = r.run(bench_cmd(mc, d, model, pm, served, w["isl"], w["osl"], conc, n,
-                                              remote_out, fname, meta, w.get("prefix", 0)), timeout=d["request_timeout_s"] * n, check=False)
+                                              remote_out, fname, meta, w.get("prefix", 0), seed), timeout=d["request_timeout_s"] * n, check=False)
                     pmeter.save(local / fname.replace(".json", ".power.json"))
                     (local / fname.replace(".json", ".log")).write_text(res.stdout or "")
                     if res.returncode != 0:
@@ -700,6 +725,8 @@ def main() -> int:
     pr.add_argument("-m", "--model", action="append", help="model id (repeatable); default: all enabled")
     pr.add_argument("-w", "--workload", action="append", help="workload name (repeatable); default: all enabled")
     pr.add_argument("-u", "--users", action="append", type=int, help="only these user counts (repeatable)")
+    pr.add_argument("--max-model-len", type=int, help="serve vLLM models with this much context (the 128K tests)")
+    pr.add_argument("--models-from", help="serve another machine's model builds (e.g. spark's, on spark-pair)")
     pr.add_argument("--dry-run", action="store_true")
     rp = sub.add_parser("report", help="results/summary.{csv,md}")
     rp.add_argument("--latest", action="store_true", help="only the newest run of each test")

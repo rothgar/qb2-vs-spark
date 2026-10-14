@@ -131,6 +131,7 @@ def main() -> None:
     p.add_argument("--random-output-len", type=int, required=True)
     p.add_argument("--random-range-ratio", default="0")
     p.add_argument("--random-prefix-len", type=int, default=0)
+    p.add_argument("--seed", type=int, default=0)
     p.add_argument("--ignore-eos", action="store_true")
     p.add_argument("--num-prompts", type=int, required=True)
     p.add_argument("--max-concurrency", type=int, required=True)
@@ -147,7 +148,7 @@ def main() -> None:
     chat = a.backend == "openai-chat"
     url = a.base_url.rstrip("/") + (a.endpoint or ("/v1/chat/completions" if chat else "/v1/completions"))
     tok = load_tokenizer(a.tokenizer)
-    prompts = make_prompts(tok, a.num_prompts, a.random_input_len, a.random_prefix_len)
+    prompts = make_prompts(tok, a.num_prompts, a.random_input_len, a.random_prefix_len, a.seed)
     pcts = [int(x) for x in a.metric_percentiles.split(",")]
 
     results, lock = [], threading.Lock()
