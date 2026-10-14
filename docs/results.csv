@@ -265,6 +265,12 @@ DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,prefill-cached,16384,256,
 DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,prefill,16384,256,8,3.09,18.03,27698.6,110187.1,0.0704,159.2,0.113
 QuietBox 2,Tenstorrent,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-long,32768,256,1,35.77,23.87,3596.3,10724.3,0.0932,,
 DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-long,32768,256,1,4.24,3.23,19011.6,79219.6,0.0126,147.9,0.022
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-64k,65536,256,1,4.2,4.14,1137.7,61799.1,0.0162,131.9,0.031
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,ctx-64k,65536,256,1,4.2,2.27,52102.8,112781.9,0.0089,164.2,0.014
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-64k,65536,256,4,3.99,15.21,3235.8,67194.8,0.0594,126.9,0.12
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-128k,130816,256,1,4.14,4.05,1572.9,63147.0,0.0158,132.7,0.031
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,ctx-128k,130816,256,1,4.14,1.43,117538.0,179077.8,0.0056,177.5,0.008
+DGX Spark,NVIDIA,muse-glimmer-30b,Dense,BF16,29.8,29.8,agent-128k,130816,256,4,3.87,14.59,4123.6,70067.2,0.057,128.9,0.113
 QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,chat,128,256,1,23.02,22.88,110.8,11187.0,0.0894,,
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,chat,128,256,1,81.38,79.54,84.6,3218.2,0.3107,114.7,0.693
 QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,chat,128,256,4,22.83,87.0,599.3,11769.5,0.3399,,
