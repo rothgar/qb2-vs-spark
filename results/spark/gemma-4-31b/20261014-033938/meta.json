@@ -1,0 +1,22 @@
+{
+  "machine": "spark",
+  "hardware": "NVIDIA DGX Spark (GB10, 128 GB unified)",
+  "model": "gemma-4-31b",
+  "hf_id": "google/gemma-4-31B-it",
+  "params": "31.3B dense",
+  "serve": {
+    "serve": "google/gemma-4-31B-it",
+    "args": [
+      "--max-model-len",
+      "40960",
+      "--gpu-memory-utilization",
+      "0.80"
+    ],
+    "max_concurrency": null,
+    "source": "vllm"
+  },
+  "started": "20261014-033938",
+  "environment": {
+    "node0": "NVIDIA GB10, 580.178.04\n7.0.0-1019-nvidia\nDGX_SWBUILD_VERSION=\"7.5.0\"\nnvcr.io/nvidia/vllm@sha256:557747337846eecf34486866f3d992383c6f8af869fdb0e365b5093fcaee02c2"
+  }
+}
