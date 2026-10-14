@@ -1,0 +1,22 @@
+{
+  "machine": "spark",
+  "hardware": "NVIDIA DGX Spark (GB10, 128 GB unified)",
+  "model": "qwen3-coder-30b-a3b",
+  "hf_id": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+  "params": "30.5B MoE / 3.3B active",
+  "serve": {
+    "serve": "Qwen/Qwen3-Coder-30B-A3B-Instruct",
+    "args": [
+      "--max-model-len",
+      "131072",
+      "--gpu-memory-utilization",
+      "0.80"
+    ],
+    "max_concurrency": null,
+    "source": "vllm"
+  },
+  "started": "20261013-180650",
+  "environment": {
+    "node0": "NVIDIA GB10, 580.178.04\n7.0.0-1019-nvidia\nDGX_SWBUILD_VERSION=\"7.5.0\"\nnvcr.io/nvidia/vllm@sha256:557747337846eecf34486866f3d992383c6f8af869fdb0e365b5093fcaee02c2"
+  }
+}
