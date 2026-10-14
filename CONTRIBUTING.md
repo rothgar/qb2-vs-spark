@@ -1,7 +1,7 @@
 # Adding results from your machine
 
-Results from more hardware make the comparison more useful. This guide covers a Mac (for example an M5 Mac mini) and
-a single Tenstorrent card; any machine that can serve an OpenAI-compatible API can be added the same way.
+Results from more hardware make the comparison more useful. This guide covers a Mac (for example an M5 Mac mini), a
+single Tenstorrent card and an AMD GPU; any machine that can serve an OpenAI-compatible API can be added the same way.
 
 ## What you need
 
@@ -90,6 +90,23 @@ The `p150` machine in `bench.yaml` is a workstation with one p150 card. It serve
 `./bench.py run p150 -w power` and `./bench.py run p150` as above. The plug measures the whole workstation, which is
 the number the page compares for every system. For a different card (p300c, n300, ...), copy the entry under a new id
 and label.
+
+## Run the tests on an AMD GPU (Ryzen AI Max+ 395 and others)
+
+The `strix-halo` machine in `bench.yaml` serves the Spark's Hugging Face builds (`models_from: spark`) with vLLM in a
+ROCm container. `gpu: rocm` gives the container the AMD GPU devices (`/dev/kfd`, `/dev/dri`, the host's `video` and
+`render` groups) instead of NVIDIA's `--gpus all`. This path hasn't run on AMD hardware yet.
+
+1. Copy the `strix-halo` entry under a new id for your machine, and set `image` to a vLLM ROCm image that runs on
+   your GPU (gfx1151 for Strix Halo). The image needs the `vllm` and `hf` commands.
+2. Add the id to `machines.yaml` with its ssh target (or `ssh: local`) and plug.
+3. On Linux, let the GPU use as much of the unified memory as possible (the BIOS UMA setting or the `amdgpu`/TTM
+   limits), so the larger models fit.
+4. Run it like any other machine: `./bench.py run <id> -m gpt-oss-20b --dry-run`, then `-w power`, then everything.
+
+The Spark's Nemotron build is NVFP4 and needs an NVIDIA GPU, so expect that one to fail. Which image you used, and
+which models loaded, are worth reporting in [issue #2](https://github.com/rothgar/qb2-vs-spark/issues/2) even before
+you have results.
 
 ## Send a pull request
 

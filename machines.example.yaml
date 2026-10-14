@@ -20,3 +20,6 @@ machines:
   mac:
     ssh: local                        # run on this Mac; or an ssh target
     power_plugs: []                   # leave empty without a plug: speed results only
+  strix-halo:
+    ssh: local                        # or an ssh target
+    power_plugs: []

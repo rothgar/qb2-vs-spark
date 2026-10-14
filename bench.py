@@ -241,8 +241,9 @@ class VLLMDockerLauncher:
     """vLLM in a container (NVIDIA's on the DGX Spark): `vllm serve` in a container named bench-vllm, or, with
     `workers`, one server spanning several machines with vLLM's own multi-node launch (rank 0 serves, the others run
     headless) over a direct link (node addresses `node_ips`, head first; NCCL over RoCE on `nccl_hca`, sockets on
-    `node_if`). The vllm client runs inside the same container, so hosts need only Docker and the NVIDIA runtime.
-    Per model: `serve`, `args` (extra `vllm serve` flags), optional `image`, `env`, `download_exclude`."""
+    `node_if`). The vllm client runs inside the same container, so hosts need only Docker and the GPU runtime: NVIDIA's
+    by default, or AMD's with `gpu: rocm` (the GPU device files instead of `--gpus all`; `image` must be a vLLM ROCm
+    build for that GPU). Per model: `serve`, `args` (extra `vllm serve` flags), optional `image`, `env`, `download_exclude`."""
 
     NAME = "bench-vllm"
 
@@ -259,6 +260,14 @@ class VLLMDockerLauncher:
     def _image(self, m: dict) -> str:
         return m.get("image", self.mc["image"])
 
+    def _gpu_flags(self) -> str:
+        """Container GPU access, spelled for the remote shell. ROCm needs the device files, and the host's video and
+        render groups by number (the container runs as the host user and may not know the group names)."""
+        if self.mc.get("gpu", "nvidia") == "rocm":
+            return ("--device /dev/kfd --device /dev/dri --security-opt seccomp=unconfined "
+                    "$(for g in video render; do getent group $g | cut -d: -f3 | sed 's/^/--group-add /'; done)")
+        return "--gpus all"
+
     def _token_flag(self) -> str:
         f = self.mc.get("hf_token_file", "~/.cache/huggingface/token")
         return f'-e HF_TOKEN="$(cat {f} 2>/dev/null)"'
@@ -271,14 +280,14 @@ class VLLMDockerLauncher:
             env |= {"VLLM_HOST_IP": node_ip, "NCCL_SOCKET_IFNAME": iface, "GLOO_SOCKET_IFNAME": iface,
                     "TP_SOCKET_IFNAME": iface, "UCX_NET_DEVICES": iface, "NCCL_IB_HCA": mc["nccl_hca"]}
         env |= m.get("env", {})
-        argv = ["--name", self.NAME, "--gpus", "all", "--ipc", "host", "--network", "host",
+        argv = ["--name", self.NAME, "--ipc", "host", "--network", "host",
                 "--ulimit", "memlock=-1", "--ulimit", "stack=67108864", "-v", f"{d}:{d}"]
         argv += ["--device", "/dev/infiniband", "--cap-add", "IPC_LOCK"] if node_ip else []
         for k, v in env.items():
             argv += ["-e", f"{k}={v}"]
         argv += ["--entrypoint", "bash", self._image(m), "-c", cmd]
         # user, cache mounts and token are spelled for the remote shell ($(id -u), $HOME, $(cat token))
-        shell = ("docker run -d --user $(id -u):$(id -g) -v $HOME/.cache/huggingface:/hf "
+        shell = ("docker run -d --user $(id -u):$(id -g) " + self._gpu_flags() + " -v $HOME/.cache/huggingface:/hf "
                  f"-v $HOME/.cache/bench-home:/cache-home {self._token_flag()} ")
         r.run(f"mkdir -p ~/.cache/huggingface ~/.cache/bench-home {shlex.quote(d)} && "
               + shell + " ".join(map(shlex.quote, argv)), timeout=600)
@@ -293,7 +302,10 @@ class VLLMDockerLauncher:
     def environment(self) -> dict:
         info = {}
         for i, r in enumerate(self.nodes):
-            res = r.run("nvidia-smi --query-gpu=name,driver_version --format=csv,noheader; uname -r; "
+            gpu = ("nvidia-smi --query-gpu=name,driver_version --format=csv,noheader" if self.mc.get("gpu", "nvidia") != "rocm"
+                   else "amd-smi static --asic --driver 2>/dev/null | grep -E 'MARKET_NAME|TARGET_GRAPHICS_VERSION|DRIVER_VERSION' "
+                        "|| rocm-smi --showproductname --showdriverversion 2>/dev/null")
+            res = r.run(gpu + "; uname -r; "
                         "grep -h SWBUILD_VERSION /etc/dgx-release 2>/dev/null; "
                         f"docker image inspect {shlex.quote(self.mc['image'])} --format '{{{{index .RepoDigests 0}}}}'",
                         check=False)

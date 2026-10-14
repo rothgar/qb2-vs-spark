@@ -36,6 +36,7 @@ of the prompt.
 | Tenstorrent p150 (one Blackhole card) | `tt serve`, models with a p150 build | `vllm bench serve` |
 | NVIDIA DGX Spark, and two Sparks over QSFP | vLLM in NVIDIA's container | `vllm bench serve` in the same container |
 | Apple silicon Mac | `mlx_lm.server` with 4-bit MLX builds | `tools/loadgen.py` (vLLM has no macOS build) |
+| AMD Ryzen AI Max+ 395 and other ROCm GPUs (untested) | vLLM in a ROCm container (`gpu: rocm`) | `vllm bench serve` in the same container |
 
 ## Running it
 
@@ -43,6 +44,7 @@ You need [uv](https://docs.astral.sh/uv/) on the machine running `bench.py`. The
 
 - **Tenstorrent:** the `tt` CLI, and a Python venv with `vllm` for the client (`bench_python` in `bench.yaml`).
 - **DGX Spark:** Docker with the NVIDIA runtime.
+- **AMD:** Docker, the ROCm driver, and a vLLM ROCm image that supports the GPU.
 - **Mac:** uv. Models download from Hugging Face on first use.
 
 ```bash
@@ -74,4 +76,5 @@ sampled, and `meta.json` with the software and hardware versions. Server logs st
 
 Have an M5 Mac mini, a single Tenstorrent card, or something else? See [CONTRIBUTING.md](CONTRIBUTING.md) for how
 much memory each model needs on a Mac, how to add a machine, and how to send results in a pull request. Mac results
-are especially wanted: see [issue #1](https://github.com/rothgar/qb2-vs-spark/issues/1).
+are especially wanted: see [issue #1](https://github.com/rothgar/qb2-vs-spark/issues/1), and for AMD Strix Halo
+[issue #2](https://github.com/rothgar/qb2-vs-spark/issues/2).

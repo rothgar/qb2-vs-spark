@@ -47,6 +47,17 @@ machines:
     models_from: mac                  # use the `mac` entries under each model's per_machine
     remote_dir: ~/bench
     port: 8080
+  strix-halo:                         # AMD Ryzen AI Max+ 395; copy this entry for your machine (see issue #2). Untested
+    label: Ryzen AI Max+ 395
+    family: AMD
+    hardware: "AMD Ryzen AI Max+ 395 (Radeon 8060S, 128 GB unified memory)"
+    launcher: vllm-docker
+    gpu: rocm                         # AMD GPU devices instead of --gpus all; amd-smi/rocm-smi for meta.json
+    image: rocm/vllm:latest           # replace with a vLLM ROCm image that supports your GPU (gfx1151 for Strix Halo)
+    bench_python: ~/bench/vllm-client.sh
+    models_from: spark                # the Spark's Hugging Face builds (its NVFP4 Nemotron build needs NVIDIA)
+    remote_dir: ~/bench
+    port: 8000
 
 # One entry per model. `hf_id` is the canonical weights repo and the tokenizer the client builds prompts with.
 # arch, params_b and weights describe the model for the page; quality is the published Artificial Analysis
