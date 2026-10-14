@@ -157,6 +157,7 @@
   .qx-anchor { margin-left: 0.4em; color: var(--color-fg-muted); text-decoration: none; font-weight: 400; opacity: 0; transition: opacity 0.15s; }
   .qx-section > h2:hover .qx-anchor, .qx-card h3:hover .qx-anchor, .qx-anchor:focus-visible { opacity: 1; }
   @media (hover: none) { .qx-anchor { opacity: 0.6; } }
+  .qx-note { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 72ch; }
   .qx-pending { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); font-style: italic; }
   [data-dash-source-state="empty"] { color: transparent; }
   [data-dash-source-state="refreshing"] { opacity: 0.5; transition: opacity var(--cds-dur-slow); }
@@ -274,7 +275,8 @@
 
   <section class="qx-section" id="long-prompts">
     <h2>Long prompts</h2>
-    <p class="qx-lede">Coding agents on a large codebase, research over documents and agents with a lot of saved context send long prompts and get short answers back, so processing the prompt (prefill) can take longer than writing the reply. These charts use one user unless they say otherwise.</p>
+    <p class="qx-lede">Coding agents on a large codebase, research over documents and agents with a lot of saved context send long prompts and get short answers back, so processing the prompt (prefill) can take longer than writing the reply. Real coding-agent traffic is longer still: in <a href="https://arxiv.org/abs/2606.30560">TraceLab</a>'s traces of Claude Code and Codex sessions, a typical step resends about 120K tokens of history, adds under 1K new tokens and writes about 250, and 96% of prompt tokens were already in the server's cache. These charts use one user unless they say otherwise.</p>
+    <p class="qx-note" id="two-spark-note" hidden></p>
     <div class="qx-grid">
       <div class="qx-card" id="prefill-card">
         <div class="qx-card-top">
@@ -299,8 +301,11 @@
         <div class="qx-chart dash-skeleton" id="ctx-energy-chart" data-source="results"></div>
       </div>
       <div class="qx-card" id="cached-card">
-        <h3>Repeated context: fresh prompt vs. cached</h3>
-        <p>An agent resends its whole context every turn. Here each request repeats the same 16K-token prompt except the last 512 tokens. A server that caches prompt prefixes only processes the new part, so time to first token drops; one that doesn't processes everything again. Hollow marks are a fresh prompt and filled marks a repeated one, with <span class="qx-lc-users-label">1 user</span>. Further left is better; log scale.</p>
+        <div class="qx-card-top">
+          <h3>Repeated context: fresh prompt vs. cached</h3>
+          <div class="qx-seg" id="cache-ctx-seg" role="group" aria-label="Context length"></div>
+        </div>
+        <p>An agent resends its whole context every turn. Here each request repeats the same <span class="qx-cache-ctx-label">16K</span>-token history and adds <span class="qx-cache-new-label">512</span> new tokens. A server that caches prompt prefixes only processes the new part, so time to first token drops; one that doesn't processes everything again. Hollow marks are a fresh prompt and filled marks a repeated one, with <span class="qx-lc-users-label">1 user</span>. Further left is better; log scale.</p>
         <p class="qx-pending" id="cached-pending" hidden>This test is queued; results appear here when it finishes.</p>
         <div class="qx-chart dash-skeleton" id="cached-chart" data-source="results"></div>
       </div>
@@ -1061,7 +1066,11 @@
 (() => {
   // long prompts: prefill speed and time per request at 1 user (agent-turn, prefill and agent-long), energy per
   // request (prefill) and fresh vs repeated-context time to first token (prefill vs prefill-cached)
-  const LONG = ['agent-turn', 'prefill', 'agent-long'];
+  const LONG = ['agent-turn', 'prefill', 'agent-long', 'ctx-64k', 'ctx-128k'];
+  // fresh vs repeated-context pairs, by context length
+  const CACHE = [['prefill', 'prefill-cached'], ['ctx-64k', 'agent-64k'], ['ctx-128k', 'agent-128k']];
+  const cacheCtxSeg = document.getElementById('cache-ctx-seg');
+  cacheCtxSeg.addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) dash.setParams({ cache_ctx: b.dataset.v }); });
   const kTok = (n) => `${Math.round(n / 1024)}K`;
   const sec = (ms) => `${d3.format(ms >= 10000 ? ',.0f' : '.1f')(ms / 1000)} s`;
   const e2e = (r) => r.e2e ?? (r.ttft + ((r.osl - 1) * 1000) / r.decode);
@@ -1170,8 +1179,25 @@
   const rBox = document.getElementById('request-chart'), rTip = QB.tip(rBox);
   const eBox = document.getElementById('ctx-energy-chart'), eTip = QB.tip(eBox);
   const cBox = document.getElementById('cached-chart'), cTip = QB.tip(cBox);
+  // models that fit one Spark but needed both for a 64K or 128K context
+  const twoSparks = (rows) => {
+    const out = new Map();
+    for (const w of ['ctx-128k', 'agent-128k', 'ctx-64k', 'agent-64k']) {
+      for (const r of rows.filter((x) => x.workload === w && x.system === '2x DGX Spark')) {
+        const fitsOne = rows.some((x) => x.model === r.model && x.system === 'DGX Spark');
+        const longOnOne = rows.some((x) => x.model === r.model && x.system === 'DGX Spark' && x.workload === w);
+        if (fitsOne && !longOnOne && !out.has(r.model)) out.set(r.model, { label: r.label, ctx: kTok(r.isl) });
+      }
+    }
+    return out;
+  };
   dash.onData(() => {
     const rows = QB.rows();
+    const two = rows ? twoSparks(rows) : new Map();
+    const note = document.getElementById('two-spark-note');
+    note.hidden = !two.size;
+    note.textContent = two.size ? `Needed two Sparks: one DGX Spark didn't have the memory for a ${[...new Set([...two.values()].map((v) => v.ctx))].join(' or ')}-token context with ${[...two.values()].map((v) => v.label).join(', ')}, so ${two.size === 1 ? 'that model' : 'those models'} ran across both Sparks for the long tests (shown as 2x DGX Spark).` : '';
+    const twoTip = (r) => (r.system === '2x DGX Spark' && two.has(r.model) && r.isl > 40960 ? [[null, 'Needed 2 Sparks', 'one lacks the memory for this context']] : []);
     const one = rows ? rows.filter((r) => LONG.includes(r.workload) && r.users === 1 && r.ttft > 0) : [];
     const lengths = [...new Set(one.map((r) => r.isl))].sort((a, b) => a - b);
     const L = lengths.length ? (lengths.includes(+(dash.params().ctx ?? 32768)) ? +(dash.params().ctx ?? 32768) : lengths[lengths.length - 1]) : 0;
@@ -1186,7 +1212,7 @@
       hbars(pBox, pTip, groups, {
         segs: (r) => [[0, r.pf, false]], end: (r) => r.pf, text: (r) => QB.fmt0(r.pf), axis: 'prompt tokens per second, 1 user',
         tipLines: (r) => [[QB.color(r.system), 'Prefill', `${QB.fmt0(r.pf)} tok/s`], [null, 'Time to first token', sec(r.ttft)],
-          [null, 'Prompt', `${d3.format(',')(r.isl)} tokens`]],
+          [null, 'Prompt', `${d3.format(',')(r.isl)} tokens`], ...twoTip(r)],
       });
     }
     if (QB.begin(rBox) && atL.length) {
@@ -1197,14 +1223,13 @@
         text: (r) => `${sec(r.ttft)} + ${sec(r.all - r.ttft)} = ${sec(r.all)}`, axis: 'seconds for the whole answer, 1 user',
         tipLines: (r) => [[QB.color(r.system), 'Whole answer', sec(r.all)], [null, 'Waiting for the first token', sec(r.ttft)],
           [null, `Writing ${r.osl} tokens`, sec(r.all - r.ttft)], [null, 'Prefill', `${QB.fmt0(r.pf)} tok/s`],
-          [null, 'Decode', `${QB.fmt1(r.decode)} tok/s`]],
+          [null, 'Decode', `${QB.fmt1(r.decode)} tok/s`], ...twoTip(r)],
       });
     }
 
     // energy per request and fresh vs cached, from the 16K tests
     const fresh = rows ? rows.filter((r) => r.workload === 'prefill' && r.ttft > 0) : [];
-    const cached = rows ? rows.filter((r) => r.workload === 'prefill-cached' && r.ttft > 0) : [];
-    const us = [...new Set([...fresh, ...cached].map((r) => r.users))].sort((a, b) => a - b);
+    const us = [...new Set([...fresh, ...(rows || []).filter((r) => CACHE.some((c) => c[1] === r.workload))].map((r) => r.users))].sort((a, b) => a - b);
     const U = us.includes(+(dash.params().lc_users ?? 1)) ? +(dash.params().lc_users ?? 1) : (us[0] ?? 1);
     seg(usersSeg, us, U, (v) => (v === 1 ? '1 user' : `${v} users`));
     document.querySelectorAll('.qx-lc-users-label').forEach((el) => { el.textContent = U === 1 ? '1 user' : `${U} users`; });
@@ -1221,8 +1246,16 @@
           [null, 'Time to first token', sec(r.ttft)]],
       });
     }
-    const pairs = cached.filter((r) => r.users === U).map((c) => ({ ...c, fresh: fresh.find((f) => f.users === U && f.system === c.system && f.model === c.model) }))
+    // fresh vs cached at the chosen context length (16K, 64K or 128K) and users
+    const pairsFor = ([fw, cw]) => (rows || []).filter((r) => r.workload === cw && r.users === U && r.ttft > 0)
+      .map((c) => ({ ...c, fresh: rows.find((f) => f.workload === fw && f.users === U && f.system === c.system && f.model === c.model && f.ttft > 0) }))
       .filter((r) => r.fresh);
+    const ctxs = CACHE.filter((c) => pairsFor(c).length).map((c) => (rows.find((r) => r.workload === c[1]) || {}).isl);
+    const C = ctxs.includes(+(dash.params().cache_ctx ?? 16384)) ? +(dash.params().cache_ctx ?? 16384) : (ctxs[0] ?? 16384);
+    seg(cacheCtxSeg, ctxs, C, (v) => `${kTok(v)} context`);
+    const pairs = CACHE.filter((c) => (rows || []).some((r) => r.workload === c[1] && r.isl === C)).flatMap(pairsFor);
+    document.querySelectorAll('.qx-cache-ctx-label').forEach((el) => { el.textContent = kTok(C); });
+    document.querySelectorAll('.qx-cache-new-label').forEach((el) => { el.textContent = C === 16384 ? '512' : '1,024'; });   // new tokens per request: prefill-cached 512, agent-* 1,024
     document.getElementById('cached-pending').hidden = pairs.length > 0;
     cBox.hidden = !pairs.length;
     if (QB.begin(cBox) && pairs.length) {
@@ -1232,7 +1265,7 @@
         marks: (r) => [[r.fresh.ttft / 1000, false], [r.ttft / 1000, true]], axis: 'seconds to first token', lowerBetter: true,
         tipLines: (r) => [[QB.color(r.system), 'Repeated context', sec(r.ttft)], [null, 'Fresh prompt', sec(r.fresh.ttft)],
           [null, 'Speed-up', `${d3.format('.1f')(r.fresh.ttft / r.ttft)}×`],
-          [null, 'Whole answer', `${sec(e2e(r))} vs ${sec(e2e(r.fresh))}`]],
+          [null, 'Whole answer', `${sec(e2e(r))} vs ${sec(e2e(r.fresh))}`], ...twoTip(r)],
       });
     }
   });
