@@ -231,11 +231,17 @@ DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,prefill-cached,16384,256,8,22.85,1
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,prefill,16384,256,8,11.53,70.8,6378.9,28499.3,0.2765,165.9,0.427
 QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-long,32768,256,1,41.65,17.4,8589.6,14711.7,0.068,,
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-long,32768,256,1,43.42,23.69,4934.7,10807.5,0.0925,154.7,0.153
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,1,37.51,29.7,1819.9,8618.0,0.116,493.0,0.06
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-64k,65536,256,1,37.51,10.08,18608.8,25407.4,0.0394,519.0,0.019
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,1,37.67,35.14,516.3,7285.6,0.1373,127.4,0.276
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-64k,65536,256,1,37.29,13.13,12654.1,19492.9,0.0513,169.7,0.077
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,4,15.94,45.22,6642.2,22642.1,0.1767,502.9,0.09
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,4,25.27,91.61,1057.7,11149.5,0.3579,143.1,0.64
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,1,31.38,23.16,2926.6,11052.0,0.0905,498.1,0.047
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-128k,130816,256,1,31.39,4.31,51207.6,59330.0,0.0169,534.6,0.008
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,1,29.99,27.09,946.0,9449.3,0.1058,126.4,0.214
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-128k,130816,256,1,30.03,5.79,35694.1,44185.2,0.0226,183.7,0.032
+QuietBox 2,Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,4,12.19,32.78,10321.6,31233.4,0.1281,512.5,0.064
 DGX Spark,NVIDIA,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,4,21.74,75.83,1731.0,13462.0,0.2962,140.4,0.54
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,chat,128,256,1,88.14,85.92,86.3,2979.3,0.3356,,
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,chat,128,256,4,61.22,231.15,264.5,4429.8,0.9029,,
@@ -259,6 +265,12 @@ QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,prefill,16384
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,prefill-cached,16384,256,8,47.19,211.5,4278.1,9682.0,0.8262,840.5,0.252
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,prefill,16384,256,8,19.81,108.02,5857.6,18730.0,0.422,878.7,0.123
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-long,32768,256,1,81.81,37.91,3635.9,6753.0,0.1481,,
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,1,77.02,58.93,1033.2,4344.0,0.2302,780.6,0.075
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-64k,65536,256,1,77.01,22.28,8178.5,11489.7,0.087,909.1,0.025
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-64k,65536,256,4,50.63,122.01,3354.6,8391.3,0.4766,861.6,0.142
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,1,69.35,48.06,1649.2,5326.3,0.1877,812.6,0.059
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,ctx-128k,130816,256,1,69.31,10.67,20310.6,23989.8,0.0417,1001.7,0.011
+QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-128k,130816,256,4,45.7,98.32,4832.4,10412.2,0.3841,896.1,0.11
 QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,1,3.74,3.72,649.2,68770.3,0.0145,1113.1,0.003
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,1,3.29,3.28,662.1,78141.7,0.0128,300.9,0.011
 QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,4,14.07,52.45,1403.3,19522.4,0.2049,851.2,0.062
