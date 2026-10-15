@@ -58,6 +58,16 @@ machines:
     models_from: spark                # the Spark's Hugging Face builds (its NVFP4 Nemotron build needs NVIDIA)
     remote_dir: ~/bench
     port: 8000
+  framework-desktop-128gb:
+    label: Framework Desktop (Ryzen AI Max+ 395)
+    family: AMD
+    hardware: "Framework Desktop (AMD Ryzen AI Max+ 395, Radeon 8060S, 128 GB unified memory, 96 GiB GTT)"
+    launcher: vllm-docker
+    gpu: rocm
+    image: docker.io/kyuz0/vllm-therock-gfx1151@sha256:8002236ea7526491cf9b0b6a543408fb0be2baacbba656effc132aba2e44dd1d
+    bench_python: ~/bench/vllm-client.sh
+    remote_dir: ~/bench
+    port: 8000
 
 # One entry per model. `hf_id` is the canonical weights repo and the tokenizer the client builds prompts with.
 # arch, params_b and weights describe the model for the page; quality is the published Artificial Analysis
@@ -173,6 +183,11 @@ models:
       p150: { serve: tt-hous/gpt-oss-20b-p150, profile: p150 }
       spark: { serve: openai/gpt-oss-20b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
       mac: { serve: mlx-community/gpt-oss-20b-MXFP4-Q4, weights: MXFP4 (MLX), weights_gb: 11.2 }
+      framework-desktop-128gb:
+        serve: openai/gpt-oss-20b
+        download_exclude: ['original/*', 'metal/*']
+        args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80', --attention-backend, TRITON_ATTN]
+        env: { USER: bench, VLLM_ROCM_USE_AITER: '0', VLLM_ROCM_USE_AITER_LINEAR: '0' }
 
   - id: gpt-oss-20b-tp4
     same_as: gpt-oss-20b
@@ -192,6 +207,11 @@ models:
       spark: { serve: openai/gpt-oss-120b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
       spark-pair: { serve: openai/gpt-oss-120b, download_exclude: ['original/*', 'metal/*'], args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
       mac: { serve: mlx-community/gpt-oss-120b-MXFP4-Q4, weights: MXFP4 (MLX), weights_gb: 62.3 }
+      framework-desktop-128gb:
+        serve: openai/gpt-oss-120b
+        download_exclude: ['original/*', 'metal/*']
+        args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80', --attention-backend, TRITON_ATTN]
+        env: { USER: bench, VLLM_ROCM_USE_AITER: '0', VLLM_ROCM_USE_AITER_LINEAR: '0' }
 
   - id: qwen3.5-122b-a10b               # too big for one Spark even in FP8
     hf_id: Qwen/Qwen3.5-122B-A10B
