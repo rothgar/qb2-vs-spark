@@ -406,6 +406,7 @@ DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill-ca
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,8,14.24,76.39,8640.1,26541.3,0.2984,170.0,0.449
 QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-long,32768,256,1,23.1,9.27,16567.0,27606.9,0.0362,,
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-long,32768,256,1,77.73,28.14,5816.3,9096.9,0.1099,156.3,0.18
+QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,ctx-64k,65536,256,1,23.0,5.8,33072.5,44159.6,0.0226,852.4,0.007
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-64k,65536,256,1,75.95,60.34,884.9,4242.4,0.2357,135.7,0.445
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,ctx-64k,65536,256,1,75.82,15.82,12821.8,16184.9,0.0618,168.0,0.094
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-64k,65536,256,4,44.0,130.25,2046.9,7842.8,0.5088,150.2,0.867
