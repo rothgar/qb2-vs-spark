@@ -1,0 +1,26 @@
+{
+  "machine": "spark-pair",
+  "hardware": "2x NVIDIA DGX Spark (GB10), QSFP 200 Gb/s, tensor parallel 2",
+  "model": "llama-3.3-70b",
+  "hf_id": "meta-llama/Llama-3.3-70B-Instruct",
+  "params": "70.6B dense",
+  "serve": {
+    "serve": "meta-llama/Llama-3.3-70B-Instruct",
+    "download_exclude": [
+      "original/*"
+    ],
+    "args": [
+      "--max-model-len",
+      "40960",
+      "--gpu-memory-utilization",
+      "0.80"
+    ],
+    "max_concurrency": null,
+    "source": "vllm"
+  },
+  "started": "20261014-233507",
+  "environment": {
+    "node0": "NVIDIA GB10, 580.178.04\n7.0.0-1019-nvidia\nDGX_SWBUILD_VERSION=\"7.5.0\"\nnvcr.io/nvidia/vllm@sha256:557747337846eecf34486866f3d992383c6f8af869fdb0e365b5093fcaee02c2",
+    "node1": "NVIDIA GB10, 580.178.04\n7.0.0-1019-nvidia\nDGX_SWBUILD_VERSION=\"7.5.0\"\nnvcr.io/nvidia/vllm@sha256:557747337846eecf34486866f3d992383c6f8af869fdb0e365b5093fcaee02c2"
+  }
+}
