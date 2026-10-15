@@ -223,20 +223,35 @@ QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,codegen,1024,
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-turn,8192,512,1,85.56,72.65,1074.9,7047.4,0.1419,,
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-turn,8192,512,4,46.83,138.85,3808.2,14719.3,0.2712,,
 QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-long,32768,256,1,81.81,37.91,3635.9,6753.0,0.1481,,
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,1,3.74,3.72,649.2,68770.3,0.0145,1113.1,0.003
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,1,3.29,3.28,662.1,78141.7,0.0128,300.9,0.011
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,4,14.07,52.45,1403.3,19522.4,0.2049,851.2,0.062
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,chat,128,256,4,3.12,12.3,1427.6,83243.6,0.048,286.8,0.043
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,1,14.02,13.82,335.9,18521.0,0.054,855.8,0.016
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,1,3.29,3.25,1159.0,78730.7,0.0127,306.5,0.011
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,2,13.98,26.42,1139.7,19381.2,0.1032,871.9,0.03
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,2,3.08,6.04,2047.8,84719.3,0.0236,285.1,0.021
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,4,13.8,51.98,1227.0,19700.9,0.203,886.3,0.059
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,4,3.05,11.79,3018.8,86702.9,0.046,294.1,0.04
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,8,12.88,86.03,4003.9,23806.0,0.336,902.0,0.095
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,8,2.91,21.95,5362.2,93077.8,0.0857,304.0,0.072
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,16,13.46,150.77,8221.1,27165.9,0.589,932.9,0.162
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,16,2.64,38.99,8037.5,104628.7,0.1523,318.8,0.122
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,32,12.94,239.52,14498.3,34200.9,0.9356,993.9,0.241
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,users,1024,256,32,2.09,60.89,11886.3,133655.7,0.2378,331.2,0.184
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,1,13.87,13.77,336.5,37183.1,0.0269,859.8,0.016
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,1,3.29,3.27,1466.5,156557.5,0.0064,302.8,0.011
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,16,13.7,194.82,4752.4,42047.8,0.3805,904.8,0.215
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,16,2.76,41.99,9151.3,194426.1,0.082,313.9,0.134
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,32,13.1,329.85,10649.6,49669.9,0.6442,940.6,0.351
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,power,1024,512,32,2.31,69.14,14235.5,235585.6,0.135,316.0,0.219
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,codegen,1024,1024,1,13.83,13.78,336.9,74298.5,0.0135,855.7,0.016
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,codegen,1024,1024,1,3.28,3.27,1290.8,313010.7,0.0032,307.8,0.011
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,codegen,1024,1024,4,13.75,53.86,1643.1,76049.6,0.0526,865.9,0.062
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,codegen,1024,1024,4,3.07,12.17,2915.8,336347.5,0.0119,289.5,0.042
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,1,11.46,10.83,2673.3,47264.3,0.0212,854.3,0.013
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,1,3.23,3.05,9640.3,167870.3,0.006,310.2,0.01
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,4,11.22,37.1,9645.1,55200.3,0.0725,922.3,0.04
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,4,2.63,9.66,17083.6,211480.0,0.0189,310.5,0.031
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,1,3.18,3.16,916.2,81036.2,0.0123,304.3,0.01
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,1,3.18,2.54,20447.3,100601.4,0.0099,322.6,0.008
@@ -244,6 +259,7 @@ QuietBox 2 (4-chip build),Tenstorrent,gpt-oss-20b,MoE,MXFP4,21,3.6,agent-long,32
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,4,1.95,5.96,38966.4,169800.4,0.0233,347.7,0.017
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,8,2.75,21.04,4386.7,97164.9,0.0822,304.8,0.069
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,8,1.23,7.44,63207.2,270186.2,0.0291,372.5,0.02
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-long,32768,256,1,7.14,5.02,15276.2,51008.0,0.0196,922.4,0.005
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-long,32768,256,1,3.06,1.99,45532.2,128956.4,0.0078,343.0,0.006
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-64k,65536,256,1,2.86,2.79,2599.6,91832.6,0.0109,308.4,0.009
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,ctx-64k,65536,256,1,2.86,1.28,111018.4,200089.2,0.005,360.5,0.004
