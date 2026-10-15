@@ -20,11 +20,11 @@ DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,users,1024,256,16,7.77,11
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,users,1024,256,32,19.9,416.78,6840.5,19654.5,1.628,,
 DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,users,1024,256,32,6.41,189.02,3244.2,43041.8,0.7383,152.9,1.236
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,1,41.7,41.36,124.7,12380.3,0.0808,864.5,0.048
-DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,1,9.29,9.24,410.9,55392.6,0.0181,128.4,0.072
+DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,1,9.28,9.23,410.9,55481.0,0.018,129.8,0.071
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,16,35.19,453.32,3550.8,18070.1,0.8854,957.9,0.473
-DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,16,7.97,123.09,2252.5,66354.2,0.2404,128.3,0.959
+DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,16,7.97,122.61,2452.1,66581.7,0.2395,130.5,0.94
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,32,22.38,500.34,9914.3,32744.4,0.9772,1013.1,0.494
-DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,32,6.78,205.27,3991.4,79321.8,0.4009,144.5,1.421
+DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,power,1024,512,32,6.83,206.96,3817.2,78686.4,0.4042,148.0,1.398
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,codegen,1024,1024,1,41.06,40.89,125.3,25041.6,0.0399,,
 DGX Spark,NVIDIA,devstral-small-2-24b,Dense,BF16,24,24,codegen,1024,1024,1,9.24,9.22,419.2,111083.3,0.009,128.2,0.072
 QuietBox 2,Tenstorrent,devstral-small-2-24b,Dense,BF16,24,24,codegen,1024,1024,4,41.02,161.15,476.7,25416.9,0.1574,,
