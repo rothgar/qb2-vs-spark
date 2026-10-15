@@ -693,3 +693,9 @@ QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill,1638
 QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill-cached,16384,256,8,25.76,65.25,21485.8,31384.9,0.2549,862.6,0.076
 QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill,16384,256,8,25.75,65.23,21495.6,31397.6,0.2548,856.9,0.076
 QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-long,32768,256,1,74.95,28.14,5696.0,9098.3,0.1099,,
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-64k,65536,256,1,71.65,15.81,12628.7,16187.9,0.0618,882.2,0.018
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,ctx-64k,65536,256,1,79.08,16.13,12643.4,15868.0,0.063,876.5,0.018
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-64k,65536,256,4,31.15,17.64,49871.5,58058.9,0.0689,898.5,0.02
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-128k,130816,256,1,71.69,7.58,30208.9,33765.9,0.0296,923.1,0.008
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,ctx-128k,130816,256,1,68.33,7.56,30123.2,33855.2,0.0295,915.0,0.008
+QuietBox 2 (4-chip build),Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-128k,130816,256,4,15.3,7.93,112424.4,129086.9,0.031,931.4,0.009
