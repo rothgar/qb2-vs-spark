@@ -110,6 +110,7 @@
   .qx-seg button { font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-sm) var(--cds-pad-lg); background: transparent; color: var(--color-fg-muted); border: 0; cursor: pointer; }
   /* a line on each button's left and top; the group's border clips the outer ones, so wrapped rows stay divided */
   .qx-seg button { box-shadow: -1px -1px 0 var(--color-border-line); }
+  @media (max-width: 600px) { .qx-seg .qx-unit { display: none; } .qx-seg button { padding-inline: var(--cds-pad-md, 0.75rem); } }
   .qx-seg button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
   .qx-seg button:focus-visible, .qx-select:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
   .qx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-lg); font-size: var(--cds-font-size-body); color: var(--color-fg-muted); }
@@ -1083,7 +1084,10 @@
         const b = document.createElement('button');
         b.type = 'button';
         b.dataset.v = v;
-        b.textContent = label(v);
+        // "16K prompt": the unit word hides on phones (the group's label names it) so every size fits in one row
+        const [, size, unit] = label(v).match(/^(\S+)( (?:prompt|context))?$/) || [, label(v)];
+        b.textContent = size;
+        if (unit) { const u = document.createElement('span'); u.className = 'qx-unit'; u.textContent = unit; b.append(u); }
         return b;
       }));
       el.dataset.v = values.join();
