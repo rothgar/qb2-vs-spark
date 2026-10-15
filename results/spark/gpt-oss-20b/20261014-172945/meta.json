@@ -1,0 +1,26 @@
+{
+  "machine": "spark",
+  "hardware": "NVIDIA DGX Spark (GB10, 128 GB unified)",
+  "model": "gpt-oss-20b",
+  "hf_id": "openai/gpt-oss-20b",
+  "params": "21B MoE / 3.6B active (MXFP4)",
+  "serve": {
+    "serve": "openai/gpt-oss-20b",
+    "download_exclude": [
+      "original/*",
+      "metal/*"
+    ],
+    "args": [
+      "--max-model-len",
+      "40960",
+      "--gpu-memory-utilization",
+      "0.80"
+    ],
+    "max_concurrency": null,
+    "source": "vllm"
+  },
+  "started": "20261014-172945",
+  "environment": {
+    "node0": "NVIDIA GB10, 580.178.04\n7.0.0-1019-nvidia\nDGX_SWBUILD_VERSION=\"7.5.0\"\nnvcr.io/nvidia/vllm@sha256:557747337846eecf34486866f3d992383c6f8af869fdb0e365b5093fcaee02c2"
+  }
+}
