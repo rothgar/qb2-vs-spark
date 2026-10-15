@@ -359,10 +359,13 @@ QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agen
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-turn,8192,512,1,79.09,65.89,1308.5,7769.9,0.1287,129.7,0.508
 QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-turn,8192,512,4,23.55,55.05,15500.4,37201.0,0.1075,,
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-turn,8192,512,4,42.6,139.95,2613.3,14609.9,0.2733,146.4,0.956
+QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,1,22.54,12.96,8445.6,19758.0,0.0506,835.8,0.016
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill-cached,16384,256,1,79.33,65.69,682.8,3897.0,0.2566,122.4,0.537
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,1,79.41,42.96,2747.1,5958.4,0.1678,140.3,0.306
+QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,4,23.33,23.52,32601.8,43532.8,0.0919,850.2,0.028
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill-cached,16384,256,4,44.28,137.26,1680.5,7439.1,0.5362,142.5,0.963
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,4,28.5,68.52,5906.7,14853.3,0.2677,159.6,0.429
+QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,8,21.31,26.54,65196.8,77164.6,0.1037,857.8,0.031
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill-cached,16384,256,8,27.07,172.63,2380.1,11798.6,0.6743,150.2,1.149
 DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,prefill,16384,256,8,14.24,76.39,8640.1,26541.3,0.2984,170.0,0.449
 QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,Hybrid MoE,NVFP4,30,3,agent-long,32768,256,1,23.1,9.27,16567.0,27606.9,0.0362,,
@@ -587,6 +590,8 @@ DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,codegen,1024,1024,4,18.77,73.85,9
 QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-turn,8192,512,1,37.85,23.12,8641.1,22141.4,0.0452,,
 DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-turn,8192,512,1,29.97,25.89,2728.5,19778.9,0.0506,124.1,0.209
 DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,agent-turn,8192,512,4,15.37,53.89,4655.1,37903.1,0.1053,126.9,0.425
+QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill-cached,16384,256,1,37.4,20.63,5592.3,12410.1,0.0806,468.8,0.044
+QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill,16384,256,1,37.39,9.46,20237.6,27058.2,0.037,480.8,0.02
 DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill-cached,16384,256,1,29.72,28.69,342.1,8921.7,0.1121,120.4,0.238
 DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill,16384,256,1,29.94,17.98,5718.8,14237.1,0.0702,126.0,0.143
 DGX Spark,NVIDIA,qwen3.6-35b-a3b,MoE,BF16,35,3,prefill-cached,16384,256,4,19.28,72.91,800.3,14028.4,0.2848,116.3,0.627
