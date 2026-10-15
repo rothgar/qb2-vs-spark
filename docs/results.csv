@@ -283,10 +283,16 @@ QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,1,
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,1,3.23,3.05,9640.3,167870.3,0.006,310.2,0.01
 QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,4,11.22,37.1,9645.1,55200.3,0.0725,922.3,0.04
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-turn,8192,512,4,2.63,9.66,17083.6,211480.0,0.0189,310.5,0.031
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,1,9.52,9.14,1247.7,28019.8,0.0357,831.8,0.011
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,1,5.8,3.04,40302.8,84265.9,0.0119,1081.0,0.003
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,1,3.18,3.16,916.2,81036.2,0.0123,304.3,0.01
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,1,3.18,2.54,20447.3,100601.4,0.0099,322.6,0.008
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,4,9.46,34.74,2512.6,29477.3,0.1357,865.1,0.04
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,4,8.11,19.99,19787.9,51235.4,0.0781,1014.1,0.02
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,4,2.9,11.27,2817.6,90754.6,0.044,290.5,0.039
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,4,1.95,5.96,38966.4,169800.4,0.0233,347.7,0.017
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,8,9.27,63.65,4654.1,32172.6,0.2486,909.9,0.07
+QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,8,7.2,25.49,41997.5,77415.9,0.0996,1072.4,0.024
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill-cached,16384,256,8,2.75,21.04,4386.7,97164.9,0.0822,304.8,0.069
 2x DGX Spark,NVIDIA,llama-3.3-70b,Dense,BF16,70.6,70.6,prefill,16384,256,8,1.23,7.44,63207.2,270186.2,0.0291,372.5,0.02
 QuietBox 2,Tenstorrent,llama-3.3-70b,Dense,BF16,70.6,70.6,agent-long,32768,256,1,7.14,5.02,15276.2,51008.0,0.0196,922.4,0.005
@@ -524,10 +530,16 @@ QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-tu
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-turn,8192,512,1,32.34,26.91,3226.5,19029.0,0.0526,277.9,0.097
 QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-turn,8192,512,4,22.2,63.9,9036.1,32051.5,0.1248,852.5,0.075
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-turn,8192,512,4,14.0,47.99,6118.1,42606.3,0.0937,308.4,0.156
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,1,39.68,23.22,4598.9,11024.6,0.0907,842.0,0.028
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,1,47.73,25.59,4661.8,10004.6,0.1,836.7,0.031
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,1,32.13,29.55,727.5,8663.7,0.1154,271.9,0.109
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,1,33.57,17.13,7345.8,14941.8,0.0669,286.9,0.06
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,4,21.84,34.33,18151.5,29826.4,0.1341,880.1,0.039
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,4,21.84,34.58,17932.3,29607.9,0.1351,870.0,0.04
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,4,16.27,58.72,1732.4,17404.4,0.2294,290.6,0.202
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,4,11.04,27.05,14496.2,37595.2,0.1057,321.9,0.084
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,8,15.2,38.86,35931.3,52702.9,0.1518,892.6,0.044
+QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,8,15.2,38.98,35762.0,52533.2,0.1523,888.3,0.044
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill-cached,16384,256,8,10.37,74.92,2646.4,27245.7,0.2926,308.2,0.243
 2x DGX Spark,NVIDIA,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,prefill,16384,256,8,5.44,29.27,22341.0,69230.8,0.1143,340.5,0.086
 QuietBox 2,Tenstorrent,qwen3.5-122b-a10b,Hybrid MoE,FP8 on Spark,125,10,agent-long,32768,256,1,42.24,16.7,9290.8,15328.1,0.0652,878.7,0.019
