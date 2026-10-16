@@ -134,7 +134,7 @@
         <h3>Tokens per month and electricity cost, running flat out</h3>
         <label class="qx-field" for="kwh-price">Electricity $/kWh <input id="kwh-price" type="number" min="0.01" max="2" step="0.01" inputmode="decimal"></label>
       </div>
-      <p>Each bar is the output tokens one system could generate in a 30-day month at the measured throughput with <span class="qx-users-label">16 users</span>, running 24 hours a day. The label adds the month's electricity at the measured wall power and the cost per million tokens. Hardware isn't included.</p>
+      <p>Each bar is the output tokens one system could generate in a 30-day month at the measured throughput with <span class="qx-users-label">16 users</span>, running 24 hours a day. The label adds the month's electricity at the measured wall power and the cost per million tokens; the price starts at $0.39/kWh, a California residential time-of-use rate averaged over the whole day. Hardware isn't included.</p>
       <div class="qx-chart dash-skeleton" id="month-chart" data-source="results"></div>
     </div>
   </section>
@@ -655,7 +655,7 @@
   const price = document.getElementById('kwh-price');
   const tip = QB.tip(box);
   const MONTH_S = 30 * 24 * 3600, MONTH_H = 30 * 24;
-  const kwh = () => { const v = +(dash.params().price ?? 0.17); return v > 0 ? v : 0.17; };
+  const kwh = () => { const v = +(dash.params().price ?? 0.39); return v > 0 ? v : 0.39; };
   price.addEventListener('change', () => { if (price.validity.valid && +price.value > 0) dash.setParams({ price: +price.value }); });
   price.addEventListener('blur', () => { price.value = kwh(); });
   const tok = (v) => (v >= 1e9 ? `${d3.format('.1f')(v / 1e9)}B` : `${d3.format('.0f')(v / 1e6)}M`);

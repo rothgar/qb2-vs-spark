@@ -63,7 +63,7 @@
 <script>
 (() => {
   const RAW = __DATA__;
-  const PARAMS = {"users":"16","model":"gpt-oss-120b","price":0.17};
+  const PARAMS = {"users":"16","model":"gpt-oss-120b","price":0.39};
   const calcs = {}, subs = [];
   const colors = ['#2f6fdf', '#13a37a', '#d08a12', '#8a4fd8', '#d64f7a', '#5a6170', '#0f8fb8', '#9a7b1c'];
   const run = () => subs.forEach((fn) => { try { fn(); } catch (e) { console.error(e); } });
@@ -106,7 +106,7 @@ __PAGE__
   over a direct QSFP link; Macs served 4-bit MLX builds with <code>mlx_lm.server</code>. Wall power came from a smart
   plug on each machine, sampled once a second and averaged over each run; tokens per joule is output tokens per second
   divided by that average. Running cost assumes a 30-day month at full load, the measured wall power and an editable
-  electricity price (default $0.17/kWh); hardware isn't included. Systems: __SYSTEMS__.</p>
+  electricity price (default $0.39/kWh); hardware isn't included. Systems: __SYSTEMS__.</p>
   <p><b>Quality scores</b> are the Artificial Analysis Intelligence Index v4.3.2 as published at
   <a href="https://artificialanalysis.ai">artificialanalysis.ai</a> on 2026-10-13, not measured on these machines:</p>
   <ul>__QUALITY__</ul>
