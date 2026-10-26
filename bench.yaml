@@ -14,7 +14,7 @@ machines:
   p150:                               # one p150 card in a workstation; models need a p150 build (per_machine.p150)
     label: Tenstorrent p150
     family: Tenstorrent
-    hardware: "Tenstorrent p150 (1x Blackhole, 32 GB GDDR6) in a workstation"
+    hardware: "Tenstorrent p150a (1x Blackhole, 32 GB GDDR6) in a workstation"
     launcher: tt
     bench_python: ~/bench/.venv/bin/vllm
     remote_dir: ~/bench

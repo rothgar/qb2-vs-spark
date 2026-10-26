@@ -42,7 +42,7 @@ answers a measured request from an earlier run's prompts.
 | machine | serves models with | client |
 |---|---|---|
 | Tenstorrent QuietBox 2 (2× p300c, 4 Blackhole chips) | `tt serve` (Tenstorrent catalog builds and tt-model bundles) | `vllm bench serve` |
-| Tenstorrent p150 (one Blackhole card) | `tt serve`, models with a p150 build | `vllm bench serve` |
+| Tenstorrent p150 (one Blackhole card) | `tt serve`, models with a p150 build (the published p150 results ran the same bundle images on Talos Linux + Kubernetes with tt-operator) | `vllm bench serve` |
 | NVIDIA DGX Spark, and two Sparks over QSFP | vLLM in NVIDIA's container | `vllm bench serve` in the same container |
 | Apple silicon Mac | `mlx_lm.server` with 4-bit MLX builds | `tools/loadgen.py` (vLLM has no macOS build) |
 | AMD Ryzen AI Max+ 395 and other ROCm GPUs (untested) | vLLM in a ROCm container (`gpu: rocm`) | `vllm bench serve` in the same container |
