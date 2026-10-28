@@ -100,7 +100,7 @@ models:
     weights: BF16
     quality: { aa_index: 10, variant: Non-reasoning, estimate: true, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-coder-30b-a3b-instruct" }
     per_machine:
-      qb2: { serve: raahemnabeel/qwen3-coder-30b-a3b, profile: p300x2 }
+      qb2: { serve: raahemnabeel/qwen3-coder-30b-a3b-blackhole-fast, profile: p300x2 }   # 2026-10-27 fused-decode build
       spark: { serve: Qwen/Qwen3-Coder-30B-A3B-Instruct, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
       mac: { serve: mlx-community/Qwen3-Coder-30B-A3B-Instruct-4bit, weights: MLX 4-bit, weights_gb: 17.2 }
 
@@ -143,7 +143,7 @@ models:
     params_b: { total: 35, active: 3 }
     weights: BF16
     per_machine:
-      qb2: { serve: raahemnabeel/ornith-1.5-35b-a3b, profile: p300x2 }
+      qb2: { serve: raahemnabeel/ornith-1.5-35b-a3b, profile: p300x2 }   # 2026-10-27 fused-decode build
       spark: { serve: ornith-ai/Ornith-1.5-35B-A3B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'], max_concurrency: null }
       mac: { serve: mlx-community/Ornith-1.5-35B-A3B-OptiQ-4bit, weights: MLX 4-bit, weights_gb: 23.5 }
 
@@ -177,6 +177,40 @@ models:
     hf_id: Qwen/Qwen3.6-35B-A3B
     per_machine:
       qb2: { serve: rothgar/qwen3.6-35b-a3b-p300x2, profile: p300x2 }
+
+  # The first QuietBox 2 builds of these three models (results/qb2/<id>-v1), replaced on the page by the 2026-10-27
+  # fused-decode rebuilds. Kept for comparison; not charted.
+  - id: ornith-1.5-35b-a3b-v1
+    same_as: ornith-1.5-35b-a3b
+    build: v1 build
+    chart: false
+    hf_id: ornith-ai/Ornith-1.5-35B-A3B
+    per_machine:
+      qb2: { serve: raahemnabeel/ornith-1.5-35b-a3b, profile: p300x2 }   # the bundle before the 2026-10-27 rebuild
+
+  - id: qwen3-coder-30b-a3b-v1
+    same_as: qwen3-coder-30b-a3b
+    build: v1 build
+    chart: false
+    hf_id: Qwen/Qwen3-Coder-30B-A3B-Instruct
+    per_machine:
+      qb2: { serve: raahemnabeel/qwen3-coder-30b-a3b, profile: p300x2 }
+
+  - id: qwen3.5-122b-a10b-v1
+    same_as: qwen3.5-122b-a10b
+    build: v1 build
+    chart: false
+    hf_id: Qwen/Qwen3.5-122B-A10B
+    per_machine:
+      qb2: { serve: raahemnabeel/qwen3-5-122b-a10b-blackholex4, profile: p300x2-text }   # since renamed qwen3-5-122b-a10b-v1
+
+  - id: qwen3-coder-next                 # not listed by Artificial Analysis; QuietBox 2 only so far
+    hf_id: Qwen/Qwen3-Coder-Next
+    arch: Hybrid MoE
+    params_b: { total: 80, active: 3 }
+    weights: BF16
+    per_machine:
+      qb2: { serve: raahemnabeel/qwen3-coder-next, profile: p300x2 }
 
   # The small-model comparison: one 8B dense model on four single-accelerator machines. The Tenstorrent cards run
   # Tenstorrent's tt-transformers build (tt-inference-server has an n300 entry; the p150 ran the same entry adapted
@@ -231,7 +265,7 @@ models:
     weights: FP8 on Spark
     quality: { aa_index: 16, variant: Reasoning, version: v4.3.2, url: "https://artificialanalysis.ai/models/qwen3-5-122b-a10b" }
     per_machine:
-      qb2: { serve: raahemnabeel/qwen3-5-122b-a10b-blackholex4, profile: p300x2-text }   # text only, like the Spark side
+      qb2: { serve: raahemnabeel/qwen3-5-122b-a10b, profile: p300x2-text }   # 2026-10-27 fused-decode build; text only, like the Spark side
       spark-pair: { serve: Qwen/Qwen3.5-122B-A10B-FP8, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80', --limit-mm-per-prompt, '{"image": 0, "video": 0}'] }
       mac: { serve: mlx-community/Qwen3.5-122B-A10B-4bit, weights: MLX 4-bit, weights_gb: 69.6 }
 
