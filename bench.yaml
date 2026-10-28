@@ -204,13 +204,14 @@ models:
     per_machine:
       qb2: { serve: raahemnabeel/qwen3-5-122b-a10b-blackholex4, profile: p300x2-text }   # since renamed qwen3-5-122b-a10b-v1
 
-  - id: qwen3-coder-next                 # not listed by Artificial Analysis; QuietBox 2 only so far
+  - id: qwen3-coder-next                 # not listed by Artificial Analysis; BF16 is too big for one Spark, so FP8 there
     hf_id: Qwen/Qwen3-Coder-Next
     arch: Hybrid MoE
     params_b: { total: 80, active: 3 }
     weights: BF16
     per_machine:
       qb2: { serve: raahemnabeel/qwen3-coder-next, profile: p300x2 }
+      spark: { serve: Qwen/Qwen3-Coder-Next-FP8, weights: FP8, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
 
   # The small-model comparison: one 8B dense model on four single-accelerator machines. The Tenstorrent cards run
   # Tenstorrent's tt-transformers build (tt-inference-server has an n300 entry; the p150 ran the same entry adapted
