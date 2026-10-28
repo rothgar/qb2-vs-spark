@@ -119,6 +119,12 @@
   .qx-legend svg { display: block; }
   .qx .qx-legend .qx-fam { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); margin-left: var(--cds-gap-sm); }
   .qx .qx-legend .qx-fam:first-child { margin-left: 0; }
+  .qx-legend button { font: inherit; color: inherit; background: none; border: 0; padding: 2px 4px; margin: -2px -4px; border-radius: var(--cds-radius); cursor: pointer; display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+  .qx-legend button:hover { background: var(--color-panel); }
+  .qx-legend button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-legend button[aria-pressed="false"] { opacity: 0.45; text-decoration: line-through; }
+  .qx .qx-legend .qx-reset { text-decoration: underline; color: var(--color-fg); }
+  .qx-legend-hint { flex-basis: 100%; font-size: var(--cds-font-size-small, 0.8rem); color: var(--color-fg-muted); }
   .qx-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); }
   .qx-section > h2 { font-size: var(--cds-font-size-title); font-family: var(--font-anthropic-serif); font-weight: 400; font-weight: var(--cds-font-weight-medium); margin: 0; }
   .qx-grid { display: grid; grid-template-columns: 1fr; gap: var(--cds-gap-lg); }
@@ -185,9 +191,9 @@
   <nav class="qx-nav" aria-label="Sections">
     <a href="#efficiency">Energy efficiency</a>
     <a href="#cost">Running cost</a>
-    <a href="#quality">Model quality</a>
     <a href="#speed">Speed</a>
     <a href="#long-prompts">Long prompts</a>
+    <a href="#quality">Model quality</a>
     <a href="#notes">Reading these results</a>
   </nav>
 
@@ -235,23 +241,6 @@
       </div>
       <p>Each bar is the output tokens one system could generate in a 30-day month at the measured throughput with <span class="qx-users-label">16 users</span>, running 24 hours a day. The label adds the month's electricity at the measured wall power and the cost per million tokens; the price starts at $0.39/kWh, a California residential time-of-use rate averaged over the whole day. Hardware isn't included.</p>
       <div class="qx-chart dash-skeleton" id="month-chart" data-source="results"></div>
-    </div>
-  </section>
-
-  <section class="qx-section" id="quality">
-    <h2>Model quality</h2>
-    <p class="qx-lede">Tokens per joule counts tokens, not how good they are. Larger and newer models usually score higher on benchmarks, so these charts add each model's Artificial Analysis Intelligence Index (v4.3.2, published scores; higher is better).</p>
-    <div class="qx-grid">
-      <div class="qx-card" id="aa-card">
-        <h3>Artificial Analysis Intelligence Index</h3>
-        <p>Composite of nine evaluations, for the variant Artificial Analysis scored (mostly reasoning mode). Marked "est." where Artificial Analysis lists an estimate. Dense models in grey, MoE in color. Ornith 1.5 and Qwen3-Coder-Next aren't listed there.</p>
-        <div class="qx-chart dash-skeleton" id="aa-chart" data-source="aa_index results"></div>
-      </div>
-      <div class="qx-card" id="qe-card">
-        <h3>How efficient is each model, best scoring first?</h3>
-        <p>Models ranked by Intelligence Index, highest at the top (grey bar; * is an Artificial Analysis estimate). The dots show tokens per joule on each system with <span class="qx-users-label">16 users</span>; further right is cheaper to run. The best trade-offs sit near the top with dots far to the right.</p>
-        <div class="qx-chart dash-skeleton" id="qe-chart" data-source="aa_index results"></div>
-      </div>
     </div>
   </section>
 
@@ -314,6 +303,23 @@
     </div>
   </section>
 
+  <section class="qx-section" id="quality">
+    <h2>Model quality</h2>
+    <p class="qx-lede">Tokens per joule counts tokens, not how good they are. Larger and newer models usually score higher on benchmarks, so these charts add each model's Artificial Analysis Intelligence Index (v4.3.2, published scores; higher is better).</p>
+    <div class="qx-grid">
+      <div class="qx-card" id="aa-card">
+        <h3>Artificial Analysis Intelligence Index</h3>
+        <p>Composite of nine evaluations, for the variant Artificial Analysis scored (mostly reasoning mode). Marked "est." where Artificial Analysis lists an estimate. Dense models in grey, MoE in color. Ornith 1.5 and Qwen3-Coder-Next aren't listed there.</p>
+        <div class="qx-chart dash-skeleton" id="aa-chart" data-source="aa_index results"></div>
+      </div>
+      <div class="qx-card" id="qe-card">
+        <h3>How efficient is each model, best scoring first?</h3>
+        <p>Models ranked by Intelligence Index, highest at the top (grey bar; * is an Artificial Analysis estimate). The dots show tokens per joule on each system with <span class="qx-users-label">16 users</span>; further right is cheaper to run. The best trade-offs sit near the top with dots far to the right.</p>
+        <div class="qx-chart dash-skeleton" id="qe-chart" data-source="aa_index results"></div>
+      </div>
+    </div>
+  </section>
+
   <section class="qx-section" id="notes">
     <h2>Reading these results</h2>
     <div class="qx-card">
@@ -346,12 +352,15 @@
       return (d.status === 'ok' && d.data.find((r) => r.system === s)?.family) || '';
     };
     const rank = (list, x) => (list.includes(x) ? list.indexOf(x) : list.length);
-    const SYS = () => {
+    const ALL = () => {
       const d = dash.data('results');
       const seen = d.status === 'ok' ? [...new Set(d.data.map((r) => r.system))] : [];
       return seen.sort((a, b) => rank(FAMILIES, familyOf(a)) - rank(FAMILIES, familyOf(b))
         || rank(KNOWN, a) - rank(KNOWN, b) || a.localeCompare(b));
     };
+    // systems hidden with the legend's toggles (the `hide` param, '|'-separated); every chart reads SYS() and rows()
+    const hidden = () => new Set((dash.params().hide || '').split('|').filter(Boolean));
+    const SYS = () => { const h = hidden(); return ALL().filter((s) => !h.has(s)); };
     const hollow = (s) => s === 'QuietBox 2 (4-chip build)';   // same color as QuietBox 2, drawn as an outline
     // fill, outline and outline width for a system's marks
     const paint = (sel, sys) => sel
@@ -359,12 +368,13 @@
       .attr('stroke', (d) => (hollow(sys(d)) ? color(sys(d)) : 'var(--color-panel)'))
       .attr('stroke-width', (d) => (hollow(sys(d)) ? 2.5 : 1.5));
     const ARCH = ['Dense', 'MoE', 'Hybrid MoE'];
-    const color = (s) => dash.colors[SYS_COLOR[s] ?? (6 + Math.max(0, SYS().filter((x) => !KNOWN.includes(x)).indexOf(s))) % dash.colors.length];
+    const color = (s) => dash.colors[SYS_COLOR[s] ?? (6 + Math.max(0, ALL().filter((x) => !KNOWN.includes(x)).indexOf(s))) % dash.colors.length];
     const num = (v) => (v === '' || v == null ? null : +v);
     const rows = () => {
       const d = dash.data('results');
       if (d.status !== 'ok') return null;
-      return d.data.map((r) => ({
+      const h = hidden();
+      return d.data.filter((r) => !h.has(r.system)).map((r) => ({
         ...r, users: +r.users, isl: +r.isl, osl: +r.osl,
         decode: num(r.decode_tok_s_user), total: num(r.total_tok_s), ttft: num(r.ttft_ms),
         e2e: num(r.e2e_ms), reqs: num(r.req_s),
@@ -435,7 +445,7 @@
       return false;
     }
     const strip = (sel) => sel.attr('font-size', null).attr('font-family', null);
-    return { SYS, familyOf, ARCH, color, hollow, paint, rows, symbol, fmtJ, fmt1, fmt0, fmtP, size, users, logTicks, thin, tip, begin, strip };
+    return { SYS, ALL, hidden, familyOf, ARCH, color, hollow, paint, rows, symbol, fmtJ, fmt1, fmt0, fmtP, size, users, logTicks, thin, tip, begin, strip };
   })();
 })();
 </script>
@@ -521,26 +531,58 @@
     const b = e.target.closest('button[data-users]');
     if (b) dash.setParams({ users: b.dataset.users });
   });
+  // hidden systems: the `hide` param, kept in this browser between visits
+  const setHidden = (h) => {
+    const v = [...h].join('|');
+    try { localStorage.setItem('qx-hide', v); } catch (e) { /* storage blocked: the filter lasts this visit */ }
+    dash.setParams({ hide: v });
+  };
+  try { const v = localStorage.getItem('qx-hide'); if (v) dash.setParams({ hide: v }); } catch (e) { /* no storage */ }
+  legend.addEventListener('click', (e) => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    const h = QB.hidden();
+    if (b.classList.contains('qx-reset')) return setHidden(new Set());
+    const group = b.dataset.fam != null ? QB.ALL().filter((s) => (QB.familyOf(s) || 'Other') === b.dataset.fam) : [b.dataset.name];
+    const show = group.every((s) => h.has(s));      // a family shows when all of it is hidden, otherwise hides
+    for (const s of group) show ? h.delete(s) : h.add(s);
+    setHidden(h);
+  });
   dash.onData(() => {
     legend.querySelectorAll('[data-sys]').forEach((x) => x.remove());
-    const systems = QB.SYS(), grouped = new Set(systems.map(QB.familyOf)).size > 1;
+    const systems = QB.ALL(), h = QB.hidden(), grouped = new Set(systems.map(QB.familyOf)).size > 1;
     const first = legend.firstChild;
+    const add = (el) => { el.dataset.sys = ''; legend.insertBefore(el, first); return el; };
     let fam = null;
     for (const s of systems) {
       if (grouped && QB.familyOf(s) !== fam) {
         fam = QB.familyOf(s);
-        const h = document.createElement('b');
-        h.className = 'qx-fam';
-        h.dataset.sys = '';
-        h.textContent = fam || 'Other';
-        legend.insertBefore(h, first);
+        const name = fam || 'Other';
+        const fb = add(document.createElement('button'));
+        fb.type = 'button';
+        fb.className = 'qx-fam';
+        fb.dataset.fam = name;
+        fb.textContent = name;
+        fb.setAttribute('aria-pressed', String(!systems.filter((x) => (QB.familyOf(x) || 'Other') === name).every((x) => h.has(x))));
+        fb.title = `Show or hide every ${name} system`;
       }
-      const span = document.createElement('span');
+      const b = add(document.createElement('button'));
+      b.type = 'button';
+      b.dataset.name = s;
+      b.setAttribute('aria-pressed', String(!h.has(s)));
       const i = document.createElement('i');
       i.dataset.sys = s;
-      span.dataset.sys = s;
-      span.append(i, s);
-      legend.insertBefore(span, first);
+      b.append(i, s);
+    }
+    const hint = add(document.createElement('span'));
+    hint.className = 'qx-legend-hint';
+    hint.textContent = h.size ? `${h.size} hidden from every chart. ` : 'Click a system or family to hide it from every chart.';
+    if (h.size) {
+      const r = document.createElement('button');
+      r.type = 'button';
+      r.className = 'qx-reset';
+      r.textContent = 'Show all';
+      hint.appendChild(r);
     }
     legend.querySelectorAll('i[data-sys]').forEach((i) => {
       const c = QB.color(i.dataset.sys);
