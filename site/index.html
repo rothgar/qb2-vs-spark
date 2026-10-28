@@ -74,15 +74,18 @@
 
 <div class="qx">
   <header class="qx-head">
-    <h1>QuietBox 2 vs DGX Spark</h1>
+    <h1>Tokens per Joule</h1>
     <p class="qx-lede">
-      Per joule of wall power, one DGX Spark produced a median
-      <b class="dash-skeleton" data-source="head_to_head" data-field="eff_ratio" data-where="users=16">—</b>× the tokens QuietBox 2 did with 16 users, and
-      <b class="dash-skeleton" data-source="head_to_head" data-field="eff_ratio" data-where="users=1">—</b>× with one user.
-      QuietBox 2 was faster: a median
-      <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=16">—</b>× the tokens per second with 16 users and
-      <b class="dash-skeleton" data-source="head_to_head" data-field="speed_ratio" data-where="users=1">—</b>× with one,
-      over the models that ran on both.
+      How many output tokens open-weight models produce per joule of wall power on
+      <span data-source="headline" data-field="families" data-where="users=16">Tenstorrent and NVIDIA</span> hardware.
+      Every machine runs the same prompts under the same load, and a smart plug measures the whole box at the wall.
+      With 16 users the most efficient run was
+      <b class="dash-skeleton" data-source="headline" data-field="best" data-where="users=16">—</b> at
+      <b class="dash-skeleton" data-source="headline" data-field="best_tpj" data-where="users=16">—</b> tokens per joule,
+      <b class="dash-skeleton" data-source="headline" data-field="spread" data-where="users=16">—</b>× the least efficient;
+      with one user it was
+      <b class="dash-skeleton" data-source="headline" data-field="best" data-where="users=1">—</b> at
+      <b class="dash-skeleton" data-source="headline" data-field="best_tpj" data-where="users=1">—</b>.
     </p>
     <p class="qx-links">
       <a href="https://github.com/rothgar/qb2-vs-spark">Code and data on GitHub</a>
@@ -254,7 +257,8 @@
     const rank = (list, x) => (list.includes(x) ? list.indexOf(x) : list.length);
     const ALL = () => {
       const d = dash.data('results');
-      const seen = d.status === 'ok' ? [...new Set(d.data.map((r) => r.system))] : [];
+      // only systems with something to chart: wall power, or a test other than the power test
+      const seen = d.status === 'ok' ? [...new Set(d.data.filter((r) => r.tok_per_j !== '' || r.workload !== 'power').map((r) => r.system))] : [];
       return seen.sort((a, b) => rank(FAMILIES, familyOf(a)) - rank(FAMILIES, familyOf(b))
         || rank(KNOWN, a) - rank(KNOWN, b) || a.localeCompare(b));
     };
@@ -379,32 +383,32 @@
 </script>
 
 <script>
-  dash.calc('head_to_head', {
-    title: 'Spark vs QuietBox 2 medians',
-    description: 'Per user count in the power test: median of DGX Spark tok/J ÷ QuietBox 2 tok/J, and of QuietBox 2 tok/s ÷ DGX Spark tok/s, over models run on both (QuietBox 2 default builds, not the 4-chip builds).',
+  dash.calc('headline', {
+    title: 'Most efficient run per user count',
+    description: 'Per user count in the power test: the run with the most output tokens per joule of wall power, the spread to the least efficient run, and the vendor families with wall-power results. Ignores the legend filter.',
     inputs: ['results'],
-    fn: (results) => {
-      const med = (a) => { const s = [...a].sort((x, y) => x - y), m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
-      return ['1', '16', '32'].map((users) => {
-        const by = {};
-        for (const r of results) {
-          if (r.workload === 'power' && r.users === users && r.tok_per_j !== '') (by[r.model] ||= {})[r.system] = r;
-        }
-        const pairs = Object.values(by).filter((o) => o['QuietBox 2'] && o['DGX Spark']);
-        return {
-          users,
-          models: pairs.length,
-          eff_ratio: +med(pairs.map((o) => o['DGX Spark'].tok_per_j / o['QuietBox 2'].tok_per_j)).toFixed(1),
-          speed_ratio: +med(pairs.map((o) => o['QuietBox 2'].total_tok_s / o['DGX Spark'].total_tok_s)).toFixed(1),
-        };
-      });
-    },
+    fn: (results) => ['1', '16', '32'].map((users) => {
+      const runs = results.filter((r) => r.workload === 'power' && r.users === users && r.tok_per_j !== '')
+        .sort((a, b) => b.tok_per_j - a.tok_per_j);
+      if (!runs.length) return { users };
+      const order = ['Tenstorrent', 'NVIDIA', 'Apple', 'AMD'], at = (f) => (order.includes(f) ? order.indexOf(f) : order.length);
+      const fams = [...new Set(runs.map((r) => r.family).filter(Boolean))].sort((a, b) => at(a) - at(b));
+      const best = runs[0], worst = runs[runs.length - 1];
+      return {
+        users,
+        best: `${best.model} on ${best.system}`,
+        best_tpj: (+best.tok_per_j).toFixed(2),
+        spread: Math.round(best.tok_per_j / worst.tok_per_j),
+        families: fams.length > 1 ? `${fams.slice(0, -1).join(', ')} and ${fams[fams.length - 1]}` : fams[0],
+      };
+    }),
   });
   dash.onData(() => {
-    const c = dash.data('head_to_head');
-    document.querySelectorAll('[data-source="head_to_head"]').forEach((el) => {
+    const c = dash.data('headline');
+    document.querySelectorAll('[data-source="headline"]').forEach((el) => {
       const row = c.status === 'ok' ? c.data.find((r) => r.users === el.dataset.where.split('=')[1]) : null;
-      el.textContent = row ? String(row[el.dataset.field]) : '—';
+      if (row?.[el.dataset.field] != null) el.textContent = String(row[el.dataset.field]);
+      else if (el.classList.contains('dash-skeleton')) el.textContent = '—';
       if (c.status !== 'loading') el.classList.remove('dash-skeleton');
     });
   });
