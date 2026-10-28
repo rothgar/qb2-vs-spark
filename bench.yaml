@@ -19,6 +19,14 @@ machines:
     bench_python: ~/bench/.venv/bin/vllm
     remote_dir: ~/bench
     port: 8000
+  n300:                               # one n300 card (2 Wormhole chips) in a workstation; models need an n300 build (per_machine.n300)
+    label: Tenstorrent n300
+    family: Tenstorrent
+    hardware: "Tenstorrent n300d (2x Wormhole, 24 GB GDDR6) in a workstation"
+    launcher: tt
+    bench_python: ~/bench/.venv/bin/vllm
+    remote_dir: ~/bench
+    port: 8000
   spark:
     label: DGX Spark
     family: NVIDIA
@@ -35,6 +43,15 @@ machines:
     launcher: vllm-docker
     image: nvcr.io/nvidia/vllm:26.09-py3
     tp: 2
+    bench_python: ~/bench/vllm-client.sh
+    remote_dir: ~/bench
+    port: 8000
+  rtx6000:                            # one Quadro RTX 6000 (Turing, 24 GB) in a workstation; no bf16 on Turing, so models run in fp16
+    label: Quadro RTX 6000
+    family: NVIDIA
+    hardware: "NVIDIA Quadro RTX 6000 (Turing, 24 GB GDDR6) in a workstation"
+    launcher: vllm-docker
+    image: nvcr.io/nvidia/vllm:26.04-py3
     bench_python: ~/bench/vllm-client.sh
     remote_dir: ~/bench
     port: 8000
@@ -160,6 +177,20 @@ models:
     hf_id: Qwen/Qwen3.6-35B-A3B
     per_machine:
       qb2: { serve: rothgar/qwen3.6-35b-a3b-p300x2, profile: p300x2 }
+
+  # The small-model comparison: one 8B dense model on four single-accelerator machines. The Tenstorrent cards run
+  # Tenstorrent's tt-transformers build (tt-inference-server has an n300 entry; the p150 ran the same entry adapted
+  # for one Blackhole chip). These results ran on Talos Linux + Kubernetes, the Spark's with vLLM 26.04.
+  - id: qwen3-8b
+    hf_id: Qwen/Qwen3-8B
+    arch: Dense
+    params_b: { total: 8.2, active: 8.2 }
+    weights: BF16
+    per_machine:
+      n300: { serve: Qwen3-8B, source: tt-inference-server }
+      p150: { serve: Qwen3-8B, source: tt-inference-server }
+      spark: { serve: Qwen/Qwen3-8B, args: [--max-model-len, '40960', --gpu-memory-utilization, '0.80'] }
+      rtx6000: { serve: Qwen/Qwen3-8B, weights: FP16, args: [--dtype, float16, --max-model-len, '40960', --gpu-memory-utilization, '0.92'] }
 
   # gpt-oss on qb2: tt-hous builds target p150 cards; their p150x4 profiles run on qb2's 4 chips.
   - id: gpt-oss-20b

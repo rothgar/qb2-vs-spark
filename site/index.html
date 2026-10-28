@@ -227,6 +227,7 @@
         <li>Two DGX Sparks run one copy of gpt-oss-120b split across both machines over the direct QSFP link, and both plugs are summed.</li>
         <li>The default QuietBox 2 builds of gpt-oss-20b and Qwen3.6 35B A3B run on one Blackhole chip; their 4-chip builds spread the same model over all four.</li>
         <li>Tenstorrent p150 is one p150a card (one Blackhole chip, 32 GB) in a desktop with a 6-core Ryzen 5 5500 on PCIe 3.0, running the same gpt-oss-20b and Qwen3.6 35B A3B bundles as QuietBox 2's single-chip builds on Talos Linux and Kubernetes (Tenstorrent's tt-operator) instead of Ubuntu. On QuietBox 2 that stack matched Ubuntu on decode speed and power under load. The p150's wall power is from the power test only, measured with the operator's telemetry collector off; the box idles at 98 W. Decode speed matches a QuietBox 2 chip, at about half the wall power. Qwen3.6 was only run with one user.</li>
+        <li>Qwen3 8B is the small-model comparison: the same 8B dense model on four single-accelerator machines, all on Talos Linux and Kubernetes. Tenstorrent n300 (two Wormhole chips, 24 GB) and Quadro RTX 6000 (Turing, 24 GB) sit in the same Ryzen 5 5500 desktop as the p150. The Tenstorrent cards run Tenstorrent's tt-transformers build through vLLM; there is no official p150 entry for this model, so the p150 ran the n300 entry adapted for one Blackhole chip. The RTX 6000 runs vLLM 26.04 in fp16 (Turing has no bf16), which leaves room in 24 GB for only one 40K-token request at a time; the Spark runs vLLM 26.04 in bf16. Wall power for the Tenstorrent cards is from the power test only, with the telemetry collector off; the RTX 6000 and Spark have wall power for every test. The n300 is missing the 32K-token test, and 32 of its 96 requests failed with 32 users in the users test.</li>
       </ul>
     </div>
   </section>
@@ -235,8 +236,8 @@
 <script>
   window.QB = (() => {
     // systems in a fixed order and color; any other system in the data (a contributed Mac, say) follows them
-    const KNOWN = ['QuietBox 2', 'QuietBox 2 (4-chip build)', 'Tenstorrent p150', 'DGX Spark', '2x DGX Spark'];
-    const SYS_COLOR = { 'QuietBox 2': 0, 'QuietBox 2 (4-chip build)': 0, 'DGX Spark': 1, '2x DGX Spark': 2, 'Tenstorrent p150': 3 };
+    const KNOWN = ['QuietBox 2', 'QuietBox 2 (4-chip build)', 'Tenstorrent p150', 'Tenstorrent n300', 'DGX Spark', '2x DGX Spark', 'Quadro RTX 6000'];
+    const SYS_COLOR = { 'QuietBox 2': 0, 'QuietBox 2 (4-chip build)': 0, 'DGX Spark': 1, '2x DGX Spark': 2, 'Tenstorrent p150': 3, 'Tenstorrent n300': 4, 'Quadro RTX 6000': 5 };
     // grouped by vendor family (Tenstorrent, NVIDIA, Apple, then any other), known systems first within a family
     const FAMILIES = ['Tenstorrent', 'NVIDIA', 'Apple'];
     const familyOf = (s) => {
@@ -257,7 +258,7 @@
       .attr('stroke', (d) => (hollow(sys(d)) ? color(sys(d)) : 'var(--color-panel)'))
       .attr('stroke-width', (d) => (hollow(sys(d)) ? 2.5 : 1.5));
     const ARCH = ['Dense', 'MoE', 'Hybrid MoE'];
-    const color = (s) => dash.colors[SYS_COLOR[s] ?? (4 + Math.max(0, SYS().filter((x) => !KNOWN.includes(x)).indexOf(s))) % dash.colors.length];
+    const color = (s) => dash.colors[SYS_COLOR[s] ?? (6 + Math.max(0, SYS().filter((x) => !KNOWN.includes(x)).indexOf(s))) % dash.colors.length];
     const num = (v) => (v === '' || v == null ? null : +v);
     const rows = () => {
       const d = dash.data('results');
@@ -600,7 +601,7 @@
             [null, `${a} median here`, QB.fmtJ(med)],
           ]))
           .on('mouseleave', () => tip.hide());
-        const short = { 'QuietBox 2': 'QB2', 'QuietBox 2 (4-chip build)': 'QB2 4c', 'Tenstorrent p150': 'p150', 'DGX Spark': 'Spark', '2x DGX Spark': '2× Spark' }[s] ?? s.replace(/^Mac mini /, 'Mac ');
+        const short = { 'QuietBox 2': 'QB2', 'QuietBox 2 (4-chip build)': 'QB2 4c', 'Tenstorrent p150': 'p150', 'Tenstorrent n300': 'n300', 'DGX Spark': 'Spark', '2x DGX Spark': '2× Spark', 'Quadro RTX 6000': 'RTX 6000' }[s] ?? s.replace(/^Mac mini /, 'Mac ');
         if (bw > 30) svg.append('text').attr('x', cx).attr('y', H - bottom + 20).attr('text-anchor', 'middle').text(short);
       }
     }

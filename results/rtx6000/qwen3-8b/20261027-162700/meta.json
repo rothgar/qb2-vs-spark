@@ -1,0 +1,45 @@
+{
+  "machine": "rtx6000",
+  "hardware": "NVIDIA Quadro RTX 6000 (Turing, 24 GB GDDR6) in a Ryzen 5 5500 workstation (PCIe 3.0 x16), Talos Linux + Kubernetes",
+  "model": "qwen3-8b",
+  "hf_id": "Qwen/Qwen3-8B",
+  "params": "8.2B dense",
+  "serve": {
+    "spec": "qwen3-8b-rtx6000",
+    "serve": "Qwen/Qwen3-8B"
+  },
+  "started": "20261027-162700",
+  "environment": {
+    "node": {
+      "osImage": "Talos (v1.14.4)",
+      "kernelVersion": "6.18.57-talos",
+      "kubeletVersion": "v1.37.0",
+      "containerRuntimeVersion": "containerd://2.3.7"
+    },
+    "talos_extensions": {
+      "amd-ucode": "20260916",
+      "modules.dep": "6.18.57-talos",
+      "nvidia-container-toolkit-production": "595.91.07-v1.19.1",
+      "nvidia-open-gpu-kernel-modules-production": "595.91.07-v1.14.4",
+      "tenstorrent": "2.11.0"
+    },
+    "helm": {
+      "nvdp": "nvidia-device-plugin-0.20.0",
+      "tt-operator": "tt-operator-0.3.0"
+    },
+    "daemonsets": {
+      "kube-flannel": true,
+      "kube-proxy": true,
+      "nvdp-nvidia-device-plugin": true,
+      "nvdp-nvidia-device-plugin-mps-control-daemon": false,
+      "hugepages-1g": false,
+      "tt-fabric-manager-agent": false,
+      "tt-operator-node-feature-discovery-worker": true,
+      "tt-operator-tt-dra-driver-kubeletplugin": false,
+      "tt-telemetry-daemonset": false
+    },
+    "nvidia": {
+      "nvidia.com/gpu.present": "true"
+    }
+  }
+}

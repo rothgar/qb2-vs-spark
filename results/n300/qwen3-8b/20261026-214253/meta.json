@@ -1,0 +1,38 @@
+{
+  "machine": "n300",
+  "hardware": "Tenstorrent n300d (2x Wormhole, 24 GB GDDR6) in a Ryzen 5 5500 workstation (PCIe 3.0 x16), Talos Linux + Kubernetes",
+  "model": "qwen3-8b",
+  "hf_id": "Qwen/Qwen3-8B",
+  "params": "8.2B dense",
+  "serve": {
+    "spec": "qwen3-8b-n300",
+    "serve": "Qwen3-8B"
+  },
+  "started": "20261026-214253",
+  "environment": {
+    "node": {
+      "osImage": "Talos (v1.14.4)",
+      "kernelVersion": "6.18.57-talos",
+      "kubeletVersion": "v1.37.0",
+      "containerRuntimeVersion": "containerd://2.3.7"
+    },
+    "talos_extensions": {
+      "amd-ucode": "20260916",
+      "modules.dep": "6.18.57-talos",
+      "tenstorrent": "2.11.0"
+    },
+    "helm": {
+      "tt-operator": "tt-operator-0.3.0"
+    },
+    "daemonsets": {
+      "kube-flannel": true,
+      "kube-proxy": true,
+      "hugepages-1g": true,
+      "tt-fabric-manager-agent": true,
+      "tt-operator-node-feature-discovery-worker": true,
+      "tt-operator-tt-dra-driver-kubeletplugin": true,
+      "tt-telemetry-daemonset": false
+    },
+    "device_info": "tt-smi -s Failed: 3]\n11. PyObject_Vectorcall\n12. _PyEval_EvalFrameDefault\n13. PyEval_EvalCode\n14. /usr/local/bin/../lib/libpython3.12.so.1.0(+0x2b8c0a) [0x7fd2ddb1ec0a]\n15. /usr/local/bin/../lib/libpython3.12.so.1.0(+0x2b3b3e) [0x7fd2ddb19b3e]\n16. /usr/local/bin/../lib/libpython3.12.so.1.0(+0x2b0603) [0x7fd2ddb16603]\n17. _PyRun_SimpleFileObject\n18. _PyRun_AnyFileObject\n19. Py_RunMain\n20. Py_BytesMain\n21. /lib/x86_64-linux-gnu/libc.so.6(+0x29ca8) [0x7fd2dd699ca8]\n22. __libc_start_main\n23. _start\n\n Exiting... \u001b[0m\n"
+  }
+}
