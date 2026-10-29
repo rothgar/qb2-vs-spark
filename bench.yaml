@@ -36,6 +36,20 @@ machines:
     bench_python: ~/bench/vllm-client.sh
     remote_dir: ~/bench
     port: 8000
+  # The same QuietBox 2 and Spark reinstalled with Talos Linux, serving the same builds as Kubernetes pods. Results
+  # only (this repo has no Kubernetes launcher): they chart on talos.html against the Ubuntu runs, not on the main page
+  qb2-talos:
+    label: QuietBox 2
+    family: Tenstorrent
+    hardware: "Tenstorrent QuietBox 2 (2x p300c, 4x Blackhole), Talos Linux + Kubernetes"
+    talos_of: qb2
+    models_from: qb2
+  spark-talos:
+    label: DGX Spark
+    family: NVIDIA
+    hardware: "NVIDIA DGX Spark (GB10, 128 GB unified), Talos Linux + Kubernetes"
+    talos_of: spark
+    models_from: spark
   spark-pair:                         # two Sparks as one server over the direct QSFP cable (200 Gb/s)
     label: 2x DGX Spark
     family: NVIDIA

@@ -1,0 +1,107 @@
+{
+  "machine": "qb2-talos",
+  "hardware": "Tenstorrent QuietBox 2 (2x p300c, 4x Blackhole), Talos Linux + Kubernetes",
+  "model": "gpt-oss-120b",
+  "hf_id": "openai/gpt-oss-120b",
+  "params": "117B MoE / 5.1B active (MXFP4)",
+  "serve": {
+    "spec": "gpt-oss-120b",
+    "serve": "tt-hous/gpt-oss-120b-p150x4",
+    "max_concurrency": null
+  },
+  "started": "20261023-235919",
+  "environment": {
+    "node": {
+      "osImage": "Talos (v1.14.4)",
+      "kernelVersion": "6.18.57-talos",
+      "kubeletVersion": "v1.37.0",
+      "containerRuntimeVersion": "containerd://2.3.7"
+    },
+    "talos_extensions": {
+      "amd-ucode": "20260916",
+      "modules.dep": "6.18.57-talos",
+      "tenstorrent": "2.11.0"
+    },
+    "helm": {
+      "tt-operator": "tt-operator-0.3.0"
+    },
+    "daemonsets": {
+      "kube-flannel": true,
+      "kube-proxy": true,
+      "hugepages-1g": true,
+      "tt-fabric-manager-agent": true,
+      "tt-operator-node-feature-discovery-worker": true,
+      "tt-operator-tt-dra-driver-kubeletplugin": true,
+      "tt-telemetry-daemonset": false
+    },
+    "device_info": {
+      "host": {
+        "OS": "Linux",
+        "Distro": "Debian GNU/Linux 13 (trixie)",
+        "Kernel": "6.18.57-talos",
+        "Platform": "x86_64",
+        "Python": "3.12.15",
+        "Memory": "249.30 GB",
+        "Driver": "TT-KMD 2.10.0"
+      },
+      "devices": [
+        {
+          "board_type": "p300c",
+          "bus_id": "0000:01:00.0",
+          "firmware": {
+            "fw_bundle_version": "19.15.0.0",
+            "tt_flash_version": "N/A",
+            "cm_fw": "0.37.0.0",
+            "cm_fw_date": "2020-00-37",
+            "eth_fw": "1.12.2",
+            "dm_bl_fw": "0.0.0.0",
+            "dm_app_fw": "0.31.0.0",
+            "gddr_fw": "2.16"
+          }
+        },
+        {
+          "board_type": "p300c",
+          "bus_id": "0000:02:00.0",
+          "firmware": {
+            "fw_bundle_version": "19.15.0.0",
+            "tt_flash_version": "N/A",
+            "cm_fw": "0.37.0.0",
+            "cm_fw_date": "2020-00-37",
+            "eth_fw": "1.12.2",
+            "dm_bl_fw": "0.0.0.0",
+            "dm_app_fw": "0.31.0.0",
+            "gddr_fw": "2.16"
+          }
+        },
+        {
+          "board_type": "p300c",
+          "bus_id": "0000:03:00.0",
+          "firmware": {
+            "fw_bundle_version": "19.15.0.0",
+            "tt_flash_version": "N/A",
+            "cm_fw": "0.37.0.0",
+            "cm_fw_date": "2020-00-37",
+            "eth_fw": "1.12.2",
+            "dm_bl_fw": "0.0.0.0",
+            "dm_app_fw": "0.31.0.0",
+            "gddr_fw": "2.16"
+          }
+        },
+        {
+          "board_type": "p300c",
+          "bus_id": "0000:04:00.0",
+          "firmware": {
+            "fw_bundle_version": "19.15.0.0",
+            "tt_flash_version": "N/A",
+            "cm_fw": "0.37.0.0",
+            "cm_fw_date": "2020-00-37",
+            "eth_fw": "1.12.2",
+            "dm_bl_fw": "0.0.0.0",
+            "dm_app_fw": "0.31.0.0",
+            "gddr_fw": "2.16"
+          }
+        }
+      ]
+    }
+  }
+}

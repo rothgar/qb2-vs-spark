@@ -653,16 +653,17 @@ def cmd_report(cfg: dict, a: argparse.Namespace) -> int:
 
 # ---------------------------------------------------------------------------------------------------- site
 
-SITE_RESULTS, SITE_QUALITY = "results.csv", "quality.csv"
+SITE_RESULTS, SITE_QUALITY, SITE_TALOS = "results.csv", "quality.csv", "talos.csv"
 
 
 def cmd_site(cfg: dict, a: argparse.Namespace) -> int:
     """docs/: the page (site/index.html in a small stand-in for the claude.ai dashboard runtime) and its data."""
     models = {m["id"]: m for m in cfg["models"]}
+    results = load_results(latest=True)
     out = []
-    for r in load_results(latest=True):
+    for r in results:
         m, mc = models.get(r["model"]), cfg["machines"].get(r["machine"], {})
-        if not m or m.get("chart") is False:
+        if not m or m.get("chart") is False or mc.get("talos_of"):
             continue
         base = models.get(m.get("same_as"), m)               # a second build of a model charts on that model's row
         pm = m["per_machine"].get(mc.get("models_from", r["machine"]), {})
@@ -688,22 +689,61 @@ def cmd_site(cfg: dict, a: argparse.Namespace) -> int:
     page = (ROOT / "site" / "index.html").read_text()
     if not any(o["workload"] == "power" and o["users"] == 32 and o["tok_per_j"] for o in out):
         page = re.sub(r'\s*<button type="button" data-users="32"[^>]*>32 users</button>', "", page)
-    # each dashboard script runs in its own scope
-    page = re.sub(r"<script>(.*?)</script>", lambda x: f"<script>\n(() => {{{x.group(1)}}})();\n</script>", page, flags=re.S)
-    shell = (ROOT / "site" / "shell.html").read_text()
-    data = {"results": [{k: ("" if v is None else str(v)) for k, v in o.items()} for o in out],
-            "aa_index": [{k: str(v) for k, v in q.items()} for q in quality]}
     aa = "".join(f'<li><a href="{html.escape(q["source_url"])}">{html.escape(q["model"])}</a>: {q["aa_index"]} '
                  f'({html.escape(q["aa_variant"])}{", estimate" if q["aa_estimate"] == "yes" else ""})</li>'
                  for q in quality)
     systems = ", ".join(sorted({o["system"] for o in out}))
-    doc = (shell.replace("__DATA__", json.dumps(data, separators=(",", ":")))
-                .replace("__PAGE__", page).replace("__QUALITY__", aa).replace("__SYSTEMS__", html.escape(systems))
-                .replace("__DATE__", f"{dt.date.today():%Y-%m-%d}"))
-    (DOCS / "index.html").write_text(doc)
+    page = page.replace("__QUALITY__", aa).replace("__SYSTEMS__", html.escape(systems))
+    write_page("index.html", page, {"results": out, "aa_index": quality}, "Tokens per Joule",
+               "Output tokens per joule of wall power for open-weight models on Tenstorrent, NVIDIA, Apple and AMD "
+               "hardware, with speed, running cost and published quality scores.")
     (DOCS / ".nojekyll").touch()
     print(f"wrote {DOCS / 'index.html'} ({len(out)} result rows, {len(quality)} quality scores)")
+
+    pairs = talos_pairs(cfg, results)
+    with open(DOCS / SITE_TALOS, "w", newline="") as fh:
+        w = csv.DictWriter(fh, list(pairs[0]))
+        w.writeheader()
+        w.writerows(pairs)
+    write_page("talos.html", (ROOT / "site" / "talos.html").read_text(), {"pairs": pairs}, "Talos Linux vs Ubuntu",
+               "The same QuietBox 2 and DGX Spark on Talos Linux and on Ubuntu: the change in throughput, per-user "
+               "speed and time to first token for each model and test.")
+    print(f"wrote {DOCS / 'talos.html'} ({len(pairs)} paired tests)")
     return 0
+
+
+def talos_pairs(cfg: dict, results: list[dict]) -> list[dict]:
+    """Each Talos result next to the Ubuntu result for the same machine, model, test and user count."""
+    models = {m["id"]: m for m in cfg["models"]}
+    key = lambda r, machine: (machine, r["model"], r["workload"], r["isl"], r["osl"], r["concurrency"])
+    ubuntu = {key(r, r["machine"]): r for r in results}
+    pairs = []
+    for t in results:
+        mc = cfg["machines"].get(t["machine"], {})
+        if not mc.get("talos_of") or not (u := ubuntu.get(key(t, mc["talos_of"]))) or not (m := models.get(t["model"])):
+            continue
+        base = models.get(m.get("same_as"), m)
+        pairs.append({
+            "system": mc["label"], "family": mc.get("family", ""),
+            "model": base["id"] + (f" ({m['build']})" if m.get("build") else ""),
+            "workload": t["workload"], "isl": t["isl"], "osl": t["osl"], "users": t["concurrency"],
+            "ubuntu_tok_s": u["output_tok_s_total"], "talos_tok_s": t["output_tok_s_total"],
+            "ubuntu_ttft_ms": u["ttft_ms_mean"], "talos_ttft_ms": t["ttft_ms_mean"],
+            "ubuntu_decode_tok_s": u["decode_tok_s_user"], "talos_decode_tok_s": t["decode_tok_s_user"],
+        })
+    return pairs
+
+
+def write_page(name: str, page: str, data: dict[str, list[dict]], title: str, desc: str) -> None:
+    """docs/<name>: a page from site/ inside site/shell.html, with its data inlined."""
+    # each dashboard script runs in its own scope
+    page = re.sub(r"<script>(.*?)</script>", lambda x: f"<script>\n(() => {{{x.group(1)}}})();\n</script>", page, flags=re.S)
+    data = {k: [{c: ("" if v is None else str(v)) for c, v in o.items()} for o in rows] for k, rows in data.items()}
+    doc = ((ROOT / "site" / "shell.html").read_text()
+           .replace("__TITLE__", html.escape(title)).replace("__DESC__", html.escape(desc))
+           .replace("__DATA__", json.dumps(data, separators=(",", ":"))).replace("__PAGE__", page)
+           .replace("__DATE__", f"{dt.date.today():%Y-%m-%d}"))
+    (DOCS / name).write_text(doc)
 
 
 def cmd_ram(cfg: dict, a: argparse.Namespace) -> int:

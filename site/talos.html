@@ -1,0 +1,359 @@
+<style>
+  .qx { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans);
+        --tx-better: #6a3fc8; --tx-worse: #c26a00; --tx-mid: #eceae6; --tx-better-bg: #cdbcf2; --tx-worse-bg: #f4c992; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .qx { --tx-better: #b49bf2; --tx-worse: #f0a24a; --tx-mid: #2a2e35; --tx-better-bg: #4d3590; --tx-worse-bg: #7a4a0c; }
+  }
+  :root[data-theme="dark"] .qx { --tx-better: #b49bf2; --tx-worse: #f0a24a; --tx-mid: #2a2e35; --tx-better-bg: #4d3590; --tx-worse-bg: #7a4a0c; }
+  .qx-head { display: flex; flex-direction: column; gap: var(--cds-gap-sm); }
+  .qx-links { margin: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 1rem; }
+  .qx-links a { color: var(--color-text-link, inherit); font-weight: 600; }
+  .qx h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+  .qx-lede { margin: 0; color: var(--color-fg-muted); max-width: 66ch; font-size: var(--cds-font-size-heading); line-height: 1.5; }
+  .qx .qx-lede b { font-weight: 600; color: var(--color-fg); font-variant-numeric: tabular-nums; }
+  .qx-bar { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 3; background: var(--color-bg); padding: var(--cds-pad-sm) 0;
+            box-shadow: 0 0 0 100vmax var(--color-bg); clip-path: inset(0 -100vmax); border-bottom: 1px solid var(--color-border-line); }
+  .qx-seg { display: inline-flex; flex-wrap: wrap; max-width: 100%; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); overflow: hidden; }
+  .qx-seg button { font: inherit; font-size: var(--cds-font-size-body); padding: var(--cds-pad-sm) var(--cds-pad-lg); background: transparent;
+                   color: var(--color-fg-muted); border: 0; cursor: pointer; box-shadow: -1px -1px 0 var(--color-border-line); }
+  @media (max-width: 600px) { .qx-seg button { padding-inline: var(--cds-pad-md); } }
+  .qx-seg button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .qx-seg button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-lg); color: var(--color-fg-muted); }
+  .qx-legend span { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+  .qx-legend i { width: 0.8rem; height: 0.8rem; border-radius: 50%; display: inline-block; }
+  .qx-section { display: flex; flex-direction: column; gap: var(--cds-gap-md); scroll-margin-top: 4.5rem; }
+  .qx-section > h2 { font-size: var(--cds-font-size-title); font-family: var(--font-anthropic-serif); font-weight: var(--cds-font-weight-medium); margin: 0; }
+  .qx-card { position: relative; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg);
+             display: flex; flex-direction: column; gap: var(--cds-gap-sm); min-width: 0; }
+  .qx-card h3 { font-weight: var(--cds-font-weight-medium); margin: 0; font-size: calc(var(--cds-font-size-heading) * 1.15); }
+  .qx-card p, .qx-card li { margin: 0; color: var(--color-fg-muted); line-height: 1.5; max-width: 80ch; }
+  .qx-card ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+  .qx-chart { position: relative; }
+  .qx-chart svg { display: block; overflow: visible; }
+  .qx-chart text { font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); fill: var(--color-fg-muted); }
+  .qx-chart text.qx-strong { fill: var(--color-fg); }
+  .qx-chart text.qx-small { font-size: var(--cds-font-size-caption); }
+  .qx-tip { position: absolute; z-index: 4; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border);
+            border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-sm) var(--cds-pad-md);
+            font-size: var(--cds-font-size-caption); display: flex; flex-direction: column; gap: 2px; min-width: 13rem; max-width: 18rem; }
+  .qx-tip[hidden] { display: none; }
+  .qx-tip-h { color: var(--cds-text-secondary); }
+  .qx-tip-r { display: flex; gap: var(--cds-gap-md); }
+  .qx-tip-r b { margin-left: auto; font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+  .qx-key { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cds-gap-xs) var(--cds-gap-md); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .qx-key span { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+  .qx-key i { width: 1.6rem; height: 0.8rem; border-radius: 3px; display: inline-block; }
+  .qx-scroll { overflow-x: auto; margin-inline: calc(-1 * var(--cds-pad-lg)); padding-inline: var(--cds-pad-lg); }
+  .qx-heat { border-collapse: separate; border-spacing: 2px; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+  .qx-heat th { font-weight: 400; color: var(--color-fg-muted); padding: 2px 4px; white-space: nowrap; }
+  .qx-heat thead th { text-align: center; }
+  .qx-heat thead tr:first-child th { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); border-bottom: 1px solid var(--color-border-line); }
+  .qx-heat tbody th { text-align: left; position: sticky; left: 0; background: var(--color-panel); z-index: 1; padding-right: var(--cds-pad-md); }
+  .qx-heat tbody th.qx-sys { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); padding-top: var(--cds-pad-md); }
+  .qx-heat td { min-width: 3.1rem; text-align: center; padding: 5px 4px; border-radius: 4px; color: var(--color-fg); }
+  .qx-heat td.qx-none { color: var(--color-fg-muted); }
+  .qx-heat td:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-note { margin: 0; color: var(--color-fg-muted); max-width: 72ch; line-height: 1.5; }
+</style>
+
+<div class="qx">
+  <header class="qx-head">
+    <h1>Talos Linux vs Ubuntu</h1>
+    <p class="qx-lede">
+      The same QuietBox 2 and DGX Spark, reinstalled with Talos Linux and serving the same model builds as Kubernetes
+      pods, against the Ubuntu runs on the main page. Each Talos test is paired with the identical Ubuntu test.
+      Median change in throughput on Talos:
+      <span id="lede-systems">—</span>.
+    </p>
+    <p class="qx-links">
+      <a href="index.html">← Tokens per Joule</a>
+      <a href="talos.csv">Paired data (CSV)</a>
+      <a href="https://github.com/rothgar/qb2-vs-spark">Code and data on GitHub</a>
+    </p>
+  </header>
+
+  <div class="qx-bar">
+    <div class="qx-legend" id="legend" aria-label="Systems"></div>
+    <div class="qx-seg" role="group" aria-label="Metric" id="metric"></div>
+  </div>
+
+  <section class="qx-section" id="by-model">
+    <h2>By model</h2>
+    <div class="qx-card">
+      <h3 class="qx-metric-title">Change on Talos, by model</h3>
+      <p>Each dot is one test (a workload at one user count); the bar is the model's median. <span class="qx-metric-dir"></span></p>
+      <div class="qx-chart" id="model-chart"></div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="by-use-case">
+    <h2>By use case</h2>
+    <div class="qx-card">
+      <h3 class="qx-metric-title">Change on Talos, by use case</h3>
+      <p>Each dot is one model at one user count; the bar is the median for that system. <span class="qx-metric-dir"></span></p>
+      <div class="qx-chart" id="case-chart"></div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="every-test">
+    <h2>Every test</h2>
+    <div class="qx-card">
+      <h3 class="qx-metric-title">Change on Talos, every test</h3>
+      <p>Percent change from Ubuntu to Talos. Columns are workloads, split by the number of concurrent users. <span class="qx-metric-dir"></span></p>
+      <div class="qx-key" id="heat-key"></div>
+      <div class="qx-scroll"><div id="heat"></div></div>
+    </div>
+  </section>
+
+  <section class="qx-section" id="notes">
+    <h2>Reading these results</h2>
+    <div class="qx-card">
+      <ul>
+        <li>Same hardware, model builds, prompts and load on both. What changed with the OS: the kernel (Talos 6.18
+          against Ubuntu's 7.0), the NVIDIA driver on the Spark (595 against 580), and the runtime: Kubernetes pods
+          under containerd on Talos, <code>tt serve</code> and Docker on Ubuntu. The Spark ran the same vLLM image,
+          by digest, on both.</li>
+        <li>The QuietBox 2 rows use the builds that ran on Ubuntu: the v1 bundles, not the fused-decode rebuilds the
+          main page shows, which only ran on Talos.</li>
+        <li>Most QuietBox 2 differences are small, but under load several models reached their first token later on
+          Talos, which cuts total throughput at 16 and 32 users. Single runs of four requests (the 1-user tests) move a
+          few percent from run to run on either OS, so read single dots with that in mind and lean on the medians.</li>
+      </ul>
+    </div>
+  </section>
+
+<footer class="qx-foot">
+  <p><b>Method.</b> Every run sent random prompts with a fixed output length and greedy sampling (temperature 0)
+  through <code>vllm bench serve</code>. Each Talos test is matched to the newest Ubuntu run of the same model build,
+  workload, prompt length and user count; the change is (Talos − Ubuntu) / Ubuntu.</p>
+  <p><b>Data and code:</b> <a href="talos.csv">talos.csv</a> and the benchmark harness at
+  <a href="https://github.com/rothgar/qb2-vs-spark">github.com/rothgar/qb2-vs-spark</a>. Built __DATE__.</p>
+</footer>
+</div>
+
+<script>
+  const SYSTEMS = ['DGX Spark', 'QuietBox 2'];
+  const SYS_COLOR = { 'QuietBox 2': 0, 'DGX Spark': 1 };   // the main page's colors
+  const color = (s) => dash.colors[SYS_COLOR[s] ?? 5];
+  const METRICS = {
+    tok: { label: 'Throughput', key: 'tok_s', better: 1, title: 'Total output tokens per second',
+           fmt: (v) => `${d3.format(',.1f')(v)} tok/s` },
+    ttft: { label: 'Time to first token', key: 'ttft_ms', better: -1, title: 'Mean time to first token',
+            fmt: (v) => v >= 1000 ? `${d3.format(',.2f')(v / 1000)} s` : `${d3.format(',.0f')(v)} ms` },
+    decode: { label: 'Per-user speed', key: 'decode_tok_s', better: 1, title: 'Decode speed each user sees, tokens per second',
+              fmt: (v) => `${d3.format(',.1f')(v)} tok/s` },
+  };
+  const WORKLOADS = [
+    ['users', 'Concurrent users', '1,024 in / 256 out'], ['chat', 'Chat', '128 in / 256 out'],
+    ['codegen', 'Code generation', '1,024 in / 1,024 out'], ['agent-turn', 'Agent turn', '8K in / 512 out'],
+    ['agent-long', 'Long agent context', '32K in / 256 out'], ['prefill', '16K prompt', '16K in / 256 out'],
+    ['prefill-cached', '16K cached prompt', '16K, 15.5K cached'], ['power', 'Power test', '1,024 in / 512 out'],
+  ];
+  const WL = Object.fromEntries(WORKLOADS.map(([k, n, s], i) => [k, { name: n, shape: s, order: i }]));
+  const users = (n) => `${n} user${+n === 1 ? '' : 's'}`;
+  const pct = (v) => { const r = Math.round(v * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${d3.format('.1f')(Math.abs(r))}%`; };
+  const metric = () => METRICS[dash.params().metric] ? dash.params().metric : 'tok';
+
+  // one row per paired test, with the change in the chosen metric
+  const rows = (m) => {
+    const d = dash.data('pairs');
+    if (d.status !== 'ok') return [];
+    const M = METRICS[m];
+    return d.data.map((r) => {
+      const u = +r['ubuntu_' + M.key], t = +r['talos_' + M.key];
+      return { ...r, u, t, change: u > 0 && t > 0 ? (t / u - 1) * 100 : null };
+    }).filter((r) => r.change !== null && WL[r.workload]);
+  };
+  const median = (xs) => d3.median(xs);
+
+  // tooltip, shared by the charts and the table
+  const tip = (() => {
+    let el;
+    return {
+      show(host, ev, head, lines) {
+        if (!el || !host.contains(el)) { el = document.createElement('div'); el.className = 'qx-tip'; host.appendChild(el); }
+        el.replaceChildren();
+        const h = document.createElement('div'); h.className = 'qx-tip-h'; h.textContent = head; el.appendChild(h);
+        for (const [k, v] of lines) {
+          const r = document.createElement('div'); r.className = 'qx-tip-r';
+          const a = document.createElement('span'); a.textContent = k;
+          const b = document.createElement('b'); b.textContent = v;
+          r.append(a, b); el.appendChild(r);
+        }
+        el.hidden = false;
+        const box = host.getBoundingClientRect(), w = el.offsetWidth, hh = el.offsetHeight;
+        const x = ev.clientX - box.left, y = ev.clientY - box.top;
+        el.style.left = `${Math.max(0, Math.min(box.width - w, x + 14 > box.width - w ? x - w - 14 : x + 14))}px`;
+        el.style.top = `${Math.max(0, y - hh - 10)}px`;
+      },
+      hide() { if (el) el.hidden = true; },
+    };
+  })();
+  const testLines = (r, M) => [
+    ['Ubuntu', M.fmt(r.u)], ['Talos', M.fmt(r.t)], ['Change', pct(r.change)],
+  ];
+
+  // controls
+  const seg = document.getElementById('metric');
+  for (const [k, M] of Object.entries(METRICS)) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.metric = k; b.textContent = M.label;
+    b.addEventListener('click', () => { dash.setParams({ metric: k }); try { localStorage.setItem('tx-metric', k); } catch (e) {} });
+    seg.appendChild(b);
+  }
+  try { const s = localStorage.getItem('tx-metric'); if (METRICS[s]) dash.setParams({ metric: s }); } catch (e) {}
+  const legend = document.getElementById('legend');
+  for (const s of SYSTEMS) {
+    const sp = document.createElement('span'), i = document.createElement('i');
+    i.style.background = color(s); sp.append(i, s); legend.appendChild(sp);
+  }
+
+  // a dot strip: one row per group, dots for the tests in it, a bar at the median
+  const strip = (host, groups, M, opts) => {
+    const W = host.clientWidth || 600, narrow = W < 560;
+    const labelW = narrow ? 0 : Math.min(260, W * 0.36), rowH = narrow ? 46 : 30, headH = opts.heads ? 30 : 0;
+    const all = groups.flatMap((g) => g.items.map((r) => r.change));
+    const lo = Math.max(-80, Math.min(-5, d3.min(all) ?? 0)), hi = Math.min(120, Math.max(5, d3.max(all) ?? 0));
+    let y = 24;
+    const laid = groups.map((g) => { if (g.head) y += headH; const at = y; y += rowH; return { ...g, y: at }; });
+    const H = y + 10, x = d3.scaleLinear().domain([lo, hi]).nice().range([labelW + 8, W - 64]);
+    const [dlo, dhi] = x.domain(), clamp = (v) => Math.max(dlo, Math.min(dhi, v));
+    host.replaceChildren();
+    const svg = d3.select(host).append('svg').attr('width', W).attr('height', H).attr('role', 'img')
+      .attr('aria-label', opts.aria);
+    const ticks = x.ticks(narrow ? 5 : 8);
+    svg.append('g').selectAll('line').data(ticks).join('line')
+      .attr('x1', (t) => x(t)).attr('x2', (t) => x(t)).attr('y1', 18).attr('y2', H - 6)
+      .attr('stroke', (t) => t === 0 ? 'var(--cds-chart-reference)' : 'var(--cds-chart-grid)')
+      .attr('stroke-width', (t) => t === 0 ? 1.5 : 1);
+    svg.append('g').selectAll('text').data(ticks).join('text')
+      .attr('x', (t) => x(t)).attr('y', 12).attr('text-anchor', 'middle').attr('class', 'qx-small')
+      .text((t) => `${t > 0 ? '+' : t < 0 ? '−' : ''}${Math.abs(t)}%`);
+    for (const g of laid) {
+      const cy = g.y + (narrow ? 30 : rowH / 2);
+      if (g.head) svg.append('text').attr('x', 0).attr('y', g.y - 8).attr('class', 'qx-strong').attr('font-weight', 600).text(g.head);
+      svg.append('text').attr('x', narrow ? 0 : labelW).attr('y', narrow ? g.y + 12 : cy + 5)
+        .attr('text-anchor', narrow ? 'start' : 'end').attr('class', g.strong ? 'qx-strong' : null).text(g.label);
+      svg.append('line').attr('x1', x(dlo)).attr('x2', x(dhi)).attr('y1', cy).attr('y2', cy).attr('stroke', 'var(--cds-chart-grid)');
+      const c = color(g.system);
+      svg.append('g').selectAll('circle').data(g.items).join('circle')
+        .attr('cx', (r) => x(clamp(r.change))).attr('cy', cy).attr('r', 4.5)
+        .attr('fill', (r) => r.change === clamp(r.change) ? c : 'var(--color-panel)').attr('stroke', c).attr('stroke-width', 1.5)
+        .attr('fill-opacity', 0.75);
+      const med = median(g.items.map((r) => r.change));
+      svg.append('rect').attr('x', x(clamp(med)) - 1.5).attr('y', cy - 10).attr('width', 3).attr('height', 20).attr('rx', 1.5)
+        .attr('fill', 'var(--color-fg)');
+      svg.append('text').attr('x', W - 60).attr('y', cy + 5).attr('class', 'qx-strong').text(pct(med));
+      // hit targets bigger than the marks
+      svg.append('g').selectAll('circle').data(g.items).join('circle')
+        .attr('cx', (r) => x(clamp(r.change))).attr('cy', cy).attr('r', 9).attr('fill', 'transparent')
+        .on('pointerenter pointermove', (ev, r) => tip.show(host, ev, `${opts.tipHead(r)}`, testLines(r, M)))
+        .on('pointerleave', () => tip.hide());
+      svg.append('rect').attr('x', W - 62).attr('y', cy - 12).attr('width', 62).attr('height', 24).attr('fill', 'transparent')
+        .on('pointerenter pointermove', (ev) => tip.show(host, ev, g.tipLabel || g.label, [['Median change', pct(med)], ['Tests', String(g.items.length)]]))
+        .on('pointerleave', () => tip.hide());
+    }
+  };
+  const testName = (r) => `${WL[r.workload].name}, ${users(r.users)}`;
+
+  dash.onData(() => {
+    const m = metric(), M = METRICS[m], data = rows(m);
+    for (const b of seg.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b.dataset.metric === m));
+    document.querySelectorAll('.qx-metric-title').forEach((h) => {
+      h.textContent = h.textContent.replace(/^.*?(?=, by|, every)/, `${M.label} on Talos`).replace(/^Change on Talos/, `${M.label} on Talos`);
+    });
+    document.querySelectorAll('.qx-metric-dir').forEach((s) => {
+      s.textContent = `${M.title}; ${M.better > 0 ? 'right of zero is better on Talos' : 'left of zero is better on Talos'}.`;
+    });
+
+    // lede: median throughput change per system
+    const tok = rows('tok'), parts = [];
+    for (const s of SYSTEMS) {
+      const xs = tok.filter((r) => r.system === s).map((r) => r.change);
+      if (!xs.length) continue;
+      const b = document.createElement('b'); b.textContent = pct(median(xs));
+      parts.push(...(parts.length ? ['; '] : []), b, ` for the ${s} (${xs.length} tests)`);
+    }
+    document.getElementById('lede-systems').replaceChildren(...parts);
+
+    // by model: systems as sections, models sorted by median change (best on Talos first)
+    const byModel = [];
+    for (const s of SYSTEMS) {
+      const ms = d3.groups(data.filter((r) => r.system === s), (r) => r.model)
+        .map(([k, items]) => ({ label: k, system: s, items, med: median(items.map((r) => r.change)) * M.better }))
+        .sort((a, b) => b.med - a.med);
+      ms.forEach((g, i) => { if (i === 0) g.head = s; g.tipLabel = `${g.label} on ${s}`; });
+      byModel.push(...ms);
+    }
+    strip(document.getElementById('model-chart'), byModel, M, {
+      heads: true, aria: `${M.label}: change on Talos for each model`, tipHead: (r) => `${r.model}: ${testName(r)}`,
+    });
+
+    // by use case: a row per system within each workload
+    const byCase = [];
+    for (const [k] of WORKLOADS) {
+      let first = true;
+      for (const s of SYSTEMS) {
+        const items = data.filter((r) => r.workload === k && r.system === s);
+        if (!items.length) continue;
+        byCase.push({ label: s, system: s, items, head: first ? `${WL[k].name} (${WL[k].shape})` : null,
+                      tipLabel: `${WL[k].name} on ${s}` });
+        first = false;
+      }
+    }
+    strip(document.getElementById('case-chart'), byCase, M, {
+      heads: true, aria: `${M.label}: change on Talos for each use case`, tipHead: (r) => `${r.model}: ${testName(r)}`,
+    });
+
+    // every test: a table, cells shaded by better (purple) or worse (orange) on Talos
+    const host = document.getElementById('heat');
+    const cols = d3.sort(d3.groups(data, (r) => r.workload).map(([k, rs]) => [k, d3.sort([...new Set(rs.map((r) => +r.users))])]),
+                         ([k]) => WL[k].order);
+    const cs = getComputedStyle(host.closest('.qx'));
+    const mid = cs.getPropertyValue('--tx-mid').trim(), good = cs.getPropertyValue('--tx-better-bg').trim(),
+          bad = cs.getPropertyValue('--tx-worse-bg').trim();
+    const shade = (v) => {
+      const g = v * M.better, f = Math.min(1, Math.abs(g) / 15);
+      return d3.interpolateRgb(mid, g >= 0 ? good : bad)(f);
+    };
+    const key = document.getElementById('heat-key');
+    key.replaceChildren(...[[-15, 'Worse on Talos (15% or more)'], [0, 'No change'], [15, 'Better on Talos (15% or more)']].map(([v, t]) => {
+      const sp = document.createElement('span'), i = document.createElement('i');
+      i.style.background = shade(v * M.better); sp.append(i, t); return sp;
+    }));
+    const table = document.createElement('table'); table.className = 'qx-heat';
+    const thead = table.createTHead(), h1 = thead.insertRow(), h2 = thead.insertRow();
+    h1.appendChild(document.createElement('th')); h2.appendChild(document.createElement('th'));
+    for (const [k, us] of cols) {
+      const th = document.createElement('th'); th.colSpan = us.length; th.textContent = WL[k].name; th.title = WL[k].shape; h1.appendChild(th);
+      for (const u of us) { const t = document.createElement('th'); t.textContent = users(u); h2.appendChild(t); }
+    }
+    const tbody = table.createTBody();
+    const idx = new Map(data.map((r) => [`${r.system}|${r.model}|${r.workload}|${r.users}`, r]));
+    for (const s of SYSTEMS) {
+      const models = byModel.filter((g) => g.system === s);
+      if (!models.length) continue;
+      const sr = tbody.insertRow(), sh = document.createElement('th'); sh.className = 'qx-sys'; sh.textContent = s;
+      sh.colSpan = 1 + d3.sum(cols, ([, us]) => us.length); sr.appendChild(sh);
+      for (const g of models) {
+        const tr = tbody.insertRow(), th = document.createElement('th'); th.scope = 'row'; th.textContent = g.label; tr.appendChild(th);
+        for (const [k, us] of cols) for (const u of us) {
+          const td = tr.insertCell(), r = idx.get(`${s}|${g.label}|${k}|${u}`);
+          if (!r) { td.textContent = '–'; td.className = 'qx-none'; continue; }
+          td.textContent = pct(r.change).replace('%', '');
+          td.style.background = shade(r.change);
+          td.tabIndex = 0;
+          const lines = testLines(r, M), head = `${r.model}: ${testName(r)}`;
+          td.setAttribute('aria-label', `${head}: ${lines.map(([a, b]) => `${a} ${b}`).join(', ')}`);
+          const card = host.closest('.qx-card');
+          td.addEventListener('pointerenter', (ev) => tip.show(card, ev, head, lines));
+          td.addEventListener('pointermove', (ev) => tip.show(card, ev, head, lines));
+          td.addEventListener('pointerleave', () => tip.hide());
+        }
+      }
+    }
+    host.replaceChildren(table);
+  });
+</script>

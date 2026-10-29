@@ -88,6 +88,7 @@
       <b class="dash-skeleton" data-source="headline" data-field="best_tpj" data-where="users=1">—</b>.
     </p>
     <p class="qx-links">
+      <a href="talos.html">Talos Linux vs Ubuntu</a>
       <a href="https://github.com/rothgar/qb2-vs-spark">Code and data on GitHub</a>
     </p>
   </header>
@@ -1200,3 +1201,20 @@
     }
   });
 </script>
+
+<footer class="qx-foot">
+  <p><b>Method.</b> Every run sent random prompts with a fixed output length and greedy sampling (temperature 0)
+  through <code>vllm bench serve</code>, or on Macs the repo's <code>tools/loadgen.py</code>, which sends the same
+  requests and reports the same measurements. QuietBox 2 (2× p300c, 4 Tenstorrent Blackhole chips) served
+  <code>tt serve</code> bundles, and a single p150a card served the same bundles' images on Kubernetes; DGX Sparks served vLLM in NVIDIA's container, and two Sparks ran one copy of a model
+  over a direct QSFP link; Macs served 4-bit MLX builds with <code>mlx_lm.server</code>. Wall power came from a smart
+  plug on each machine, sampled once a second and averaged over each run; tokens per joule is output tokens per second
+  divided by that average. Running cost assumes a 30-day month at full load, the measured wall power and an editable
+  electricity price (default $0.39/kWh); hardware isn't included. Systems: __SYSTEMS__.</p>
+  <p><b>Quality scores</b> are the Artificial Analysis Intelligence Index v4.3.2 as published at
+  <a href="https://artificialanalysis.ai">artificialanalysis.ai</a> on 2026-10-13, not measured on these machines:</p>
+  <ul>__QUALITY__</ul>
+  <p><b>Data and code:</b> <a href="results.csv">results.csv</a>, <a href="quality.csv">quality.csv</a>, and the
+  benchmark harness at <a href="https://github.com/rothgar/qb2-vs-spark">github.com/rothgar/qb2-vs-spark</a>, where
+  you can add results from your own machine. Built __DATE__.</p>
+</footer>
