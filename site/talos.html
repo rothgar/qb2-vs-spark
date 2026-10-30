@@ -20,6 +20,17 @@
   @media (max-width: 600px) { .qx-seg button { padding-inline: var(--cds-pad-md); } }
   .qx-seg button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
   .qx-seg button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-ctl { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: center; }
+  .qx-sys-tog { display: inline-flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+  .qx-sys-tog button { font: inherit; font-size: var(--cds-font-size-body); display: inline-flex; align-items: center; gap: var(--cds-gap-xs);
+                       padding: var(--cds-pad-sm) var(--cds-pad-md); background: transparent; color: var(--color-fg-muted); cursor: pointer;
+                       border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); }
+  .qx-sys-tog button i { width: 0.8rem; height: 0.8rem; border-radius: 50%; display: inline-block; border: 2px solid; box-sizing: border-box; }
+  .qx-sys-tog button[aria-pressed="true"] { background: var(--color-panel); color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+  .qx-sys-tog button[aria-pressed="false"] { text-decoration: line-through; }
+  .qx-sys-tog button:disabled { cursor: not-allowed; opacity: 0.5; text-decoration: none; }
+  .qx-sys-tog button:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 1px; }
+  .qx-empty { margin: 0; color: var(--color-fg-muted); padding: var(--cds-pad-lg) 0; }
   .qx-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs) var(--cds-gap-lg); color: var(--color-fg-muted); }
   .qx-legend span { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
   .qx-legend i { width: 0.8rem; height: 0.8rem; border-radius: 50%; display: inline-block; }
@@ -64,8 +75,7 @@
     <p class="qx-lede">
       The same QuietBox 2 and DGX Spark, reinstalled with Talos Linux and serving the same model builds as Kubernetes
       pods, against the Ubuntu runs on the main page. Each Talos test is paired with the identical Ubuntu test.
-      Median change in throughput on Talos:
-      <span id="lede-systems">—</span>.
+      Median change in throughput from Ubuntu: <span id="lede-systems">—</span>.
     </p>
     <p class="qx-links">
       <a href="index.html">← Tokens per Joule</a>
@@ -75,7 +85,10 @@
   </header>
 
   <div class="qx-bar">
-    <div class="qx-legend" id="legend" aria-label="Systems"></div>
+    <div class="qx-ctl">
+      <div class="qx-seg" role="group" aria-label="Talos version" id="version"></div>
+      <div class="qx-sys-tog" role="group" aria-label="Show systems" id="systems"></div>
+    </div>
     <div class="qx-seg" role="group" aria-label="Metric" id="metric"></div>
   </div>
 
@@ -111,10 +124,14 @@
     <h2>Reading these results</h2>
     <div class="qx-card">
       <ul>
-        <li>Same hardware, model builds, prompts and load on both. What changed with the OS: the kernel (Talos 6.18
-          against Ubuntu's 7.0), the NVIDIA driver on the Spark (595 against 580), and the runtime: Kubernetes pods
-          under containerd on Talos, <code>tt serve</code> and Docker on Ubuntu. The Spark ran the same vLLM image,
-          by digest, on both.</li>
+        <li>Same hardware, model builds, prompts and load on both. What changed with the OS: the kernel (Talos 1.14
+          runs 6.18 and Talos 1.15 runs 7.3, against Ubuntu's 7.0), the NVIDIA driver on the Spark (595 on both Talos
+          versions, against 580 on Ubuntu), and the runtime: Kubernetes pods under containerd on Talos,
+          <code>tt serve</code> and Docker on Ubuntu. The Spark ran the same vLLM image, by digest, everywhere.</li>
+        <li>Talos 1.15 (an alpha release, 1.15.0-alpha.2) has only been run on the DGX Spark so far. On 1.15 the GPU
+          reaches the pod through CDI and the NVIDIA container toolkit's NRI plugin instead of a runtime class.</li>
+        <li>The one large drop on Talos 1.15, gemma-4-31b at 32 users (about −24%), is a single run: every request
+          finished, but each token took longer. Its other tests sit with the rest.</li>
         <li>The QuietBox 2 rows use the builds that ran on Ubuntu: the v1 bundles, not the fused-decode rebuilds the
           main page shows, which only ran on Talos.</li>
         <li>Most QuietBox 2 differences are small, but under load several models reached their first token later on
@@ -155,13 +172,20 @@
   const users = (n) => `${n} user${+n === 1 ? '' : 's'}`;
   const pct = (v) => { const r = Math.round(v * 10) / 10; return `${r > 0 ? '+' : r < 0 ? '−' : ''}${d3.format('.1f')(Math.abs(r))}%`; };
   const metric = () => METRICS[dash.params().metric] ? dash.params().metric : 'tok';
+  const allPairs = () => { const d = dash.data('pairs'); return d.status === 'ok' ? d.data : []; };
+  const VERSIONS = [...new Set(allPairs().map((r) => r.talos))].filter(Boolean).sort(d3.ascending);
+  const version = () => VERSIONS.includes(dash.params().talos) ? dash.params().talos : VERSIONS[VERSIONS.length - 1];
+  const hidden = () => new Set((dash.params().hide || '').split(',').filter(Boolean));
+  const hasData = (s, v) => allPairs().some((r) => r.system === s && r.talos === v);
+  const shown = () => SYSTEMS.filter((s) => !hidden().has(s) && hasData(s, version()));
 
   // one row per paired test, with the change in the chosen metric
   const rows = (m) => {
     const d = dash.data('pairs');
     if (d.status !== 'ok') return [];
     const M = METRICS[m];
-    return d.data.map((r) => {
+    const v = version(), vis = new Set(shown());
+    return d.data.filter((r) => r.talos === v && vis.has(r.system)).map((r) => {
       const u = +r['ubuntu_' + M.key], t = +r['talos_' + M.key];
       return { ...r, u, t, change: u > 0 && t > 0 ? (t / u - 1) * 100 : null };
     }).filter((r) => r.change !== null && WL[r.workload]);
@@ -192,7 +216,7 @@
     };
   })();
   const testLines = (r, M) => [
-    ['Ubuntu', M.fmt(r.u)], ['Talos', M.fmt(r.t)], ['Change', pct(r.change)],
+    ['Ubuntu', M.fmt(r.u)], [`Talos ${r.talos}`, M.fmt(r.t)], ['Change', pct(r.change)],
   ];
 
   // controls
@@ -204,11 +228,28 @@
     seg.appendChild(b);
   }
   try { const s = localStorage.getItem('tx-metric'); if (METRICS[s]) dash.setParams({ metric: s }); } catch (e) {}
-  const legend = document.getElementById('legend');
-  for (const s of SYSTEMS) {
-    const sp = document.createElement('span'), i = document.createElement('i');
-    i.style.background = color(s); sp.append(i, s); legend.appendChild(sp);
+  const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+  const vseg = document.getElementById('version');
+  for (const v of VERSIONS) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.dataset.version = v; b.textContent = `Talos ${v}`;
+    b.addEventListener('click', () => { dash.setParams({ talos: v }); save('tx-talos', v); });
+    vseg.appendChild(b);
   }
+  const systog = document.getElementById('systems');
+  for (const s of SYSTEMS) {
+    const b = document.createElement('button'), i = document.createElement('i');
+    b.type = 'button'; b.dataset.system = s; i.style.borderColor = color(s); b.append(i, s);
+    b.addEventListener('click', () => {
+      const h = hidden(); h.has(s) ? h.delete(s) : h.add(s);
+      const hide = [...h].join(','); dash.setParams({ hide }); save('tx-hide', hide);
+    });
+    systog.appendChild(b);
+  }
+  try {
+    const v = localStorage.getItem('tx-talos'); if (VERSIONS.includes(v)) dash.setParams({ talos: v });
+    const h = localStorage.getItem('tx-hide'); if (h !== null) dash.setParams({ hide: h });
+  } catch (e) {}
 
   // a dot strip: one row per group, dots for the tests in it, a bar at the median
   const strip = (host, groups, M, opts) => {
@@ -261,26 +302,49 @@
   dash.onData(() => {
     const m = metric(), M = METRICS[m], data = rows(m);
     for (const b of seg.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b.dataset.metric === m));
+    const v = version(), h = hidden();
+    for (const b of vseg.querySelectorAll('button')) b.setAttribute('aria-pressed', String(b.dataset.version === v));
+    for (const b of systog.querySelectorAll('button')) {
+      const s = b.dataset.system, ok = hasData(s, v);
+      b.disabled = !ok; b.setAttribute('aria-pressed', String(ok && !h.has(s)));
+      b.querySelector('i').style.background = ok && !h.has(s) ? color(s) : 'transparent';
+      b.title = ok ? (h.has(s) ? `Show the ${s}` : `Hide the ${s}`) : `The ${s} has no Talos ${v} results yet`;
+    }
     document.querySelectorAll('.qx-metric-title').forEach((h) => {
-      h.textContent = h.textContent.replace(/^.*?(?=, by|, every)/, `${M.label} on Talos`).replace(/^Change on Talos/, `${M.label} on Talos`);
+      h.textContent = h.textContent.replace(/^.*?(?=, by|, every)/, `${M.label} on Talos ${version()}`);
     });
     document.querySelectorAll('.qx-metric-dir').forEach((s) => {
       s.textContent = `${M.title}; ${M.better > 0 ? 'right of zero is better on Talos' : 'left of zero is better on Talos'}.`;
     });
 
     // lede: median throughput change per system
-    const tok = rows('tok'), parts = [];
-    for (const s of SYSTEMS) {
-      const xs = tok.filter((r) => r.system === s).map((r) => r.change);
-      if (!xs.length) continue;
-      const b = document.createElement('b'); b.textContent = pct(median(xs));
-      parts.push(...(parts.length ? ['; '] : []), b, ` for the ${s} (${xs.length} tests)`);
+    const parts = [];
+    for (const ver of [...VERSIONS].reverse()) {
+      const sub = [];
+      for (const s of SYSTEMS) {
+        const xs = allPairs().filter((r) => r.talos === ver && r.system === s)
+          .map((r) => (+r.talos_tok_s / +r.ubuntu_tok_s - 1) * 100).filter((x) => Number.isFinite(x));
+        if (!xs.length) continue;
+        const b = document.createElement('b'); b.textContent = pct(median(xs));
+        sub.push(...(sub.length ? [', '] : []), b, ` for the ${s} (${xs.length} tests)`);
+      }
+      if (sub.length) parts.push(...(parts.length ? ['; '] : []), `on Talos ${ver}, `, ...sub);
     }
     document.getElementById('lede-systems').replaceChildren(...parts);
 
+    const empty = !data.length;
+    for (const id of ['model-chart', 'case-chart', 'heat']) {
+      if (!empty) continue;
+      const p = document.createElement('p'); p.className = 'qx-empty';
+      p.textContent = 'No system selected. Turn on the QuietBox 2 or the DGX Spark above.';
+      document.getElementById(id).replaceChildren(p);
+    }
+    document.getElementById('heat-key').hidden = empty;
+    if (empty) return;
+
     // by model: systems as sections, models sorted by median change (best on Talos first)
     const byModel = [];
-    for (const s of SYSTEMS) {
+    for (const s of shown()) {
       const ms = d3.groups(data.filter((r) => r.system === s), (r) => r.model)
         .map(([k, items]) => ({ label: k, system: s, items, med: median(items.map((r) => r.change)) * M.better }))
         .sort((a, b) => b.med - a.med);
@@ -295,7 +359,7 @@
     const byCase = [];
     for (const [k] of WORKLOADS) {
       let first = true;
-      for (const s of SYSTEMS) {
+      for (const s of shown()) {
         const items = data.filter((r) => r.workload === k && r.system === s);
         if (!items.length) continue;
         byCase.push({ label: s, system: s, items, head: first ? `${WL[k].name} (${WL[k].shape})` : null,
@@ -332,7 +396,7 @@
     }
     const tbody = table.createTBody();
     const idx = new Map(data.map((r) => [`${r.system}|${r.model}|${r.workload}|${r.users}`, r]));
-    for (const s of SYSTEMS) {
+    for (const s of shown()) {
       const models = byModel.filter((g) => g.system === s);
       if (!models.length) continue;
       const sr = tbody.insertRow(), sh = document.createElement('th'); sh.className = 'qx-sys'; sh.textContent = s;

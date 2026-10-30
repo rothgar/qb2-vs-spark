@@ -724,7 +724,7 @@ def talos_pairs(cfg: dict, results: list[dict]) -> list[dict]:
             continue
         base = models.get(m.get("same_as"), m)
         pairs.append({
-            "system": mc["label"], "family": mc.get("family", ""),
+            "system": mc["label"], "family": mc.get("family", ""), "talos": mc.get("talos_version", ""),
             "model": base["id"] + (f" ({m['build']})" if m.get("build") else ""),
             "workload": t["workload"], "isl": t["isl"], "osl": t["osl"], "users": t["concurrency"],
             "ubuntu_tok_s": u["output_tok_s_total"], "talos_tok_s": t["output_tok_s_total"],

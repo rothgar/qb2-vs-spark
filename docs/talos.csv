@@ -1,485 +1,675 @@
-system,family,model,workload,isl,osl,users,ubuntu_tok_s,talos_tok_s,ubuntu_ttft_ms,talos_ttft_ms,ubuntu_decode_tok_s,talos_decode_tok_s
-QuietBox 2,Tenstorrent,devstral-small-2-24b,chat,128,256,1,44.25,44.25,52.8,54.1,44.48,44.5
-DGX Spark,NVIDIA,devstral-small-2-24b,chat,128,256,1,9.35,9.72,131.2,133.3,9.36,9.73
-QuietBox 2,Tenstorrent,devstral-small-2-24b,chat,128,256,4,172.8,174.16,191.3,145.9,44.47,44.48
-DGX Spark,NVIDIA,devstral-small-2-24b,chat,128,256,4,37.43,38.82,338.2,270.2,9.44,9.77
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,1,41.79,41.37,59.9,124.1,42.04,42.06
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,1,9.2,9.59,310.3,311.6,9.26,9.66
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,2,82.32,81.23,151.1,236.2,42.02,42.03
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,2,18.42,19.01,503.3,496.4,9.35,9.65
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,4,156.95,151.27,440.8,668.6,41.92,41.8
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,4,35.4,36.63,899.4,866.2,9.11,9.43
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,8,279.58,242.69,1047.6,1872.1,40.62,38.84
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,8,66.26,67.63,1483.6,1453.1,8.69,8.87
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,16,410.02,272.89,2505.3,5330.8,34.07,26.35
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,16,116.57,120.3,2169.0,2130.3,7.77,8.02
-QuietBox 2,Tenstorrent,devstral-small-2-24b,users,1024,256,32,416.78,198.52,6840.5,16812.5,19.9,10.43
-DGX Spark,NVIDIA,devstral-small-2-24b,users,1024,256,32,189.02,193.33,3244.2,3163.2,6.41,6.55
-QuietBox 2,Tenstorrent,devstral-small-2-24b,power,1024,512,1,41.36,41.38,124.7,122.2,41.7,41.71
-QuietBox 2,Tenstorrent,devstral-small-2-24b,power,1024,512,16,453.32,383.8,3550.8,5455.3,35.19,32.16
-QuietBox 2,Tenstorrent,devstral-small-2-24b,power,1024,512,32,500.34,499.81,9914.3,9951.8,22.38,22.39
-QuietBox 2,Tenstorrent,devstral-small-2-24b,codegen,1024,1024,1,40.89,40.89,125.3,126.6,41.06,41.06
-DGX Spark,NVIDIA,devstral-small-2-24b,codegen,1024,1024,1,9.22,9.61,419.2,312.2,9.24,9.63
-QuietBox 2,Tenstorrent,devstral-small-2-24b,codegen,1024,1024,4,161.15,159.95,476.7,657.5,41.02,41.0
-DGX Spark,NVIDIA,devstral-small-2-24b,codegen,1024,1024,4,36.03,37.23,929.9,859.1,9.08,9.37
-QuietBox 2,Tenstorrent,devstral-small-2-24b,agent-turn,8192,512,1,27.65,26.3,953.7,1901.6,29.09,29.09
-DGX Spark,NVIDIA,devstral-small-2-24b,agent-turn,8192,512,1,8.48,8.82,2677.5,2634.4,8.85,9.22
-QuietBox 2,Tenstorrent,devstral-small-2-24b,agent-turn,8192,512,4,99.85,94.44,2048.8,2735.1,27.68,26.97
-DGX Spark,NVIDIA,devstral-small-2-24b,agent-turn,8192,512,4,27.0,27.82,4854.1,4733.7,7.22,7.44
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill-cached,16384,256,1,21.38,21.38,246.2,245.4,21.74,21.74
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill,16384,256,1,17.95,17.96,2529.4,2523.2,21.74,21.74
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill-cached,16384,256,1,8.39,8.69,282.9,309.1,8.44,8.75
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill,16384,256,1,7.1,7.33,5885.9,5830.4,8.45,8.77
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill-cached,16384,256,4,80.96,80.92,906.9,913.4,21.72,21.72
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill,16384,256,4,47.08,47.07,6416.8,6424.0,16.63,16.64
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill-cached,16384,256,4,30.01,30.44,886.7,1271.8,7.68,7.89
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill,16384,256,4,16.75,17.02,11605.1,11414.0,5.23,5.31
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill-cached,16384,256,8,151.3,151.15,1701.5,1715.8,21.55,21.55
-QuietBox 2,Tenstorrent,devstral-small-2-24b,prefill,16384,256,8,61.73,61.35,10343.8,10448.3,11.84,11.78
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill-cached,16384,256,8,49.97,50.51,1301.1,1563.0,6.44,6.55
-DGX Spark,NVIDIA,devstral-small-2-24b,prefill,16384,256,8,20.43,20.69,19404.9,19046.5,3.23,3.27
-QuietBox 2,Tenstorrent,devstral-small-2-24b,agent-long,32768,256,1,10.49,9.08,6587.9,10383.5,14.32,14.32
-DGX Spark,NVIDIA,devstral-small-2-24b,agent-long,32768,256,1,5.4,5.55,14352.0,14109.5,7.71,7.97
-QuietBox 2,Tenstorrent,gemma-4-31b,chat,128,256,1,39.99,39.91,69.3,81.9,40.27,40.27
-DGX Spark,NVIDIA,gemma-4-31b,chat,128,256,1,3.71,3.92,430.8,329.9,3.72,3.93
-QuietBox 2,Tenstorrent,gemma-4-31b,chat,128,256,4,39.99,39.94,16869.6,16903.6,40.26,40.27
-DGX Spark,NVIDIA,gemma-4-31b,chat,128,256,4,14.38,14.74,945.5,679.3,3.63,3.71
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,1,38.04,38.03,142.4,143.9,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,1,3.63,3.84,956.4,976.4,3.67,3.88
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,2,38.06,38.05,5743.4,5745.8,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,2,7.02,7.16,1490.2,1530.3,3.57,3.64
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,4,38.06,38.05,16951.7,16960.4,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,4,13.28,13.55,2725.3,2809.3,3.43,3.51
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,8,38.06,38.05,39370.1,39390.1,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,8,24.07,24.45,4102.8,4495.3,3.15,3.22
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,16,38.06,38.05,84205.6,84241.3,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,16,41.06,41.62,6415.2,6697.3,2.74,2.79
-QuietBox 2,Tenstorrent,gemma-4-31b,users,1024,256,32,38.06,38.05,173905.6,173955.6,38.71,38.71
-DGX Spark,NVIDIA,gemma-4-31b,users,1024,256,32,62.64,63.02,9533.9,9989.4,2.12,2.14
-QuietBox 2,Tenstorrent,gemma-4-31b,power,1024,512,1,32.22,31.6,2689.0,3004.7,38.71,38.72
-QuietBox 2,Tenstorrent,gemma-4-31b,power,1024,512,16,38.38,38.38,150215.2,150225.5,38.71,38.71
-QuietBox 2,Tenstorrent,gemma-4-31b,power,1024,512,32,37.92,38.37,315452.0,310368.1,38.71,38.71
-QuietBox 2,Tenstorrent,gemma-4-31b,codegen,1024,1024,1,35.11,34.88,2734.2,2920.8,38.7,38.7
-DGX Spark,NVIDIA,gemma-4-31b,codegen,1024,1024,1,3.66,3.87,1088.3,980.8,3.67,3.88
-QuietBox 2,Tenstorrent,gemma-4-31b,codegen,1024,1024,4,38.53,38.53,69903.4,69905.0,38.7,38.7
-DGX Spark,NVIDIA,gemma-4-31b,codegen,1024,1024,4,13.71,14.0,2706.5,2811.2,3.46,3.53
-QuietBox 2,Tenstorrent,gemma-4-31b,agent-turn,8192,512,1,27.45,26.78,5295.1,5760.5,38.26,38.26
-DGX Spark,NVIDIA,gemma-4-31b,agent-turn,8192,512,1,3.43,3.61,8386.2,8565.4,3.63,3.83
-QuietBox 2,Tenstorrent,gemma-4-31b,agent-turn,8192,512,4,35.21,35.2,39362.5,39365.1,38.26,38.26
-DGX Spark,NVIDIA,gemma-4-31b,agent-turn,8192,512,4,11.13,11.25,15451.8,15938.4,3.04,3.08
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill-cached,16384,256,1,27.65,27.65,2534.8,2534.2,37.92,37.93
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill,16384,256,1,16.33,15.71,8953.6,9572.5,37.93,37.93
-DGX Spark,NVIDIA,gemma-4-31b,prefill-cached,16384,256,1,3.52,3.76,881.0,890.5,3.55,3.8
-DGX Spark,NVIDIA,gemma-4-31b,prefill,16384,256,1,2.82,2.96,19386.8,19432.1,3.57,3.8
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill-cached,16384,256,4,27.72,27.71,23289.7,23300.7,37.92,37.92
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill,16384,256,4,27.72,27.71,23290.2,23301.3,37.93,37.92
-DGX Spark,NVIDIA,gemma-4-31b,prefill-cached,16384,256,4,13.0,13.54,2952.0,2973.0,3.37,3.51
-DGX Spark,NVIDIA,gemma-4-31b,prefill,16384,256,4,6.73,6.76,36629.2,37413.9,2.23,2.26
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill-cached,16384,256,8,27.72,27.7,50996.7,51035.2,37.92,37.92
-QuietBox 2,Tenstorrent,gemma-4-31b,prefill,16384,256,8,27.72,27.71,50992.5,51032.4,37.93,37.92
-DGX Spark,NVIDIA,gemma-4-31b,prefill-cached,16384,256,8,23.5,24.87,4596.8,4264.2,3.09,3.27
-DGX Spark,NVIDIA,gemma-4-31b,prefill,16384,256,8,8.72,8.72,56599.6,57661.9,1.46,1.47
-QuietBox 2,Tenstorrent,gemma-4-31b,agent-long,32768,256,1,18.62,18.53,6901.2,6970.9,37.26,37.25
-DGX Spark,NVIDIA,gemma-4-31b,agent-long,32768,256,1,2.13,2.2,46916.1,47792.6,3.49,3.71
-QuietBox 2,Tenstorrent,gpt-oss-120b,chat,128,256,1,61.87,61.83,245.0,249.0,65.52,65.54
-DGX Spark,NVIDIA,gpt-oss-120b,chat,128,256,1,36.17,37.69,267.4,148.2,37.44,38.38
-QuietBox 2,Tenstorrent,gpt-oss-120b,chat,128,256,4,170.09,166.0,473.1,620.8,45.97,45.97
-DGX Spark,NVIDIA,gpt-oss-120b,chat,128,256,4,85.7,87.58,394.9,308.9,22.08,22.41
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,1,60.57,59.55,292.4,367.3,64.82,64.86
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,1,35.13,36.0,305.2,307.5,36.53,37.48
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,2,82.67,82.12,596.0,636.5,45.56,45.55
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,2,55.71,56.6,467.1,462.2,29.26,29.74
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,4,153.54,149.97,1062.9,1223.3,45.49,45.5
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,4,78.26,80.32,751.2,746.5,20.7,21.27
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,8,207.11,204.83,1572.2,1683.8,30.66,30.67
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,8,104.1,108.03,1165.2,1144.1,13.8,14.34
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,16,218.66,232.28,3011.6,3048.6,16.27,17.49
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,16,138.79,141.76,1657.2,1645.2,9.18,9.38
-QuietBox 2,Tenstorrent,gpt-oss-120b,users,1024,256,32,432.9,441.08,3891.0,4617.5,17.13,18.27
-DGX Spark,NVIDIA,gpt-oss-120b,users,1024,256,32,191.77,193.93,2405.6,2371.1,6.36,6.43
-QuietBox 2,Tenstorrent,gpt-oss-120b,power,1024,512,1,61.4,60.92,452.9,516.0,64.8,64.78
-QuietBox 2,Tenstorrent,gpt-oss-120b,power,1024,512,16,247.64,258.15,3212.0,2978.5,17.15,17.77
-QuietBox 2,Tenstorrent,gpt-oss-120b,power,1024,512,32,520.53,529.48,4519.8,4625.8,18.96,19.42
-QuietBox 2,Tenstorrent,gpt-oss-120b,codegen,1024,1024,1,63.01,61.3,446.1,892.0,64.72,64.7
-DGX Spark,NVIDIA,gpt-oss-120b,codegen,1024,1024,1,36.16,37.3,437.5,305.9,36.69,37.69
-QuietBox 2,Tenstorrent,gpt-oss-120b,codegen,1024,1024,4,173.0,172.22,1175.4,1277.1,45.47,45.46
-DGX Spark,NVIDIA,gpt-oss-120b,codegen,1024,1024,4,86.57,88.59,806.0,726.8,22.0,22.49
-QuietBox 2,Tenstorrent,gpt-oss-120b,agent-turn,8192,512,1,53.15,50.73,1567.5,2025.5,63.36,63.35
-DGX Spark,NVIDIA,gpt-oss-120b,agent-turn,8192,512,1,31.18,31.94,1869.4,1886.2,35.11,36.13
-QuietBox 2,Tenstorrent,gpt-oss-120b,agent-turn,8192,512,4,105.63,121.85,4917.0,4296.9,35.43,40.85
-DGX Spark,NVIDIA,gpt-oss-120b,agent-turn,8192,512,4,63.49,62.51,3621.6,3578.1,17.88,17.54
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill-cached,16384,256,1,50.9,49.22,934.7,1106.8,62.28,62.28
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill,16384,256,1,37.3,36.61,2768.0,2898.9,62.28,62.29
-DGX Spark,NVIDIA,gpt-oss-120b,prefill-cached,16384,256,1,32.63,33.27,305.2,352.8,33.82,34.73
-DGX Spark,NVIDIA,gpt-oss-120b,prefill,16384,256,1,21.93,22.82,4239.0,3901.7,34.31,34.86
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill-cached,16384,256,4,114.13,111.98,3074.2,3250.2,43.24,43.27
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill,16384,256,4,61.42,59.26,6227.3,6554.2,24.69,24.04
-DGX Spark,NVIDIA,gpt-oss-120b,prefill-cached,16384,256,4,79.84,79.94,674.8,734.9,21.0,21.14
-DGX Spark,NVIDIA,gpt-oss-120b,prefill,16384,256,4,34.92,35.36,7669.6,7736.9,11.89,12.13
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill-cached,16384,256,8,136.23,132.41,6151.5,6584.7,28.71,28.71
-QuietBox 2,Tenstorrent,gpt-oss-120b,prefill,16384,256,8,67.82,64.99,9319.1,9919.5,12.41,12.0
-DGX Spark,NVIDIA,gpt-oss-120b,prefill-cached,16384,256,8,106.98,106.25,1025.6,1026.2,14.1,14.0
-DGX Spark,NVIDIA,gpt-oss-120b,prefill,16384,256,8,39.5,40.04,11954.6,11742.6,6.5,6.58
-QuietBox 2,Tenstorrent,gpt-oss-120b,agent-long,32768,256,1,25.89,25.37,5641.4,5847.3,60.07,60.12
-DGX Spark,NVIDIA,gpt-oss-120b,agent-long,32768,256,1,14.9,15.27,8935.5,8809.8,30.95,32.07
-QuietBox 2,Tenstorrent,gpt-oss-20b,chat,128,256,1,45.69,45.63,209.3,215.9,47.28,47.28
-DGX Spark,NVIDIA,gpt-oss-20b,chat,128,256,1,50.99,52.53,61.9,64.5,51.42,53.03
-QuietBox 2,Tenstorrent,gpt-oss-20b,chat,128,256,4,93.92,96.85,407.2,476.6,24.3,25.26
-DGX Spark,NVIDIA,gpt-oss-20b,chat,128,256,4,132.8,135.7,128.5,124.6,33.65,34.38
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,1,44.46,44.46,292.4,292.0,46.65,46.65
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,1,49.32,50.9,140.3,143.4,50.49,52.19
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,2,60.99,60.96,573.0,577.1,32.6,32.6
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,2,82.39,83.58,213.3,218.6,42.54,43.19
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,4,85.79,89.03,1149.0,1157.3,23.64,24.65
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,4,128.8,129.62,349.5,352.9,33.6,33.84
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,8,133.53,135.69,1900.8,1911.2,18.98,19.35
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,8,193.92,200.32,571.2,531.0,25.58,26.38
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,16,183.52,183.62,3433.3,3432.6,13.56,13.51
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,16,299.67,311.3,827.7,803.9,19.93,20.72
-QuietBox 2,Tenstorrent,gpt-oss-20b,users,1024,256,32,313.79,321.11,5725.2,5424.2,12.58,12.7
-DGX Spark,NVIDIA,gpt-oss-20b,users,1024,256,32,465.9,474.08,1192.6,1194.1,15.66,15.97
-QuietBox 2,Tenstorrent,gpt-oss-20b,power,1024,512,1,45.2,45.19,370.8,374.0,46.64,46.64
-QuietBox 2,Tenstorrent,gpt-oss-20b,power,1024,512,16,175.82,194.17,3457.3,3430.6,11.88,13.18
-QuietBox 2,Tenstorrent,gpt-oss-20b,power,1024,512,32,353.53,355.1,5518.8,5412.9,12.52,12.55
-QuietBox 2,Tenstorrent,gpt-oss-20b,codegen,1024,1024,1,45.92,45.01,366.1,813.9,46.64,46.64
-DGX Spark,NVIDIA,gpt-oss-20b,codegen,1024,1024,1,50.32,51.9,139.4,141.6,50.61,52.22
-QuietBox 2,Tenstorrent,gpt-oss-20b,codegen,1024,1024,4,90.58,94.89,1219.6,1272.9,23.25,24.42
-DGX Spark,NVIDIA,gpt-oss-20b,codegen,1024,1024,4,133.65,137.46,322.0,338.6,33.74,34.74
-QuietBox 2,Tenstorrent,gpt-oss-20b,agent-turn,8192,512,1,38.06,38.27,2191.9,2117.8,45.38,45.37
-DGX Spark,NVIDIA,gpt-oss-20b,agent-turn,8192,512,1,44.49,45.73,1006.2,1020.7,48.65,50.23
-QuietBox 2,Tenstorrent,gpt-oss-20b,agent-turn,8192,512,4,63.28,72.59,6052.0,5110.4,19.49,22.12
-DGX Spark,NVIDIA,gpt-oss-20b,agent-turn,8192,512,4,95.9,98.04,1906.7,1943.6,26.32,27.02
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill-cached,16384,256,1,37.26,36.6,1084.1,1207.2,44.07,44.07
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill,16384,256,1,27.74,27.67,3441.2,3465.0,44.07,44.07
-DGX Spark,NVIDIA,gpt-oss-20b,prefill-cached,16384,256,1,45.94,46.76,157.5,232.8,47.09,48.65
-DGX Spark,NVIDIA,gpt-oss-20b,prefill,16384,256,1,34.07,34.71,2111.4,2147.6,47.2,48.78
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill-cached,16384,256,4,65.5,65.42,3964.1,3983.0,21.85,21.85
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill,16384,256,4,40.8,40.35,8071.3,8113.1,15.14,14.93
-DGX Spark,NVIDIA,gpt-oss-20b,prefill-cached,16384,256,4,119.56,120.73,345.7,405.9,31.08,31.66
-DGX Spark,NVIDIA,gpt-oss-20b,prefill,16384,256,4,58.61,59.09,4199.9,4297.3,19.43,19.79
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill-cached,16384,256,8,83.81,83.7,7852.1,7887.6,15.38,15.38
-QuietBox 2,Tenstorrent,gpt-oss-20b,prefill,16384,256,8,46.52,46.27,12203.4,12275.8,8.16,8.12
-DGX Spark,NVIDIA,gpt-oss-20b,prefill-cached,16384,256,8,174.5,174.45,543.0,531.7,22.85,22.86
-DGX Spark,NVIDIA,gpt-oss-20b,prefill,16384,256,8,70.8,71.03,6378.9,6464.2,11.53,11.63
-QuietBox 2,Tenstorrent,gpt-oss-20b,agent-long,32768,256,1,17.4,18.62,8589.6,7623.7,41.65,41.64
-DGX Spark,NVIDIA,gpt-oss-20b,agent-long,32768,256,1,23.69,24.15,4934.7,4951.9,43.42,45.14
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),chat,128,256,1,85.92,85.72,86.3,93.9,88.14,88.17
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),chat,128,256,4,231.15,228.57,264.5,344.8,61.22,61.67
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,1,81.9,82.0,207.4,204.3,87.39,87.4
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,2,137.64,135.5,403.9,461.2,76.9,76.87
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,4,207.84,209.82,692.7,727.0,60.23,61.4
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,8,341.3,348.41,970.5,1018.7,50.7,52.48
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,16,443.89,484.34,1977.5,1978.8,35.34,39.37
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),users,1024,256,32,803.15,839.88,2819.1,2867.6,34.7,37.04
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),power,1024,512,1,82.24,82.28,370.6,366.6,87.28,87.26
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),power,1024,512,16,502.76,543.17,2209.5,1896.4,36.42,38.76
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),power,1024,512,32,985.07,990.97,2910.1,2846.8,37.24,37.34
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),codegen,1024,1024,1,85.03,81.41,306.4,839.9,87.16,87.15
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),codegen,1024,1024,4,225.38,228.31,873.7,923.2,59.13,60.12
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),agent-turn,8192,512,1,72.65,68.84,1074.9,1464.3,85.56,85.56
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),agent-turn,8192,512,4,138.85,172.68,3808.2,2619.6,46.83,55.3
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill-cached,16384,256,1,69.71,66.82,648.9,808.4,84.35,84.36
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill,16384,256,1,52.19,52.45,1881.2,1857.7,84.34,84.35
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill-cached,16384,256,4,156.26,153.09,2094.9,2226.3,57.2,57.15
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill,16384,256,4,92.05,89.4,3964.6,4103.8,36.01,35.07
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill-cached,16384,256,8,211.5,205.77,4278.1,4549.7,47.19,47.21
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),prefill,16384,256,8,108.02,105.03,5857.6,6051.9,19.81,19.29
-QuietBox 2,Tenstorrent,gpt-oss-20b (4-chip build),agent-long,32768,256,1,37.91,37.62,3635.9,3687.8,81.81,81.8
-QuietBox 2,Tenstorrent,llama-3.3-70b,chat,128,256,1,3.72,4.18,649.2,9259.8,3.74,4.9
-QuietBox 2,Tenstorrent,llama-3.3-70b,chat,128,256,4,52.45,51.34,1403.3,1488.8,14.07,13.82
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,1,13.82,13.61,335.9,336.0,14.02,13.8
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,2,26.42,25.95,1139.7,1134.0,13.98,13.71
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,4,51.98,51.11,1227.0,1233.6,13.8,13.56
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,8,86.03,84.83,4003.9,5002.1,12.88,13.32
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,16,150.77,148.87,8221.1,8445.1,13.46,13.37
-QuietBox 2,Tenstorrent,llama-3.3-70b,users,1024,256,32,239.52,236.89,14498.3,14751.2,12.94,12.86
-QuietBox 2,Tenstorrent,llama-3.3-70b,power,1024,512,1,13.77,7.27,336.5,32562.5,13.87,13.49
-QuietBox 2,Tenstorrent,llama-3.3-70b,power,1024,512,16,194.82,167.83,4752.4,10334.6,13.7,13.28
-QuietBox 2,Tenstorrent,llama-3.3-70b,power,1024,512,32,329.85,287.08,10649.6,17339.5,13.1,12.86
-QuietBox 2,Tenstorrent,llama-3.3-70b,codegen,1024,1024,1,13.78,13.58,336.9,338.7,13.83,13.63
-QuietBox 2,Tenstorrent,llama-3.3-70b,codegen,1024,1024,4,53.86,53.14,1643.1,1670.0,13.75,13.56
-QuietBox 2,Tenstorrent,llama-3.3-70b,agent-turn,8192,512,1,10.83,10.71,2673.3,2673.1,11.46,11.32
-QuietBox 2,Tenstorrent,llama-3.3-70b,agent-turn,8192,512,4,37.1,36.77,9645.1,8650.9,11.22,10.86
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill-cached,16384,256,1,9.14,9.09,1247.7,1283.7,9.52,9.48
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill,16384,256,1,3.04,3.35,40302.8,49144.5,5.8,9.33
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill-cached,16384,256,4,34.74,34.53,2512.6,2271.5,9.46,9.31
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill,16384,256,4,19.99,19.85,19787.9,19792.1,8.11,8.02
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill-cached,16384,256,8,63.65,63.29,4654.1,4858.1,9.27,9.27
-QuietBox 2,Tenstorrent,llama-3.3-70b,prefill,16384,256,8,25.49,25.31,41997.5,42123.3,7.2,7.13
-QuietBox 2,Tenstorrent,llama-3.3-70b,agent-long,32768,256,1,5.02,4.99,15276.2,15267.6,7.14,7.08
-QuietBox 2,Tenstorrent,muse-glimmer-30b,chat,128,256,1,42.32,42.34,96.7,98.7,42.84,42.87
-DGX Spark,NVIDIA,muse-glimmer-30b,chat,128,256,1,4.26,4.52,403.5,274.2,4.28,4.52
-QuietBox 2,Tenstorrent,muse-glimmer-30b,chat,128,256,4,164.74,162.39,265.5,354.4,42.86,42.85
-DGX Spark,NVIDIA,muse-glimmer-30b,chat,128,256,4,16.7,17.4,851.6,560.7,4.22,4.38
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,1,41.24,40.71,72.9,155.5,41.57,41.58
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,1,4.22,4.46,719.6,724.9,4.25,4.5
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,2,81.6,79.53,136.4,298.0,41.55,41.53
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,2,8.25,8.56,1128.0,1119.7,4.19,4.35
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,4,160.18,152.31,255.9,585.1,41.55,41.55
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,4,16.03,16.63,1983.2,1990.1,4.13,4.29
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,8,298.62,280.15,717.6,1168.1,41.53,41.52
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,8,30.39,31.4,3359.4,3441.4,3.99,4.14
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,16,523.12,482.0,1647.7,2316.0,41.25,41.26
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,16,54.74,56.42,4998.1,5167.0,3.67,3.8
-QuietBox 2,Tenstorrent,muse-glimmer-30b,users,1024,256,32,847.69,746.53,3292.4,4597.3,40.03,40.0
-DGX Spark,NVIDIA,muse-glimmer-30b,users,1024,256,32,89.39,90.73,7298.1,7574.8,3.05,3.11
-QuietBox 2,Tenstorrent,muse-glimmer-30b,power,1024,512,1,41.08,41.13,170.7,152.7,41.57,41.56
-QuietBox 2,Tenstorrent,muse-glimmer-30b,power,1024,512,16,561.75,556.29,2167.4,2310.4,41.16,41.16
-QuietBox 2,Tenstorrent,muse-glimmer-30b,power,1024,512,32,939.03,938.49,4604.3,4611.3,39.79,39.78
-QuietBox 2,Tenstorrent,muse-glimmer-30b,codegen,1024,1024,1,41.03,41.03,155.4,153.6,41.25,41.24
-DGX Spark,NVIDIA,muse-glimmer-30b,codegen,1024,1024,1,4.23,4.49,910.7,722.8,4.25,4.5
-QuietBox 2,Tenstorrent,muse-glimmer-30b,codegen,1024,1024,4,162.1,161.29,462.1,588.0,41.24,41.24
-DGX Spark,NVIDIA,muse-glimmer-30b,codegen,1024,1024,4,16.43,17.08,1872.9,1901.6,4.14,4.3
-QuietBox 2,Tenstorrent,muse-glimmer-30b,agent-turn,8192,512,1,37.17,37.09,908.8,936.1,39.72,39.71
-DGX Spark,NVIDIA,muse-glimmer-30b,agent-turn,8192,512,1,4.04,4.26,5855.8,6077.7,4.23,4.48
-QuietBox 2,Tenstorrent,muse-glimmer-30b,agent-turn,8192,512,4,131.45,123.87,2712.9,3660.5,39.71,39.7
-DGX Spark,NVIDIA,muse-glimmer-30b,agent-turn,8192,512,4,14.0,14.36,10341.4,10756.5,3.77,3.88
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill-cached,16384,256,1,34.78,34.63,706.6,742.9,38.32,38.35
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill,16384,256,1,28.06,28.76,2470.2,2249.9,38.33,38.34
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill-cached,16384,256,1,4.21,4.44,484.5,527.7,4.23,4.46
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill,16384,256,1,3.54,3.69,12107.7,12286.3,4.24,4.47
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill-cached,16384,256,4,136.92,136.98,829.5,829.4,38.35,38.37
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill,16384,256,4,68.98,69.02,8202.7,8207.1,38.4,38.47
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill-cached,16384,256,4,16.08,16.5,1661.3,1699.1,4.12,4.23
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill,16384,256,4,9.54,9.52,22564.1,23404.4,3.06,3.08
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill-cached,16384,256,8,247.97,247.75,1627.3,1629.0,38.46,38.43
-QuietBox 2,Tenstorrent,muse-glimmer-30b,prefill,16384,256,8,88.95,89.04,16400.6,16371.4,38.51,38.47
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill-cached,16384,256,8,30.49,31.28,2487.4,2599.7,3.95,4.07
-DGX Spark,NVIDIA,muse-glimmer-30b,prefill,16384,256,8,13.15,13.05,35431.9,36582.6,2.18,2.18
-QuietBox 2,Tenstorrent,muse-glimmer-30b,agent-long,32768,256,1,23.87,19.97,3596.3,5694.5,35.77,35.78
-DGX Spark,NVIDIA,muse-glimmer-30b,agent-long,32768,256,1,3.01,3.09,24470.6,25491.5,4.2,4.46
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,chat,128,256,1,22.88,24.63,110.8,112.1,23.02,24.8
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,chat,128,256,1,77.96,80.84,110.2,91.7,80.35,82.94
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,chat,128,256,4,87.0,86.02,599.3,764.3,22.83,22.89
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,chat,128,256,4,182.15,182.12,244.8,299.6,47.45,47.92
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,1,22.64,22.79,854.7,989.6,24.39,24.9
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,1,75.19,77.34,188.3,195.0,79.29,81.87
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,2,44.48,41.45,1114.5,1202.4,24.53,22.87
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,2,117.27,119.0,296.5,345.1,62.7,64.47
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,4,75.0,73.24,2203.3,2434.9,22.27,22.09
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,4,170.47,169.39,505.4,521.7,46.39,46.23
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,8,128.84,90.06,4357.5,10757.0,22.1,21.28
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,8,240.06,244.4,762.6,773.4,32.89,33.58
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,16,192.2,184.76,8676.6,9818.8,20.18,20.65
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,16,331.15,338.3,1103.6,1091.2,22.7,23.22
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,users,1024,256,32,265.68,247.43,17341.6,19496.2,18.9,18.74
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,users,1024,256,32,441.42,437.76,1597.7,1575.4,15.11,14.95
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,power,1024,512,1,23.85,21.88,994.2,1147.2,24.95,22.96
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,power,1024,512,16,235.01,227.94,9403.0,10650.9,20.08,20.21
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,power,1024,512,32,362.34,356.35,18193.4,19556.5,18.91,19.34
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,1,23.15,22.1,1000.6,4869.7,23.66,24.67
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,1,77.85,80.02,293.2,329.1,79.55,82.06
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,4,87.6,87.79,2556.4,2970.4,23.14,23.42
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,4,191.37,191.17,588.5,550.5,49.16,49.01
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,1,20.04,16.47,4064.6,10313.9,23.78,24.6
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,1,65.89,67.38,1308.5,1308.0,79.09,81.23
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,4,55.05,54.06,15500.4,15995.8,23.55,23.35
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,4,139.95,140.58,2613.3,2614.8,42.6,42.83
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,1,12.96,13.14,8445.6,8742.5,22.54,23.74
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,1,65.69,66.67,682.8,718.8,79.33,81.72
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,1,42.96,43.5,2747.1,2781.9,79.41,82.18
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,4,23.52,23.17,32601.8,33577.1,23.33,24.04
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,4,137.26,131.66,1680.5,1822.1,44.28,42.98
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,4,68.52,69.82,5906.7,6246.2,28.5,30.6
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,8,26.54,26.17,65196.8,67120.1,21.31,22.9
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,8,172.63,172.58,2380.1,2665.5,27.07,27.92
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,8,76.39,78.95,8640.1,8433.2,14.24,14.78
-QuietBox 2,Tenstorrent,nemotron-3.5-lightning-30b-a3b,agent-long,32768,256,1,9.27,6.92,16567.0,26086.7,23.1,23.36
-DGX Spark,NVIDIA,nemotron-3.5-lightning-30b-a3b,agent-long,32768,256,1,28.14,28.98,5816.3,5697.0,77.73,81.33
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,chat,128,256,1,30.19,31.1,263.7,163.4,31.04,31.61
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,chat,128,256,4,75.76,76.85,436.9,373.0,19.51,19.69
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,1,29.67,29.99,353.1,356.1,30.81,31.18
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,2,51.26,51.48,571.1,572.9,27.09,27.22
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,4,72.91,71.7,862.8,859.5,19.37,19.02
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,8,96.27,97.13,1180.0,1176.9,12.72,12.84
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,16,133.4,134.01,1689.1,1685.2,8.83,8.88
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,users,1024,256,32,179.72,181.0,2758.4,2750.9,6.01,6.06
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,codegen,1024,1024,1,30.22,30.84,603.0,425.9,30.74,31.21
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,codegen,1024,1024,4,77.08,76.8,963.9,852.4,19.61,19.5
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,agent-turn,8192,512,1,26.0,26.3,2766.1,2744.9,30.19,30.56
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,agent-turn,8192,512,4,53.37,53.45,4795.6,4808.8,15.26,15.29
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill-cached,16384,256,1,28.56,28.58,358.3,440.4,29.63,29.94
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill,16384,256,1,17.82,18.05,5844.7,5711.5,29.94,30.09
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill-cached,16384,256,4,69.33,68.28,841.6,957.6,18.33,18.18
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill,16384,256,4,29.51,29.45,10774.3,10803.6,10.85,10.83
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill-cached,16384,256,8,95.95,94.6,1288.1,1378.6,12.73,12.6
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,prefill,16384,256,8,31.69,31.64,17413.1,17537.7,5.55,5.55
-DGX Spark,NVIDIA,ornith-1.5-35b-a3b,agent-long,32768,256,1,12.11,12.18,12195.0,12225.1,28.5,28.97
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),chat,128,256,1,68.17,68.76,171.6,191.4,71.16,72.21
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),chat,128,256,4,130.16,128.16,625.9,725.1,35.22,35.1
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,1,65.46,72.44,288.7,294.9,70.4,78.74
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,2,76.1,74.97,559.2,617.5,41.34,41.05
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,4,123.11,121.2,1062.7,1169.1,35.15,35.03
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,8,179.32,176.48,1968.8,2141.5,26.98,26.95
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,16,228.65,225.61,3807.0,4044.0,18.08,18.07
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),users,1024,256,32,356.97,352.25,7403.0,7716.8,16.4,16.41
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),power,1024,512,1,70.16,76.28,286.5,301.0,72.89,79.71
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),power,1024,512,16,255.55,253.03,3772.7,4081.4,18.07,18.06
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),power,1024,512,32,425.63,419.19,7392.5,7743.5,16.43,16.31
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),codegen,1024,1024,1,74.56,77.45,283.8,300.5,76.06,79.18
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),codegen,1024,1024,4,136.74,136.13,1058.5,1165.6,35.4,35.37
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),agent-turn,8192,512,1,70.75,57.23,1377.9,1389.2,87.22,67.62
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),agent-turn,8192,512,4,101.85,101.05,5363.0,5496.0,34.66,34.59
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,1,35.68,35.0,2751.7,2781.4,57.67,56.25
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,1,34.82,34.55,2750.4,2769.1,55.41,54.96
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,4,55.9,55.49,10811.5,10924.8,33.97,33.87
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,4,56.1,55.53,10747.6,10919.5,33.98,33.9
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,8,65.28,64.93,21462.4,21618.8,25.74,25.71
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,8,65.39,65.06,21415.4,21569.5,25.75,25.73
-QuietBox 2,Tenstorrent,ornith-1.5-35b-a3b (v1 build),agent-long,32768,256,1,23.31,28.59,5695.1,5750.0,48.25,79.61
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,chat,128,256,1,31.14,31.67,258.5,141.1,32.02,32.11
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,chat,128,256,4,77.34,78.6,472.3,390.8,19.98,20.19
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,1,29.99,30.23,326.3,332.1,31.06,31.34
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,2,47.63,47.96,423.8,423.4,24.71,24.89
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,4,65.15,65.66,801.2,765.4,17.12,17.22
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,8,108.53,109.05,1219.1,1218.0,14.48,14.55
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,16,160.35,161.83,1757.9,1762.3,10.75,10.86
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,users,1024,256,32,202.36,204.48,2565.9,2555.2,6.76,6.83
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,codegen,1024,1024,1,30.71,30.9,399.1,331.0,31.05,31.19
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,codegen,1024,1024,4,66.76,67.55,781.0,737.2,16.89,17.08
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,agent-turn,8192,512,1,25.52,25.36,2059.1,2044.6,28.38,28.17
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,agent-turn,8192,512,4,53.11,52.8,4016.3,4159.3,14.82,14.78
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill-cached,16384,256,1,24.88,25.15,380.1,425.3,25.73,26.15
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill,16384,256,1,17.35,17.74,5076.0,4732.9,26.34,26.3
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill-cached,16384,256,4,54.82,55.35,864.8,889.2,14.33,14.5
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill,16384,256,4,25.63,26.34,9309.0,9322.0,8.41,8.72
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill-cached,16384,256,8,92.81,97.2,1323.8,1363.3,12.32,12.97
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,prefill,16384,256,8,27.65,28.21,16612.0,16323.6,4.51,4.61
-DGX Spark,NVIDIA,qwen3-coder-30b-a3b,agent-long,32768,256,1,10.5,10.44,12824.8,12817.7,22.06,21.78
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),chat,128,256,1,47.76,47.28,201.0,248.8,49.43,49.36
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),chat,128,256,4,116.38,111.48,340.9,751.9,30.15,30.24
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,1,46.92,45.75,203.8,345.6,48.56,48.58
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,2,69.96,67.62,202.0,457.7,35.83,35.85
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,4,114.76,108.38,360.7,858.2,29.78,29.69
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,8,210.8,193.43,958.7,1848.8,29.12,29.18
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,16,367.36,330.89,2051.4,3308.2,28.03,28.12
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),users,1024,256,32,599.08,513.19,3954.1,6203.9,26.24,26.13
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),power,1024,512,1,47.04,47.07,351.8,371.5,48.52,48.64
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),power,1024,512,16,386.14,385.04,2783.8,3029.8,27.73,28.01
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),power,1024,512,32,648.61,648.2,5897.2,5891.4,26.39,26.36
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),codegen,1024,1024,1,47.77,47.76,324.4,347.1,48.46,48.49
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),codegen,1024,1024,4,117.08,116.17,658.9,865.5,29.8,29.75
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),agent-turn,8192,512,1,41.57,40.94,1287.8,1480.1,46.33,46.35
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),agent-turn,8192,512,4,92.83,87.04,3584.4,5064.2,27.66,27.67
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,1,40.62,40.34,657.3,699.6,45.17,45.17
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,1,25.73,25.43,4315.2,4432.5,45.25,45.25
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,4,95.02,94.81,1064.8,1080.1,26.26,26.24
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,4,49.5,49.43,10922.3,10941.7,26.11,26.09
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,8,161.25,160.9,1985.1,2003.6,23.8,23.78
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,8,63.44,63.4,21562.4,21586.0,23.79,23.79
-QuietBox 2,Tenstorrent,qwen3-coder-30b-a3b (v1 build),agent-long,32768,256,1,24.16,18.53,4677.8,7887.4,43.08,43.04
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),chat,128,256,1,54.86,53.62,258.4,274.6,57.85,56.67
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),chat,128,256,4,83.13,82.15,955.6,1079.7,22.44,22.4
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,1,35.3,34.84,461.1,471.9,37.55,37.09
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,2,50.78,50.16,877.9,950.7,27.7,27.55
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,4,78.37,77.51,1692.2,1815.7,22.42,22.38
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,8,105.31,104.39,3213.8,3370.3,15.71,15.69
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,16,132.99,131.89,6218.4,6468.4,10.37,10.37
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),users,1024,256,32,201.02,198.86,12167.7,12612.8,8.92,8.92
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),power,1024,512,1,50.64,48.97,457.7,468.4,52.94,51.17
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),power,1024,512,16,146.4,145.63,6236.9,6537.0,10.28,10.28
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),power,1024,512,32,234.26,233.01,12158.2,12536.6,8.84,8.84
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),codegen,1024,1024,1,45.99,48.76,458.9,474.2,46.92,49.84
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),codegen,1024,1024,4,87.16,86.91,1697.8,1806.8,22.58,22.57
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),agent-turn,8192,512,1,44.69,44.0,2295.1,2314.3,55.78,54.81
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),agent-turn,8192,512,4,63.9,63.65,9036.1,9137.5,22.2,22.18
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,1,23.22,23.01,4598.9,4623.9,39.68,39.22
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill,16384,256,1,25.59,25.4,4661.8,4584.0,47.73,46.41
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,4,34.33,34.19,18151.5,18248.5,21.84,21.79
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill,16384,256,4,34.58,34.41,17932.3,18054.1,21.84,21.79
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,8,38.86,38.71,35931.3,36115.7,15.2,15.19
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),prefill,16384,256,8,38.98,38.92,35762.0,35832.6,15.2,15.19
-QuietBox 2,Tenstorrent,qwen3.5-122b-a10b (v1 build),agent-long,32768,256,1,16.7,16.61,9290.8,9308.7,42.24,41.8
-QuietBox 2,Tenstorrent,qwen3.6-27b,chat,128,256,1,23.39,23.17,309.6,385.5,23.98,23.92
-DGX Spark,NVIDIA,qwen3.6-27b,chat,128,256,1,4.41,4.68,393.9,289.0,4.43,4.69
-QuietBox 2,Tenstorrent,qwen3.6-27b,chat,128,256,4,71.51,67.17,1536.7,1715.4,19.95,18.85
-DGX Spark,NVIDIA,qwen3.6-27b,chat,128,256,4,16.95,17.5,837.1,620.4,4.28,4.41
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,1,23.18,23.06,357.5,394.4,23.86,23.81
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,1,4.36,4.62,915.0,922.8,4.41,4.68
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,2,41.4,39.48,585.2,599.5,21.65,20.61
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,2,8.46,8.68,1648.3,1646.7,4.33,4.45
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,4,74.29,71.16,1227.0,1285.3,20.31,19.46
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,4,16.26,16.68,3077.5,3047.7,4.26,4.38
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,8,112.97,109.71,3285.9,3736.4,17.18,17.08
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,8,30.25,31.07,4329.2,4305.6,4.04,4.15
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,16,160.76,154.41,7318.5,8158.9,14.04,13.88
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,16,52.85,54.15,5967.6,5935.8,3.58,3.68
-QuietBox 2,Tenstorrent,qwen3.6-27b,users,1024,256,32,229.93,218.87,12629.1,14204.6,11.09,10.98
-DGX Spark,NVIDIA,qwen3.6-27b,users,1024,256,32,82.33,83.78,8589.3,8484.6,2.83,2.88
-QuietBox 2,Tenstorrent,qwen3.6-27b,power,1024,512,1,23.54,23.46,355.4,396.8,23.88,23.85
-QuietBox 2,Tenstorrent,qwen3.6-27b,power,1024,512,16,174.69,168.75,10810.2,12121.6,14.16,14.03
-QuietBox 2,Tenstorrent,qwen3.6-27b,power,1024,512,32,255.34,273.39,18437.9,14522.9,11.18,11.25
-QuietBox 2,Tenstorrent,qwen3.6-27b,codegen,1024,1024,1,23.69,23.62,350.9,393.0,23.86,23.82
-DGX Spark,NVIDIA,qwen3.6-27b,codegen,1024,1024,1,4.4,4.66,1084.5,923.9,4.41,4.67
-QuietBox 2,Tenstorrent,qwen3.6-27b,codegen,1024,1024,4,81.78,79.97,1147.7,1264.1,20.91,20.48
-DGX Spark,NVIDIA,qwen3.6-27b,codegen,1024,1024,4,16.82,17.29,2955.7,3063.1,4.25,4.37
-QuietBox 2,Tenstorrent,qwen3.6-27b,agent-turn,8192,512,1,22.28,22.1,1466.0,1509.1,23.75,23.59
-DGX Spark,NVIDIA,qwen3.6-27b,agent-turn,8192,512,1,4.15,4.39,6689.0,6579.4,4.38,4.64
-QuietBox 2,Tenstorrent,qwen3.6-27b,agent-turn,8192,512,4,65.85,64.61,4955.6,4886.2,19.55,19.06
-DGX Spark,NVIDIA,qwen3.6-27b,agent-turn,8192,512,4,13.83,14.19,11921.7,11668.2,3.77,3.86
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill-cached,16384,256,1,18.56,18.44,2924.9,2953.6,23.46,23.34
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill,16384,256,1,18.55,18.45,2923.7,2943.8,23.44,23.33
-DGX Spark,NVIDIA,qwen3.6-27b,prefill-cached,16384,256,1,4.3,4.57,648.6,702.9,4.33,4.61
-DGX Spark,NVIDIA,qwen3.6-27b,prefill,16384,256,1,3.53,3.74,13709.3,13195.6,4.34,4.61
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill-cached,16384,256,4,40.94,40.49,9524.9,9610.5,16.46,16.26
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill,16384,256,4,39.0,38.14,11060.3,11702.6,16.78,16.84
-DGX Spark,NVIDIA,qwen3.6-27b,prefill-cached,16384,256,4,15.93,16.43,2016.8,2048.4,4.1,4.24
-DGX Spark,NVIDIA,qwen3.6-27b,prefill,16384,256,4,8.88,9.14,25744.9,25086.9,2.91,3.0
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill-cached,16384,256,8,52.45,52.11,20759.3,20045.0,13.95,13.24
-QuietBox 2,Tenstorrent,qwen3.6-27b,prefill,16384,256,8,50.61,49.77,22082.9,22534.8,13.87,13.7
-DGX Spark,NVIDIA,qwen3.6-27b,prefill-cached,16384,256,8,29.72,30.93,3164.0,3029.7,3.89,4.05
-DGX Spark,NVIDIA,qwen3.6-27b,prefill,16384,256,8,11.62,11.93,41366.1,40352.5,1.96,2.01
-QuietBox 2,Tenstorrent,qwen3.6-27b,agent-long,32768,256,1,14.77,14.74,6269.7,6277.3,23.06,22.99
-DGX Spark,NVIDIA,qwen3.6-27b,agent-long,32768,256,1,2.89,3.03,28548.1,27980.9,4.26,4.51
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,chat,128,256,1,36.97,36.82,279.7,281.7,38.38,38.22
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,chat,128,256,1,30.3,31.21,268.4,158.8,31.17,31.7
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,chat,128,256,4,73.55,76.13,435.9,355.3,18.92,19.48
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,users,1024,256,1,32.68,32.57,1165.1,1167.3,38.24,38.1
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,1,29.69,30.19,346.1,348.5,30.81,31.36
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,2,50.43,51.24,558.1,555.1,26.59,27.04
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,4,70.07,70.6,846.7,836.3,18.55,18.68
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,8,93.18,96.49,1155.3,1129.4,12.28,12.72
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,16,125.23,128.74,1657.4,1630.5,8.25,8.49
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,users,1024,256,32,167.39,170.86,2716.6,2682.4,5.57,5.69
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,power,1024,512,1,34.92,34.75,1270.8,1279.5,38.16,37.98
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,power,1024,512,1,29.84,30.83,697.9,409.8,31.04,31.55
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,power,1024,512,16,128.6,130.63,2141.8,2009.6,8.33,8.45
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,power,1024,512,32,178.84,177.69,3467.3,3438.9,5.84,5.8
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,codegen,1024,1024,1,36.52,33.54,1270.2,3579.2,38.21,37.96
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,codegen,1024,1024,1,30.42,30.97,560.4,413.0,30.91,31.33
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,codegen,1024,1024,4,73.85,74.76,958.5,813.3,18.77,18.96
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,agent-turn,8192,512,1,23.12,21.83,8641.1,9859.5,37.85,37.59
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,agent-turn,8192,512,1,25.89,26.6,2728.5,2612.8,29.97,30.72
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,agent-turn,8192,512,4,53.89,55.11,4655.1,4571.1,15.37,15.72
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,prefill-cached,16384,256,1,20.63,20.56,5592.3,5599.3,37.4,37.21
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,prefill,16384,256,1,9.46,9.44,20237.6,20261.5,37.39,37.24
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill-cached,16384,256,1,28.69,28.75,342.1,424.7,29.72,30.07
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill,16384,256,1,17.98,18.44,5718.8,5450.3,29.94,30.25
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill-cached,16384,256,4,72.91,71.32,800.3,881.8,19.28,18.95
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill,16384,256,4,29.76,29.95,10334.8,10508.8,10.79,10.97
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill-cached,16384,256,8,92.44,94.26,1267.5,1259.0,12.23,12.48
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,prefill,16384,256,8,31.96,32.18,16961.0,16777.5,5.56,5.59
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b,agent-long,32768,256,1,6.46,5.17,32682.5,42552.4,36.76,36.54
-DGX Spark,NVIDIA,qwen3.6-35b-a3b,agent-long,32768,256,1,12.33,12.59,11831.2,11600.6,28.53,29.2
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),chat,128,256,1,72.52,56.74,174.4,187.2,76.0,58.97
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),chat,128,256,4,129.99,128.08,639.2,732.4,35.23,35.11
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,1,83.51,74.79,284.9,295.1,91.71,81.54
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,2,76.09,74.99,558.6,613.5,41.33,41.04
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,4,123.31,121.43,1050.2,1153.8,35.15,35.03
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,8,179.36,176.69,1962.5,2128.1,26.97,26.95
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,16,229.09,226.48,3768.6,3967.5,18.07,18.06
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),users,1024,256,32,354.83,347.91,7322.6,7754.1,16.18,16.15
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),power,1024,512,1,89.8,73.59,282.8,295.2,94.31,76.7
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),power,1024,512,16,255.3,253.49,3802.0,4029.3,18.07,18.06
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),power,1024,512,32,419.76,415.76,7332.2,7652.4,16.12,16.09
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),codegen,1024,1024,1,88.41,72.42,285.1,295.7,90.55,73.89
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),codegen,1024,1024,4,136.72,136.18,1062.4,1155.9,35.4,35.37
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),agent-turn,8192,512,1,67.16,63.79,1380.4,1394.2,81.85,77.05
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),agent-turn,8192,512,4,101.86,101.24,5360.9,5460.1,34.66,34.6
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,1,38.51,37.96,2752.3,2786.7,65.47,64.45
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,1,45.43,44.08,2736.5,2776.1,87.97,84.13
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,4,55.85,55.3,10830.1,10991.2,33.98,33.89
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,4,56.25,55.71,10705.2,10854.9,34.01,33.88
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,8,65.25,64.92,21485.8,21628.6,25.76,25.72
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,8,65.23,65.1,21495.6,21547.7,25.75,25.73
-QuietBox 2,Tenstorrent,qwen3.6-35b-a3b (4-chip build),agent-long,32768,256,1,28.14,28.3,5696.0,5724.8,74.95,76.8
+system,family,talos,model,workload,isl,osl,users,ubuntu_tok_s,talos_tok_s,ubuntu_ttft_ms,talos_ttft_ms,ubuntu_decode_tok_s,talos_decode_tok_s
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,chat,128,256,1,44.25,44.25,52.8,54.1,44.48,44.5
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,chat,128,256,1,9.35,9.72,131.2,133.3,9.36,9.73
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,chat,128,256,1,9.35,10.08,131.2,128.2,9.36,10.1
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,chat,128,256,4,172.8,174.16,191.3,145.9,44.47,44.48
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,chat,128,256,4,37.43,38.82,338.2,270.2,9.44,9.77
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,chat,128,256,4,37.43,40.04,338.2,293.0,9.44,10.09
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,1,41.79,41.37,59.9,124.1,42.04,42.06
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,1,9.2,9.59,310.3,311.6,9.26,9.66
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,1,9.2,9.92,310.3,337.3,9.26,10.01
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,2,82.32,81.23,151.1,236.2,42.02,42.03
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,2,18.42,19.01,503.3,496.4,9.35,9.65
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,2,18.42,19.65,503.3,527.4,9.35,10.0
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,4,156.95,151.27,440.8,668.6,41.92,41.8
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,4,35.4,36.63,899.4,866.2,9.11,9.43
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,4,35.4,37.51,899.4,908.5,9.11,9.68
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,8,279.58,242.69,1047.6,1872.1,40.62,38.84
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,8,66.26,67.63,1483.6,1453.1,8.69,8.87
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,8,66.26,69.4,1483.6,1489.2,8.69,9.12
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,16,410.02,272.89,2505.3,5330.8,34.07,26.35
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,16,116.57,120.3,2169.0,2130.3,7.77,8.02
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,16,116.57,123.22,2169.0,2199.4,7.77,8.25
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,users,1024,256,32,416.78,198.52,6840.5,16812.5,19.9,10.43
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,users,1024,256,32,189.02,193.33,3244.2,3163.2,6.41,6.55
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,users,1024,256,32,189.02,192.24,3244.2,3296.9,6.41,6.53
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,power,1024,512,1,41.36,41.38,124.7,122.2,41.7,41.71
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,power,1024,512,16,453.32,383.8,3550.8,5455.3,35.19,32.16
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,power,1024,512,32,500.34,499.81,9914.3,9951.8,22.38,22.39
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,codegen,1024,1024,1,40.89,40.89,125.3,126.6,41.06,41.06
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,codegen,1024,1024,1,9.22,9.61,419.2,312.2,9.24,9.63
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,codegen,1024,1024,1,9.22,9.94,419.2,519.0,9.24,9.98
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,codegen,1024,1024,4,161.15,159.95,476.7,657.5,41.02,41.0
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,codegen,1024,1024,4,36.03,37.23,929.9,859.1,9.08,9.37
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,codegen,1024,1024,4,36.03,38.18,929.9,1082.4,9.08,9.64
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,agent-turn,8192,512,1,27.65,26.3,953.7,1901.6,29.09,29.09
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,agent-turn,8192,512,1,8.48,8.82,2677.5,2634.4,8.85,9.22
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,agent-turn,8192,512,1,8.48,8.97,2677.5,2710.2,8.85,9.39
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,agent-turn,8192,512,4,99.85,94.44,2048.8,2735.1,27.68,26.97
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,agent-turn,8192,512,4,27.0,27.82,4854.1,4733.7,7.22,7.44
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,agent-turn,8192,512,4,27.0,27.96,4854.1,4863.2,7.22,7.49
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill-cached,16384,256,1,21.38,21.38,246.2,245.4,21.74,21.74
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill,16384,256,1,17.95,17.96,2529.4,2523.2,21.74,21.74
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill-cached,16384,256,1,8.39,8.69,282.9,309.1,8.44,8.75
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill,16384,256,1,7.1,7.33,5885.9,5830.4,8.45,8.77
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill-cached,16384,256,1,8.39,8.53,282.9,333.2,8.44,8.59
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill,16384,256,1,7.1,7.21,5885.9,5900.9,8.45,8.61
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill-cached,16384,256,4,80.96,80.92,906.9,913.4,21.72,21.72
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill,16384,256,4,47.08,47.07,6416.8,6424.0,16.63,16.64
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill-cached,16384,256,4,30.01,30.44,886.7,1271.8,7.68,7.89
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill,16384,256,4,16.75,17.02,11605.1,11414.0,5.23,5.31
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill-cached,16384,256,4,30.01,29.86,886.7,1387.0,7.68,7.76
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill,16384,256,4,16.75,16.8,11605.1,11595.4,5.23,5.25
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill-cached,16384,256,8,151.3,151.15,1701.5,1715.8,21.55,21.55
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,prefill,16384,256,8,61.73,61.35,10343.8,10448.3,11.84,11.78
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill-cached,16384,256,8,49.97,50.51,1301.1,1563.0,6.44,6.55
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,prefill,16384,256,8,20.43,20.69,19404.9,19046.5,3.23,3.27
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill-cached,16384,256,8,49.97,50.15,1301.1,1348.7,6.44,6.47
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,prefill,16384,256,8,20.43,20.33,19404.9,19317.4,3.23,3.21
+QuietBox 2,Tenstorrent,1.14,devstral-small-2-24b,agent-long,32768,256,1,10.49,9.08,6587.9,10383.5,14.32,14.32
+DGX Spark,NVIDIA,1.14,devstral-small-2-24b,agent-long,32768,256,1,5.4,5.55,14352.0,14109.5,7.71,7.97
+DGX Spark,NVIDIA,1.15,devstral-small-2-24b,agent-long,32768,256,1,5.4,5.47,14352.0,14531.5,7.71,7.9
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,chat,128,256,1,39.99,39.91,69.3,81.9,40.27,40.27
+DGX Spark,NVIDIA,1.14,gemma-4-31b,chat,128,256,1,3.71,3.92,430.8,329.9,3.72,3.93
+DGX Spark,NVIDIA,1.15,gemma-4-31b,chat,128,256,1,3.71,3.98,430.8,320.6,3.72,3.98
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,chat,128,256,4,39.99,39.94,16869.6,16903.6,40.26,40.27
+DGX Spark,NVIDIA,1.14,gemma-4-31b,chat,128,256,4,14.38,14.74,945.5,679.3,3.63,3.71
+DGX Spark,NVIDIA,1.15,gemma-4-31b,chat,128,256,4,14.38,15.46,945.5,674.0,3.63,3.89
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,1,38.04,38.03,142.4,143.9,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,1,3.63,3.84,956.4,976.4,3.67,3.88
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,1,3.63,3.87,956.4,978.1,3.67,3.91
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,2,38.06,38.05,5743.4,5745.8,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,2,7.02,7.16,1490.2,1530.3,3.57,3.64
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,2,7.02,7.49,1490.2,1530.3,3.57,3.82
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,4,38.06,38.05,16951.7,16960.4,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,4,13.28,13.55,2725.3,2809.3,3.43,3.51
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,4,13.28,14.12,2725.3,2786.6,3.43,3.66
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,8,38.06,38.05,39370.1,39390.1,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,8,24.07,24.45,4102.8,4495.3,3.15,3.22
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,8,24.07,25.31,4102.8,4453.8,3.15,3.34
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,16,38.06,38.05,84205.6,84241.3,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,16,41.06,41.62,6415.2,6697.3,2.74,2.79
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,16,41.06,41.71,6415.2,6651.3,2.74,2.79
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,users,1024,256,32,38.06,38.05,173905.6,173955.6,38.71,38.71
+DGX Spark,NVIDIA,1.14,gemma-4-31b,users,1024,256,32,62.64,63.02,9533.9,9989.4,2.12,2.14
+DGX Spark,NVIDIA,1.15,gemma-4-31b,users,1024,256,32,62.64,47.81,9533.9,10034.6,2.12,1.59
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,power,1024,512,1,32.22,31.6,2689.0,3004.7,38.71,38.72
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,power,1024,512,16,38.38,38.38,150215.2,150225.5,38.71,38.71
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,power,1024,512,32,37.92,38.37,315452.0,310368.1,38.71,38.71
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,codegen,1024,1024,1,35.11,34.88,2734.2,2920.8,38.7,38.7
+DGX Spark,NVIDIA,1.14,gemma-4-31b,codegen,1024,1024,1,3.66,3.87,1088.3,980.8,3.67,3.88
+DGX Spark,NVIDIA,1.15,gemma-4-31b,codegen,1024,1024,1,3.66,3.9,1088.3,978.9,3.67,3.91
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,codegen,1024,1024,4,38.53,38.53,69903.4,69905.0,38.7,38.7
+DGX Spark,NVIDIA,1.14,gemma-4-31b,codegen,1024,1024,4,13.71,14.0,2706.5,2811.2,3.46,3.53
+DGX Spark,NVIDIA,1.15,gemma-4-31b,codegen,1024,1024,4,13.71,14.61,2706.5,2791.5,3.46,3.69
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,agent-turn,8192,512,1,27.45,26.78,5295.1,5760.5,38.26,38.26
+DGX Spark,NVIDIA,1.14,gemma-4-31b,agent-turn,8192,512,1,3.43,3.61,8386.2,8565.4,3.63,3.83
+DGX Spark,NVIDIA,1.15,gemma-4-31b,agent-turn,8192,512,1,3.43,3.63,8386.2,8593.7,3.63,3.86
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,agent-turn,8192,512,4,35.21,35.2,39362.5,39365.1,38.26,38.26
+DGX Spark,NVIDIA,1.14,gemma-4-31b,agent-turn,8192,512,4,11.13,11.25,15451.8,15938.4,3.04,3.08
+DGX Spark,NVIDIA,1.15,gemma-4-31b,agent-turn,8192,512,4,11.13,11.63,15451.8,15943.0,3.04,3.2
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill-cached,16384,256,1,27.65,27.65,2534.8,2534.2,37.92,37.93
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill,16384,256,1,16.33,15.71,8953.6,9572.5,37.93,37.93
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill-cached,16384,256,1,3.52,3.76,881.0,890.5,3.55,3.8
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill,16384,256,1,2.82,2.96,19386.8,19432.1,3.57,3.8
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill-cached,16384,256,1,3.52,3.77,881.0,909.7,3.55,3.81
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill,16384,256,1,2.82,2.96,19386.8,19366.7,3.57,3.81
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill-cached,16384,256,4,27.72,27.71,23289.7,23300.7,37.92,37.92
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill,16384,256,4,27.72,27.71,23290.2,23301.3,37.93,37.92
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill-cached,16384,256,4,13.0,13.54,2952.0,2973.0,3.37,3.51
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill,16384,256,4,6.73,6.76,36629.2,37413.9,2.23,2.26
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill-cached,16384,256,4,13.0,13.83,2952.0,2318.2,3.37,3.56
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill,16384,256,4,6.73,6.82,36629.2,37299.8,2.23,2.29
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill-cached,16384,256,8,27.72,27.7,50996.7,51035.2,37.92,37.92
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,prefill,16384,256,8,27.72,27.71,50992.5,51032.4,37.93,37.92
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill-cached,16384,256,8,23.5,24.87,4596.8,4264.2,3.09,3.27
+DGX Spark,NVIDIA,1.14,gemma-4-31b,prefill,16384,256,8,8.72,8.72,56599.6,57661.9,1.46,1.47
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill-cached,16384,256,8,23.5,25.23,4596.8,4290.8,3.09,3.32
+DGX Spark,NVIDIA,1.15,gemma-4-31b,prefill,16384,256,8,8.72,8.78,56599.6,57516.5,1.46,1.48
+QuietBox 2,Tenstorrent,1.14,gemma-4-31b,agent-long,32768,256,1,18.62,18.53,6901.2,6970.9,37.26,37.25
+DGX Spark,NVIDIA,1.14,gemma-4-31b,agent-long,32768,256,1,2.13,2.2,46916.1,47792.6,3.49,3.71
+DGX Spark,NVIDIA,1.15,gemma-4-31b,agent-long,32768,256,1,2.13,2.18,46916.1,48098.0,3.49,3.68
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,chat,128,256,1,61.87,61.83,245.0,249.0,65.52,65.54
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,chat,128,256,1,36.17,37.69,267.4,148.2,37.44,38.38
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,chat,128,256,1,36.17,38.06,267.4,146.2,37.44,38.76
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,chat,128,256,4,170.09,166.0,473.1,620.8,45.97,45.97
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,chat,128,256,4,85.7,87.58,394.9,308.9,22.08,22.41
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,chat,128,256,4,85.7,87.76,394.9,305.0,22.08,22.45
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,1,60.57,59.55,292.4,367.3,64.82,64.86
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,1,35.13,36.0,305.2,307.5,36.53,37.48
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,1,35.13,36.57,305.2,300.3,36.53,38.06
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,2,82.67,82.12,596.0,636.5,45.56,45.55
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,2,55.71,56.6,467.1,462.2,29.26,29.74
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,2,55.71,58.32,467.1,462.9,29.26,30.68
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,4,153.54,149.97,1062.9,1223.3,45.49,45.5
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,4,78.26,80.32,751.2,746.5,20.7,21.27
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,4,78.26,82.54,751.2,734.9,20.7,21.88
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,8,207.11,204.83,1572.2,1683.8,30.66,30.67
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,8,104.1,108.03,1165.2,1144.1,13.8,14.34
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,8,104.1,109.39,1165.2,1142.6,13.8,14.53
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,16,218.66,232.28,3011.6,3048.6,16.27,17.49
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,16,138.79,141.76,1657.2,1645.2,9.18,9.38
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,16,138.79,138.18,1657.2,1634.9,9.18,9.13
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,users,1024,256,32,432.9,441.08,3891.0,4617.5,17.13,18.27
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,users,1024,256,32,191.77,193.93,2405.6,2371.1,6.36,6.43
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,users,1024,256,32,191.77,197.15,2405.6,2350.4,6.36,6.54
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,power,1024,512,1,61.4,60.92,452.9,516.0,64.8,64.78
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,power,1024,512,16,247.64,258.15,3212.0,2978.5,17.15,17.77
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,power,1024,512,32,520.53,529.48,4519.8,4625.8,18.96,19.42
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,codegen,1024,1024,1,63.01,61.3,446.1,892.0,64.72,64.7
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,codegen,1024,1024,1,36.16,37.3,437.5,305.9,36.69,37.69
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,codegen,1024,1024,1,36.16,37.64,437.5,304.4,36.69,38.03
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,codegen,1024,1024,4,173.0,172.22,1175.4,1277.1,45.47,45.46
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,codegen,1024,1024,4,86.57,88.59,806.0,726.8,22.0,22.49
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,codegen,1024,1024,4,86.57,87.45,806.0,691.3,22.0,22.17
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,agent-turn,8192,512,1,53.15,50.73,1567.5,2025.5,63.36,63.35
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,agent-turn,8192,512,1,31.18,31.94,1869.4,1886.2,35.11,36.13
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,agent-turn,8192,512,1,31.18,32.29,1869.4,1863.8,35.11,36.52
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,agent-turn,8192,512,4,105.63,121.85,4917.0,4296.9,35.43,40.85
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,agent-turn,8192,512,4,63.49,62.51,3621.6,3578.1,17.88,17.54
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,agent-turn,8192,512,4,63.49,64.47,3621.6,3546.1,17.88,18.14
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill-cached,16384,256,1,50.9,49.22,934.7,1106.8,62.28,62.28
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill,16384,256,1,37.3,36.61,2768.0,2898.9,62.28,62.29
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill-cached,16384,256,1,32.63,33.27,305.2,352.8,33.82,34.73
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill,16384,256,1,21.93,22.82,4239.0,3901.7,34.31,34.86
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill-cached,16384,256,1,32.63,33.15,305.2,349.8,33.82,34.59
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill,16384,256,1,21.93,22.8,4239.0,3883.6,34.31,34.72
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill-cached,16384,256,4,114.13,111.98,3074.2,3250.2,43.24,43.27
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill,16384,256,4,61.42,59.26,6227.3,6554.2,24.69,24.04
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill-cached,16384,256,4,79.84,79.94,674.8,734.9,21.0,21.14
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill,16384,256,4,34.92,35.36,7669.6,7736.9,11.89,12.13
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill-cached,16384,256,4,79.84,81.0,674.8,740.8,21.0,21.45
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill,16384,256,4,34.92,35.1,7669.6,7718.8,11.89,12.0
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill-cached,16384,256,8,136.23,132.41,6151.5,6584.7,28.71,28.71
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,prefill,16384,256,8,67.82,64.99,9319.1,9919.5,12.41,12.0
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill-cached,16384,256,8,106.98,106.25,1025.6,1026.2,14.1,14.0
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,prefill,16384,256,8,39.5,40.04,11954.6,11742.6,6.5,6.58
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill-cached,16384,256,8,106.98,110.2,1025.6,1011.0,14.1,14.55
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,prefill,16384,256,8,39.5,40.35,11954.6,11707.3,6.5,6.64
+QuietBox 2,Tenstorrent,1.14,gpt-oss-120b,agent-long,32768,256,1,25.89,25.37,5641.4,5847.3,60.07,60.12
+DGX Spark,NVIDIA,1.14,gpt-oss-120b,agent-long,32768,256,1,14.9,15.27,8935.5,8809.8,30.95,32.07
+DGX Spark,NVIDIA,1.15,gpt-oss-120b,agent-long,32768,256,1,14.9,15.37,8935.5,8759.6,30.95,32.3
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,chat,128,256,1,45.69,45.63,209.3,215.9,47.28,47.28
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,chat,128,256,1,50.99,52.53,61.9,64.5,51.42,53.03
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,chat,128,256,1,50.99,53.06,61.9,59.9,51.42,53.52
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,chat,128,256,4,93.92,96.85,407.2,476.6,24.3,25.26
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,chat,128,256,4,132.8,135.7,128.5,124.6,33.65,34.38
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,chat,128,256,4,132.8,141.47,128.5,120.5,33.65,35.83
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,1,44.46,44.46,292.4,292.0,46.65,46.65
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,1,49.32,50.9,140.3,143.4,50.49,52.19
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,1,49.32,51.31,140.3,143.7,50.49,52.63
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,2,60.99,60.96,573.0,577.1,32.6,32.6
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,2,82.39,83.58,213.3,218.6,42.54,43.19
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,2,82.39,86.61,213.3,228.2,42.54,44.9
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,4,85.79,89.03,1149.0,1157.3,23.64,24.65
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,4,128.8,129.62,349.5,352.9,33.6,33.84
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,4,128.8,134.07,349.5,364.4,33.6,35.1
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,8,133.53,135.69,1900.8,1911.2,18.98,19.35
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,8,193.92,200.32,571.2,531.0,25.58,26.38
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,8,193.92,207.28,571.2,522.8,25.58,27.32
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,16,183.52,183.62,3433.3,3432.6,13.56,13.51
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,16,299.67,311.3,827.7,803.9,19.93,20.72
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,16,299.67,314.14,827.7,810.6,19.93,20.93
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,users,1024,256,32,313.79,321.11,5725.2,5424.2,12.58,12.7
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,users,1024,256,32,465.9,474.08,1192.6,1194.1,15.66,15.97
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,users,1024,256,32,465.9,479.56,1192.6,1174.4,15.66,16.14
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,power,1024,512,1,45.2,45.19,370.8,374.0,46.64,46.64
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,power,1024,512,16,175.82,194.17,3457.3,3430.6,11.88,13.18
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,power,1024,512,32,353.53,355.1,5518.8,5412.9,12.52,12.55
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,codegen,1024,1024,1,45.92,45.01,366.1,813.9,46.64,46.64
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,codegen,1024,1024,1,50.32,51.9,139.4,141.6,50.61,52.22
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,codegen,1024,1024,1,50.32,52.34,139.4,138.8,50.61,52.66
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,codegen,1024,1024,4,90.58,94.89,1219.6,1272.9,23.25,24.42
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,codegen,1024,1024,4,133.65,137.46,322.0,338.6,33.74,34.74
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,codegen,1024,1024,4,133.65,143.1,322.0,372.5,33.74,36.22
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,agent-turn,8192,512,1,38.06,38.27,2191.9,2117.8,45.38,45.37
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,agent-turn,8192,512,1,44.49,45.73,1006.2,1020.7,48.65,50.23
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,agent-turn,8192,512,1,44.49,46.16,1006.2,1000.6,48.65,50.64
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,agent-turn,8192,512,4,63.28,72.59,6052.0,5110.4,19.49,22.12
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,agent-turn,8192,512,4,95.9,98.04,1906.7,1943.6,26.32,27.02
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,agent-turn,8192,512,4,95.9,98.93,1906.7,1962.4,26.32,27.32
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill-cached,16384,256,1,37.26,36.6,1084.1,1207.2,44.07,44.07
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill,16384,256,1,27.74,27.67,3441.2,3465.0,44.07,44.07
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill-cached,16384,256,1,45.94,46.76,157.5,232.8,47.09,48.65
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill,16384,256,1,34.07,34.71,2111.4,2147.6,47.2,48.78
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill-cached,16384,256,1,45.94,46.46,157.5,219.4,47.09,48.2
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill,16384,256,1,34.07,34.51,2111.4,2130.1,47.2,48.24
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill-cached,16384,256,4,65.5,65.42,3964.1,3983.0,21.85,21.85
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill,16384,256,4,40.8,40.35,8071.3,8113.1,15.14,14.93
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill-cached,16384,256,4,119.56,120.73,345.7,405.9,31.08,31.66
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill,16384,256,4,58.61,59.09,4199.9,4297.3,19.43,19.79
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill-cached,16384,256,4,119.56,119.52,345.7,392.8,31.08,31.27
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill,16384,256,4,58.61,58.36,4199.9,4290.7,19.43,19.46
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill-cached,16384,256,8,83.81,83.7,7852.1,7887.6,15.38,15.38
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,prefill,16384,256,8,46.52,46.27,12203.4,12275.8,8.16,8.12
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill-cached,16384,256,8,174.5,174.45,543.0,531.7,22.85,22.86
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,prefill,16384,256,8,70.8,71.03,6378.9,6464.2,11.53,11.63
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill-cached,16384,256,8,174.5,174.23,543.0,528.7,22.85,22.79
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,prefill,16384,256,8,70.8,71.03,6378.9,6458.5,11.53,11.62
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b,agent-long,32768,256,1,17.4,18.62,8589.6,7623.7,41.65,41.64
+DGX Spark,NVIDIA,1.14,gpt-oss-20b,agent-long,32768,256,1,23.69,24.15,4934.7,4951.9,43.42,45.14
+DGX Spark,NVIDIA,1.15,gpt-oss-20b,agent-long,32768,256,1,23.69,24.18,4934.7,4919.3,43.42,44.99
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),chat,128,256,1,85.92,85.72,86.3,93.9,88.14,88.17
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),chat,128,256,4,231.15,228.57,264.5,344.8,61.22,61.67
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,1,81.9,82.0,207.4,204.3,87.39,87.4
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,2,137.64,135.5,403.9,461.2,76.9,76.87
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,4,207.84,209.82,692.7,727.0,60.23,61.4
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,8,341.3,348.41,970.5,1018.7,50.7,52.48
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,16,443.89,484.34,1977.5,1978.8,35.34,39.37
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),users,1024,256,32,803.15,839.88,2819.1,2867.6,34.7,37.04
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),power,1024,512,1,82.24,82.28,370.6,366.6,87.28,87.26
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),power,1024,512,16,502.76,543.17,2209.5,1896.4,36.42,38.76
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),power,1024,512,32,985.07,990.97,2910.1,2846.8,37.24,37.34
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),codegen,1024,1024,1,85.03,81.41,306.4,839.9,87.16,87.15
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),codegen,1024,1024,4,225.38,228.31,873.7,923.2,59.13,60.12
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),agent-turn,8192,512,1,72.65,68.84,1074.9,1464.3,85.56,85.56
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),agent-turn,8192,512,4,138.85,172.68,3808.2,2619.6,46.83,55.3
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill-cached,16384,256,1,69.71,66.82,648.9,808.4,84.35,84.36
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill,16384,256,1,52.19,52.45,1881.2,1857.7,84.34,84.35
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill-cached,16384,256,4,156.26,153.09,2094.9,2226.3,57.2,57.15
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill,16384,256,4,92.05,89.4,3964.6,4103.8,36.01,35.07
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill-cached,16384,256,8,211.5,205.77,4278.1,4549.7,47.19,47.21
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),prefill,16384,256,8,108.02,105.03,5857.6,6051.9,19.81,19.29
+QuietBox 2,Tenstorrent,1.14,gpt-oss-20b (4-chip build),agent-long,32768,256,1,37.91,37.62,3635.9,3687.8,81.81,81.8
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,chat,128,256,1,3.72,4.18,649.2,9259.8,3.74,4.9
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,chat,128,256,4,52.45,51.34,1403.3,1488.8,14.07,13.82
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,1,13.82,13.61,335.9,336.0,14.02,13.8
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,2,26.42,25.95,1139.7,1134.0,13.98,13.71
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,4,51.98,51.11,1227.0,1233.6,13.8,13.56
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,8,86.03,84.83,4003.9,5002.1,12.88,13.32
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,16,150.77,148.87,8221.1,8445.1,13.46,13.37
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,users,1024,256,32,239.52,236.89,14498.3,14751.2,12.94,12.86
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,power,1024,512,1,13.77,7.27,336.5,32562.5,13.87,13.49
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,power,1024,512,16,194.82,167.83,4752.4,10334.6,13.7,13.28
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,power,1024,512,32,329.85,287.08,10649.6,17339.5,13.1,12.86
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,codegen,1024,1024,1,13.78,13.58,336.9,338.7,13.83,13.63
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,codegen,1024,1024,4,53.86,53.14,1643.1,1670.0,13.75,13.56
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,agent-turn,8192,512,1,10.83,10.71,2673.3,2673.1,11.46,11.32
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,agent-turn,8192,512,4,37.1,36.77,9645.1,8650.9,11.22,10.86
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill-cached,16384,256,1,9.14,9.09,1247.7,1283.7,9.52,9.48
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill,16384,256,1,3.04,3.35,40302.8,49144.5,5.8,9.33
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill-cached,16384,256,4,34.74,34.53,2512.6,2271.5,9.46,9.31
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill,16384,256,4,19.99,19.85,19787.9,19792.1,8.11,8.02
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill-cached,16384,256,8,63.65,63.29,4654.1,4858.1,9.27,9.27
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,prefill,16384,256,8,25.49,25.31,41997.5,42123.3,7.2,7.13
+QuietBox 2,Tenstorrent,1.14,llama-3.3-70b,agent-long,32768,256,1,5.02,4.99,15276.2,15267.6,7.14,7.08
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,chat,128,256,1,42.32,42.34,96.7,98.7,42.84,42.87
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,chat,128,256,1,4.26,4.52,403.5,274.2,4.28,4.52
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,chat,128,256,1,4.26,4.57,403.5,271.2,4.28,4.57
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,chat,128,256,4,164.74,162.39,265.5,354.4,42.86,42.85
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,chat,128,256,4,16.7,17.4,851.6,560.7,4.22,4.38
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,chat,128,256,4,16.7,18.2,851.6,609.2,4.22,4.58
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,1,41.24,40.71,72.9,155.5,41.57,41.58
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,1,4.22,4.46,719.6,724.9,4.25,4.5
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,1,4.22,4.51,719.6,771.1,4.25,4.55
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,2,81.6,79.53,136.4,298.0,41.55,41.53
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,2,8.25,8.56,1128.0,1119.7,4.19,4.35
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,2,8.25,8.93,1128.0,1190.7,4.19,4.55
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,4,160.18,152.31,255.9,585.1,41.55,41.55
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,4,16.03,16.63,1983.2,1990.1,4.13,4.29
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,4,16.03,17.3,1983.2,2092.0,4.13,4.48
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,8,298.62,280.15,717.6,1168.1,41.53,41.52
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,8,30.39,31.4,3359.4,3441.4,3.99,4.14
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,8,30.39,32.53,3359.4,3572.7,3.99,4.3
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,16,523.12,482.0,1647.7,2316.0,41.25,41.26
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,16,54.74,56.42,4998.1,5167.0,3.67,3.8
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,16,54.74,58.07,4998.1,5328.4,3.67,3.93
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,users,1024,256,32,847.69,746.53,3292.4,4597.3,40.03,40.0
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,users,1024,256,32,89.39,90.73,7298.1,7574.8,3.05,3.11
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,users,1024,256,32,89.39,92.39,7298.1,7798.3,3.05,3.18
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,power,1024,512,1,41.08,41.13,170.7,152.7,41.57,41.56
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,power,1024,512,16,561.75,556.29,2167.4,2310.4,41.16,41.16
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,power,1024,512,32,939.03,938.49,4604.3,4611.3,39.79,39.78
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,codegen,1024,1024,1,41.03,41.03,155.4,153.6,41.25,41.24
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,codegen,1024,1024,1,4.23,4.49,910.7,722.8,4.25,4.5
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,codegen,1024,1024,1,4.23,4.53,910.7,774.1,4.25,4.54
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,codegen,1024,1024,4,162.1,161.29,462.1,588.0,41.24,41.24
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,codegen,1024,1024,4,16.43,17.08,1872.9,1901.6,4.14,4.3
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,codegen,1024,1024,4,16.43,17.84,1872.9,2010.2,4.14,4.5
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,agent-turn,8192,512,1,37.17,37.09,908.8,936.1,39.72,39.71
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,agent-turn,8192,512,1,4.04,4.26,5855.8,6077.7,4.23,4.48
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,agent-turn,8192,512,1,4.04,4.3,5855.8,6271.6,4.23,4.53
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,agent-turn,8192,512,4,131.45,123.87,2712.9,3660.5,39.71,39.7
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,agent-turn,8192,512,4,14.0,14.36,10341.4,10756.5,3.77,3.88
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,agent-turn,8192,512,4,14.0,14.83,10341.4,11013.9,3.77,4.03
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill-cached,16384,256,1,34.78,34.63,706.6,742.9,38.32,38.35
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill,16384,256,1,28.06,28.76,2470.2,2249.9,38.33,38.34
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill-cached,16384,256,1,4.21,4.44,484.5,527.7,4.23,4.46
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill,16384,256,1,3.54,3.69,12107.7,12286.3,4.24,4.47
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill-cached,16384,256,1,4.21,4.44,484.5,551.9,4.23,4.47
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill,16384,256,1,3.54,3.7,12107.7,12065.5,4.24,4.47
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill-cached,16384,256,4,136.92,136.98,829.5,829.4,38.35,38.37
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill,16384,256,4,68.98,69.02,8202.7,8207.1,38.4,38.47
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill-cached,16384,256,4,16.08,16.5,1661.3,1699.1,4.12,4.23
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill,16384,256,4,9.54,9.52,22564.1,23404.4,3.06,3.08
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill-cached,16384,256,4,16.08,16.84,1661.3,1723.8,4.12,4.32
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill,16384,256,4,9.54,9.72,22564.1,22979.3,3.06,3.15
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill-cached,16384,256,8,247.97,247.75,1627.3,1629.0,38.46,38.43
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,prefill,16384,256,8,88.95,89.04,16400.6,16371.4,38.51,38.47
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill-cached,16384,256,8,30.49,31.28,2487.4,2599.7,3.95,4.07
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,prefill,16384,256,8,13.15,13.05,35431.9,36582.6,2.18,2.18
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill-cached,16384,256,8,30.49,31.99,2487.4,2562.7,3.95,4.16
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,prefill,16384,256,8,13.15,13.28,35431.9,36020.5,2.18,2.22
+QuietBox 2,Tenstorrent,1.14,muse-glimmer-30b,agent-long,32768,256,1,23.87,19.97,3596.3,5694.5,35.77,35.78
+DGX Spark,NVIDIA,1.14,muse-glimmer-30b,agent-long,32768,256,1,3.01,3.09,24470.6,25491.5,4.2,4.46
+DGX Spark,NVIDIA,1.15,muse-glimmer-30b,agent-long,32768,256,1,3.01,3.09,24470.6,26130.3,4.2,4.5
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,chat,128,256,1,22.88,24.63,110.8,112.1,23.02,24.8
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,chat,128,256,1,77.96,80.84,110.2,91.7,80.35,82.94
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,chat,128,256,1,77.96,82.15,110.2,91.2,80.35,84.3
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,chat,128,256,4,87.0,86.02,599.3,764.3,22.83,22.89
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,chat,128,256,4,182.15,182.12,244.8,299.6,47.45,47.92
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,chat,128,256,4,182.15,192.53,244.8,185.8,47.45,49.7
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,1,22.64,22.79,854.7,989.6,24.39,24.9
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,1,75.19,77.34,188.3,195.0,79.29,81.87
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,1,75.19,78.02,188.3,219.1,79.29,83.28
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,2,44.48,41.45,1114.5,1202.4,24.53,22.87
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,2,117.27,119.0,296.5,345.1,62.7,64.47
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,2,117.27,122.9,296.5,311.2,62.7,66.19
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,4,75.0,73.24,2203.3,2434.9,22.27,22.09
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,4,170.47,169.39,505.4,521.7,46.39,46.23
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,4,170.47,177.12,505.4,543.1,46.39,48.72
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,8,128.84,90.06,4357.5,10757.0,22.1,21.28
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,8,240.06,244.4,762.6,773.4,32.89,33.58
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,8,240.06,252.82,762.6,739.1,32.89,34.71
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,16,192.2,184.76,8676.6,9818.8,20.18,20.65
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,16,331.15,338.3,1103.6,1091.2,22.7,23.22
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,16,331.15,348.43,1103.6,1072.9,22.7,23.94
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,32,265.68,247.43,17341.6,19496.2,18.9,18.74
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,users,1024,256,32,441.42,437.76,1597.7,1575.4,15.11,14.95
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,users,1024,256,32,441.42,461.96,1597.7,1561.9,15.11,15.84
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,power,1024,512,1,23.85,21.88,994.2,1147.2,24.95,22.96
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,power,1024,512,16,235.01,227.94,9403.0,10650.9,20.08,20.21
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,power,1024,512,32,362.34,356.35,18193.4,19556.5,18.91,19.34
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,1,23.15,22.1,1000.6,4869.7,23.66,24.67
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,1,77.85,80.02,293.2,329.1,79.55,82.06
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,1,77.85,81.2,293.2,300.9,79.55,83.11
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,4,87.6,87.79,2556.4,2970.4,23.14,23.42
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,4,191.37,191.17,588.5,550.5,49.16,49.01
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,codegen,1024,1024,4,191.37,204.73,588.5,680.1,49.16,52.94
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,1,20.04,16.47,4064.6,10313.9,23.78,24.6
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,1,65.89,67.38,1308.5,1308.0,79.09,81.23
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,1,65.89,68.32,1308.5,1297.0,79.09,82.47
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,4,55.05,54.06,15500.4,15995.8,23.55,23.35
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,4,139.95,140.58,2613.3,2614.8,42.6,42.83
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,agent-turn,8192,512,4,139.95,148.47,2613.3,2633.6,42.6,45.88
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,1,12.96,13.14,8445.6,8742.5,22.54,23.74
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,1,65.69,66.67,682.8,718.8,79.33,81.72
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,1,42.96,43.5,2747.1,2781.9,79.41,82.18
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,1,65.69,66.41,682.8,716.4,79.33,81.27
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,1,42.96,43.25,2747.1,2786.5,79.41,81.42
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,4,23.52,23.17,32601.8,33577.1,23.33,24.04
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,4,137.26,131.66,1680.5,1822.1,44.28,42.98
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,4,68.52,69.82,5906.7,6246.2,28.5,30.6
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,4,137.26,125.75,1680.5,1818.7,44.28,40.47
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,4,68.52,69.35,5906.7,5845.3,28.5,28.88
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,8,26.54,26.17,65196.8,67120.1,21.31,22.9
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,8,172.63,172.58,2380.1,2665.5,27.07,27.92
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,8,76.39,78.95,8640.1,8433.2,14.24,14.78
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill-cached,16384,256,8,172.63,178.43,2380.1,2552.7,27.07,28.77
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,prefill,16384,256,8,76.39,79.16,8640.1,8554.9,14.24,14.95
+QuietBox 2,Tenstorrent,1.14,nemotron-3.5-lightning-30b-a3b,agent-long,32768,256,1,9.27,6.92,16567.0,26086.7,23.1,23.36
+DGX Spark,NVIDIA,1.14,nemotron-3.5-lightning-30b-a3b,agent-long,32768,256,1,28.14,28.98,5816.3,5697.0,77.73,81.33
+DGX Spark,NVIDIA,1.15,nemotron-3.5-lightning-30b-a3b,agent-long,32768,256,1,28.14,29.36,5816.3,5635.6,77.73,82.71
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,chat,128,256,1,30.19,31.1,263.7,163.4,31.04,31.61
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,chat,128,256,1,30.19,31.37,263.7,164.6,31.04,31.89
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,chat,128,256,4,75.76,76.85,436.9,373.0,19.51,19.69
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,chat,128,256,4,75.76,80.06,436.9,363.5,19.51,20.53
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,1,29.67,29.99,353.1,356.1,30.81,31.18
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,1,29.67,30.3,353.1,357.6,30.81,31.52
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,2,51.26,51.48,571.1,572.9,27.09,27.22
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,2,51.26,53.14,571.1,567.6,27.09,28.14
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,4,72.91,71.7,862.8,859.5,19.37,19.02
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,4,72.91,74.41,862.8,854.7,19.37,19.78
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,8,96.27,97.13,1180.0,1176.9,12.72,12.84
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,8,96.27,101.44,1180.0,1158.7,12.72,13.43
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,16,133.4,134.01,1689.1,1685.2,8.83,8.88
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,16,133.4,137.43,1689.1,1678.0,8.83,9.11
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,users,1024,256,32,179.72,181.0,2758.4,2750.9,6.01,6.06
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,users,1024,256,32,179.72,184.35,2758.4,2728.9,6.01,6.17
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,codegen,1024,1024,1,30.22,30.84,603.0,425.9,30.74,31.21
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,codegen,1024,1024,1,30.22,31.17,603.0,402.2,30.74,31.52
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,codegen,1024,1024,4,77.08,76.8,963.9,852.4,19.61,19.5
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,codegen,1024,1024,4,77.08,79.54,963.9,833.8,19.61,20.2
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,agent-turn,8192,512,1,26.0,26.3,2766.1,2744.9,30.19,30.56
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,agent-turn,8192,512,1,26.0,26.57,2766.1,2733.5,30.19,30.9
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,agent-turn,8192,512,4,53.37,53.45,4795.6,4808.8,15.26,15.29
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,agent-turn,8192,512,4,53.37,55.07,4795.6,4776.4,15.26,15.81
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill-cached,16384,256,1,28.56,28.58,358.3,440.4,29.63,29.94
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill,16384,256,1,17.82,18.05,5844.7,5711.5,29.94,30.09
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill-cached,16384,256,1,28.56,28.61,358.3,429.0,29.63,29.94
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill,16384,256,1,17.82,18.09,5844.7,5679.7,29.94,30.1
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill-cached,16384,256,4,69.33,68.28,841.6,957.6,18.33,18.18
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill,16384,256,4,29.51,29.45,10774.3,10803.6,10.85,10.83
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill-cached,16384,256,4,69.33,68.98,841.6,959.6,18.33,18.39
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill,16384,256,4,29.51,29.49,10774.3,10880.8,10.85,10.89
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill-cached,16384,256,8,95.95,94.6,1288.1,1378.6,12.73,12.6
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,prefill,16384,256,8,31.69,31.64,17413.1,17537.7,5.55,5.55
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill-cached,16384,256,8,95.95,94.52,1288.1,1386.7,12.73,12.59
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,prefill,16384,256,8,31.69,31.71,17413.1,17400.1,5.55,5.55
+DGX Spark,NVIDIA,1.14,ornith-1.5-35b-a3b,agent-long,32768,256,1,12.11,12.18,12195.0,12225.1,28.5,28.97
+DGX Spark,NVIDIA,1.15,ornith-1.5-35b-a3b,agent-long,32768,256,1,12.11,12.28,12195.0,12156.9,28.5,29.36
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),chat,128,256,1,68.17,68.76,171.6,191.4,71.16,72.21
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),chat,128,256,4,130.16,128.16,625.9,725.1,35.22,35.1
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,1,65.46,72.44,288.7,294.9,70.4,78.74
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,2,76.1,74.97,559.2,617.5,41.34,41.05
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,4,123.11,121.2,1062.7,1169.1,35.15,35.03
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,8,179.32,176.48,1968.8,2141.5,26.98,26.95
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,16,228.65,225.61,3807.0,4044.0,18.08,18.07
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),users,1024,256,32,356.97,352.25,7403.0,7716.8,16.4,16.41
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),power,1024,512,1,70.16,76.28,286.5,301.0,72.89,79.71
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),power,1024,512,16,255.55,253.03,3772.7,4081.4,18.07,18.06
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),power,1024,512,32,425.63,419.19,7392.5,7743.5,16.43,16.31
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),codegen,1024,1024,1,74.56,77.45,283.8,300.5,76.06,79.18
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),codegen,1024,1024,4,136.74,136.13,1058.5,1165.6,35.4,35.37
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),agent-turn,8192,512,1,70.75,57.23,1377.9,1389.2,87.22,67.62
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),agent-turn,8192,512,4,101.85,101.05,5363.0,5496.0,34.66,34.59
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,1,35.68,35.0,2751.7,2781.4,57.67,56.25
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,1,34.82,34.55,2750.4,2769.1,55.41,54.96
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,4,55.9,55.49,10811.5,10924.8,33.97,33.87
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,4,56.1,55.53,10747.6,10919.5,33.98,33.9
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill-cached,16384,256,8,65.28,64.93,21462.4,21618.8,25.74,25.71
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),prefill,16384,256,8,65.39,65.06,21415.4,21569.5,25.75,25.73
+QuietBox 2,Tenstorrent,1.14,ornith-1.5-35b-a3b (v1 build),agent-long,32768,256,1,23.31,28.59,5695.1,5750.0,48.25,79.61
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,chat,128,256,1,31.14,31.67,258.5,141.1,32.02,32.11
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,chat,128,256,1,31.14,32.44,258.5,138.0,32.02,32.89
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,chat,128,256,4,77.34,78.6,472.3,390.8,19.98,20.19
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,chat,128,256,4,77.34,81.51,472.3,391.0,19.98,20.96
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,1,29.99,30.23,326.3,332.1,31.06,31.34
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,1,29.99,31.02,326.3,330.5,31.06,32.19
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,2,47.63,47.96,423.8,423.4,24.71,24.89
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,2,47.63,49.82,423.8,415.1,24.71,25.87
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,4,65.15,65.66,801.2,765.4,17.12,17.22
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,4,65.15,68.34,801.2,766.1,17.12,17.96
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,8,108.53,109.05,1219.1,1218.0,14.48,14.55
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,8,108.53,114.09,1219.1,1189.8,14.48,15.25
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,16,160.35,161.83,1757.9,1762.3,10.75,10.86
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,16,160.35,169.11,1757.9,1696.3,10.75,11.35
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,users,1024,256,32,202.36,204.48,2565.9,2555.2,6.76,6.83
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,users,1024,256,32,202.36,215.03,2565.9,2474.6,6.76,7.19
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,codegen,1024,1024,1,30.71,30.9,399.1,331.0,31.05,31.19
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,codegen,1024,1024,1,30.71,31.76,399.1,326.1,31.05,32.05
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,codegen,1024,1024,4,66.76,67.55,781.0,737.2,16.89,17.08
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,codegen,1024,1024,4,66.76,70.18,781.0,732.2,16.89,17.76
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,agent-turn,8192,512,1,25.52,25.36,2059.1,2044.6,28.38,28.17
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,agent-turn,8192,512,1,25.52,26.33,2059.1,2017.4,28.38,29.32
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,agent-turn,8192,512,4,53.11,52.8,4016.3,4159.3,14.82,14.78
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,agent-turn,8192,512,4,53.11,55.6,4016.3,4062.0,14.82,15.62
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill-cached,16384,256,1,24.88,25.15,380.1,425.3,25.73,26.15
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill,16384,256,1,17.35,17.74,5076.0,4732.9,26.34,26.3
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill-cached,16384,256,1,24.88,24.83,380.1,438.9,25.73,25.84
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill,16384,256,1,17.35,17.55,5076.0,4769.6,26.34,25.97
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill-cached,16384,256,4,54.82,55.35,864.8,889.2,14.33,14.5
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill,16384,256,4,25.63,26.34,9309.0,9322.0,8.41,8.72
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill-cached,16384,256,4,54.82,54.16,864.8,915.0,14.33,14.2
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill,16384,256,4,25.63,26.11,9309.0,9408.4,8.41,8.64
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill-cached,16384,256,8,92.81,97.2,1323.8,1363.3,12.32,12.97
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,prefill,16384,256,8,27.65,28.21,16612.0,16323.6,4.51,4.61
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill-cached,16384,256,8,92.81,91.29,1323.8,1370.7,12.32,12.13
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,prefill,16384,256,8,27.65,28.03,16612.0,16443.9,4.51,4.58
+DGX Spark,NVIDIA,1.14,qwen3-coder-30b-a3b,agent-long,32768,256,1,10.5,10.44,12824.8,12817.7,22.06,21.78
+DGX Spark,NVIDIA,1.15,qwen3-coder-30b-a3b,agent-long,32768,256,1,10.5,10.87,12824.8,12476.5,22.06,23.02
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),chat,128,256,1,47.76,47.28,201.0,248.8,49.43,49.36
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),chat,128,256,4,116.38,111.48,340.9,751.9,30.15,30.24
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,1,46.92,45.75,203.8,345.6,48.56,48.58
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,2,69.96,67.62,202.0,457.7,35.83,35.85
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,4,114.76,108.38,360.7,858.2,29.78,29.69
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,8,210.8,193.43,958.7,1848.8,29.12,29.18
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,16,367.36,330.89,2051.4,3308.2,28.03,28.12
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),users,1024,256,32,599.08,513.19,3954.1,6203.9,26.24,26.13
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),power,1024,512,1,47.04,47.07,351.8,371.5,48.52,48.64
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),power,1024,512,16,386.14,385.04,2783.8,3029.8,27.73,28.01
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),power,1024,512,32,648.61,648.2,5897.2,5891.4,26.39,26.36
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),codegen,1024,1024,1,47.77,47.76,324.4,347.1,48.46,48.49
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),codegen,1024,1024,4,117.08,116.17,658.9,865.5,29.8,29.75
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),agent-turn,8192,512,1,41.57,40.94,1287.8,1480.1,46.33,46.35
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),agent-turn,8192,512,4,92.83,87.04,3584.4,5064.2,27.66,27.67
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,1,40.62,40.34,657.3,699.6,45.17,45.17
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,1,25.73,25.43,4315.2,4432.5,45.25,45.25
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,4,95.02,94.81,1064.8,1080.1,26.26,26.24
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,4,49.5,49.43,10922.3,10941.7,26.11,26.09
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill-cached,16384,256,8,161.25,160.9,1985.1,2003.6,23.8,23.78
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),prefill,16384,256,8,63.44,63.4,21562.4,21586.0,23.79,23.79
+QuietBox 2,Tenstorrent,1.14,qwen3-coder-30b-a3b (v1 build),agent-long,32768,256,1,24.16,18.53,4677.8,7887.4,43.08,43.04
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),chat,128,256,1,54.86,53.62,258.4,274.6,57.85,56.67
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),chat,128,256,4,83.13,82.15,955.6,1079.7,22.44,22.4
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,1,35.3,34.84,461.1,471.9,37.55,37.09
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,2,50.78,50.16,877.9,950.7,27.7,27.55
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,4,78.37,77.51,1692.2,1815.7,22.42,22.38
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,8,105.31,104.39,3213.8,3370.3,15.71,15.69
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,16,132.99,131.89,6218.4,6468.4,10.37,10.37
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),users,1024,256,32,201.02,198.86,12167.7,12612.8,8.92,8.92
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),power,1024,512,1,50.64,48.97,457.7,468.4,52.94,51.17
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),power,1024,512,16,146.4,145.63,6236.9,6537.0,10.28,10.28
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),power,1024,512,32,234.26,233.01,12158.2,12536.6,8.84,8.84
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),codegen,1024,1024,1,45.99,48.76,458.9,474.2,46.92,49.84
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),codegen,1024,1024,4,87.16,86.91,1697.8,1806.8,22.58,22.57
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),agent-turn,8192,512,1,44.69,44.0,2295.1,2314.3,55.78,54.81
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),agent-turn,8192,512,4,63.9,63.65,9036.1,9137.5,22.2,22.18
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,1,23.22,23.01,4598.9,4623.9,39.68,39.22
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill,16384,256,1,25.59,25.4,4661.8,4584.0,47.73,46.41
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,4,34.33,34.19,18151.5,18248.5,21.84,21.79
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill,16384,256,4,34.58,34.41,17932.3,18054.1,21.84,21.79
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill-cached,16384,256,8,38.86,38.71,35931.3,36115.7,15.2,15.19
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),prefill,16384,256,8,38.98,38.92,35762.0,35832.6,15.2,15.19
+QuietBox 2,Tenstorrent,1.14,qwen3.5-122b-a10b (v1 build),agent-long,32768,256,1,16.7,16.61,9290.8,9308.7,42.24,41.8
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,chat,128,256,1,23.39,23.17,309.6,385.5,23.98,23.92
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,chat,128,256,1,4.41,4.68,393.9,289.0,4.43,4.69
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,chat,128,256,1,4.41,4.76,393.9,287.3,4.43,4.77
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,chat,128,256,4,71.51,67.17,1536.7,1715.4,19.95,18.85
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,chat,128,256,4,16.95,17.5,837.1,620.4,4.28,4.41
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,chat,128,256,4,16.95,18.5,837.1,640.4,4.28,4.66
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,1,23.18,23.06,357.5,394.4,23.86,23.81
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,1,4.36,4.62,915.0,922.8,4.41,4.68
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,1,4.36,4.69,915.0,953.9,4.41,4.75
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,2,41.4,39.48,585.2,599.5,21.65,20.61
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,2,8.46,8.68,1648.3,1646.7,4.33,4.45
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,2,8.46,9.19,1648.3,1692.7,4.33,4.72
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,4,74.29,71.16,1227.0,1285.3,20.31,19.46
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,4,16.26,16.68,3077.5,3047.7,4.26,4.38
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,4,16.26,17.57,3077.5,3114.7,4.26,4.63
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,8,112.97,109.71,3285.9,3736.4,17.18,17.08
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,8,30.25,31.07,4329.2,4305.6,4.04,4.15
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,8,30.25,32.7,4329.2,4405.9,4.04,4.39
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,16,160.76,154.41,7318.5,8158.9,14.04,13.88
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,16,52.85,54.15,5967.6,5935.8,3.58,3.68
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,16,52.85,56.33,5967.6,6073.4,3.58,3.85
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,users,1024,256,32,229.93,218.87,12629.1,14204.6,11.09,10.98
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,users,1024,256,32,82.33,83.78,8589.3,8484.6,2.83,2.88
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,users,1024,256,32,82.33,84.84,8589.3,8707.2,2.83,2.93
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,power,1024,512,1,23.54,23.46,355.4,396.8,23.88,23.85
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,power,1024,512,16,174.69,168.75,10810.2,12121.6,14.16,14.03
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,power,1024,512,32,255.34,273.39,18437.9,14522.9,11.18,11.25
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,codegen,1024,1024,1,23.69,23.62,350.9,393.0,23.86,23.82
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,codegen,1024,1024,1,4.4,4.66,1084.5,923.9,4.41,4.67
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,codegen,1024,1024,1,4.4,4.74,1084.5,960.3,4.41,4.75
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,codegen,1024,1024,4,81.78,79.97,1147.7,1264.1,20.91,20.48
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,codegen,1024,1024,4,16.82,17.29,2955.7,3063.1,4.25,4.37
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,codegen,1024,1024,4,16.82,18.28,2955.7,3127.8,4.25,4.63
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,agent-turn,8192,512,1,22.28,22.1,1466.0,1509.1,23.75,23.59
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,agent-turn,8192,512,1,4.15,4.39,6689.0,6579.4,4.38,4.64
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,agent-turn,8192,512,1,4.15,4.43,6689.0,6900.2,4.38,4.7
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,agent-turn,8192,512,4,65.85,64.61,4955.6,4886.2,19.55,19.06
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,agent-turn,8192,512,4,13.83,14.19,11921.7,11668.2,3.77,3.86
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,agent-turn,8192,512,4,13.83,14.72,11921.7,12147.9,3.77,4.04
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill-cached,16384,256,1,18.56,18.44,2924.9,2953.6,23.46,23.34
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill,16384,256,1,18.55,18.45,2923.7,2943.8,23.44,23.33
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill-cached,16384,256,1,4.3,4.57,648.6,702.9,4.33,4.61
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill,16384,256,1,3.53,3.74,13709.3,13195.6,4.34,4.61
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill-cached,16384,256,1,4.3,4.56,648.6,714.0,4.33,4.6
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill,16384,256,1,3.53,3.73,13709.3,13253.9,4.34,4.6
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill-cached,16384,256,4,40.94,40.49,9524.9,9610.5,16.46,16.26
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill,16384,256,4,39.0,38.14,11060.3,11702.6,16.78,16.84
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill-cached,16384,256,4,15.93,16.43,2016.8,2048.4,4.1,4.24
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill,16384,256,4,8.88,9.14,25744.9,25086.9,2.91,3.0
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill-cached,16384,256,4,15.93,16.61,2016.8,1922.6,4.1,4.28
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill,16384,256,4,8.88,9.18,25744.9,25214.9,2.91,3.02
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill-cached,16384,256,8,52.45,52.11,20759.3,20045.0,13.95,13.24
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,prefill,16384,256,8,50.61,49.77,22082.9,22534.8,13.87,13.7
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill-cached,16384,256,8,29.72,30.93,3164.0,3029.7,3.89,4.05
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,prefill,16384,256,8,11.62,11.93,41366.1,40352.5,1.96,2.01
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill-cached,16384,256,8,29.72,31.04,3164.0,3184.9,3.89,4.08
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,prefill,16384,256,8,11.62,11.94,41366.1,40563.7,1.96,2.01
+QuietBox 2,Tenstorrent,1.14,qwen3.6-27b,agent-long,32768,256,1,14.77,14.74,6269.7,6277.3,23.06,22.99
+DGX Spark,NVIDIA,1.14,qwen3.6-27b,agent-long,32768,256,1,2.89,3.03,28548.1,27980.9,4.26,4.51
+DGX Spark,NVIDIA,1.15,qwen3.6-27b,agent-long,32768,256,1,2.89,3.01,28548.1,29241.4,4.26,4.56
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,chat,128,256,1,36.97,36.82,279.7,281.7,38.38,38.22
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,chat,128,256,1,30.3,31.21,268.4,158.8,31.17,31.7
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,chat,128,256,1,30.3,31.27,268.4,156.0,31.17,31.76
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,chat,128,256,4,73.55,76.13,435.9,355.3,18.92,19.48
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,chat,128,256,4,73.55,77.74,435.9,356.7,18.92,19.9
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,users,1024,256,1,32.68,32.57,1165.1,1167.3,38.24,38.1
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,1,29.69,30.19,346.1,348.5,30.81,31.36
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,1,29.69,30.23,346.1,347.9,30.81,31.4
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,2,50.43,51.24,558.1,555.1,26.59,27.04
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,2,50.43,51.94,558.1,556.7,26.59,27.43
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,4,70.07,70.6,846.7,836.3,18.55,18.68
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,4,70.07,71.89,846.7,832.1,18.55,19.04
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,8,93.18,96.49,1155.3,1129.4,12.28,12.72
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,8,93.18,97.77,1155.3,1126.7,12.28,12.9
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,16,125.23,128.74,1657.4,1630.5,8.25,8.49
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,16,125.23,129.98,1657.4,1630.6,8.25,8.58
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,users,1024,256,32,167.39,170.86,2716.6,2682.4,5.57,5.69
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,users,1024,256,32,167.39,171.09,2716.6,2693.1,5.57,5.7
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,power,1024,512,1,34.92,34.75,1270.8,1279.5,38.16,37.98
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,power,1024,512,1,29.84,30.83,697.9,409.8,31.04,31.55
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,power,1024,512,16,128.6,130.63,2141.8,2009.6,8.33,8.45
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,power,1024,512,32,178.84,177.69,3467.3,3438.9,5.84,5.8
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,codegen,1024,1024,1,36.52,33.54,1270.2,3579.2,38.21,37.96
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,codegen,1024,1024,1,30.42,30.97,560.4,413.0,30.91,31.33
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,codegen,1024,1024,1,30.42,31.05,560.4,406.2,30.91,31.4
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,codegen,1024,1024,4,73.85,74.76,958.5,813.3,18.77,18.96
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,codegen,1024,1024,4,73.85,76.29,958.5,812.3,18.77,19.35
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,agent-turn,8192,512,1,23.12,21.83,8641.1,9859.5,37.85,37.59
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,agent-turn,8192,512,1,25.89,26.6,2728.5,2612.8,29.97,30.72
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,agent-turn,8192,512,1,25.89,26.62,2728.5,2645.9,29.97,30.8
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,agent-turn,8192,512,4,53.89,55.11,4655.1,4571.1,15.37,15.72
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,agent-turn,8192,512,4,53.89,55.34,4655.1,4599.8,15.37,15.81
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,prefill-cached,16384,256,1,20.63,20.56,5592.3,5599.3,37.4,37.21
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,prefill,16384,256,1,9.46,9.44,20237.6,20261.5,37.39,37.24
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill-cached,16384,256,1,28.69,28.75,342.1,424.7,29.72,30.07
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill,16384,256,1,17.98,18.44,5718.8,5450.3,29.94,30.25
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill-cached,16384,256,1,28.69,28.66,342.1,410.7,29.72,29.93
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill,16384,256,1,17.98,18.38,5718.8,5465.2,29.94,30.12
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill-cached,16384,256,4,72.91,71.32,800.3,881.8,19.28,18.95
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill,16384,256,4,29.76,29.95,10334.8,10508.8,10.79,10.97
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill-cached,16384,256,4,72.91,71.22,800.3,875.5,19.28,18.91
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill,16384,256,4,29.76,29.94,10334.8,10387.3,10.79,10.9
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill-cached,16384,256,8,92.44,94.26,1267.5,1259.0,12.23,12.48
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,prefill,16384,256,8,31.96,32.18,16961.0,16777.5,5.56,5.59
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill-cached,16384,256,8,92.44,94.48,1267.5,1281.1,12.23,12.52
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,prefill,16384,256,8,31.96,32.21,16961.0,16840.0,5.56,5.6
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b,agent-long,32768,256,1,6.46,5.17,32682.5,42552.4,36.76,36.54
+DGX Spark,NVIDIA,1.14,qwen3.6-35b-a3b,agent-long,32768,256,1,12.33,12.59,11831.2,11600.6,28.53,29.2
+DGX Spark,NVIDIA,1.15,qwen3.6-35b-a3b,agent-long,32768,256,1,12.33,12.53,11831.2,11649.0,28.53,29.06
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),chat,128,256,1,72.52,56.74,174.4,187.2,76.0,58.97
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),chat,128,256,4,129.99,128.08,639.2,732.4,35.23,35.11
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,1,83.51,74.79,284.9,295.1,91.71,81.54
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,2,76.09,74.99,558.6,613.5,41.33,41.04
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,4,123.31,121.43,1050.2,1153.8,35.15,35.03
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,8,179.36,176.69,1962.5,2128.1,26.97,26.95
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,16,229.09,226.48,3768.6,3967.5,18.07,18.06
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),users,1024,256,32,354.83,347.91,7322.6,7754.1,16.18,16.15
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),power,1024,512,1,89.8,73.59,282.8,295.2,94.31,76.7
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),power,1024,512,16,255.3,253.49,3802.0,4029.3,18.07,18.06
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),power,1024,512,32,419.76,415.76,7332.2,7652.4,16.12,16.09
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),codegen,1024,1024,1,88.41,72.42,285.1,295.7,90.55,73.89
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),codegen,1024,1024,4,136.72,136.18,1062.4,1155.9,35.4,35.37
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),agent-turn,8192,512,1,67.16,63.79,1380.4,1394.2,81.85,77.05
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),agent-turn,8192,512,4,101.86,101.24,5360.9,5460.1,34.66,34.6
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,1,38.51,37.96,2752.3,2786.7,65.47,64.45
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,1,45.43,44.08,2736.5,2776.1,87.97,84.13
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,4,55.85,55.3,10830.1,10991.2,33.98,33.89
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,4,56.25,55.71,10705.2,10854.9,34.01,33.88
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill-cached,16384,256,8,65.25,64.92,21485.8,21628.6,25.76,25.72
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),prefill,16384,256,8,65.23,65.1,21495.6,21547.7,25.75,25.73
+QuietBox 2,Tenstorrent,1.14,qwen3.6-35b-a3b (4-chip build),agent-long,32768,256,1,28.14,28.3,5696.0,5724.8,74.95,76.8

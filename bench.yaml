@@ -43,12 +43,21 @@ machines:
     family: Tenstorrent
     hardware: "Tenstorrent QuietBox 2 (2x p300c, 4x Blackhole), Talos Linux + Kubernetes"
     talos_of: qb2
+    talos_version: "1.14"
     models_from: qb2
   spark-talos:
     label: DGX Spark
     family: NVIDIA
     hardware: "NVIDIA DGX Spark (GB10, 128 GB unified), Talos Linux + Kubernetes"
     talos_of: spark
+    talos_version: "1.14"
+    models_from: spark
+  spark-talos-115:                    # the same Spark on Talos 1.15 (kernel 7.3), same NVIDIA driver (595) as on 1.14
+    label: DGX Spark
+    family: NVIDIA
+    hardware: "NVIDIA DGX Spark (GB10, 128 GB unified), Talos Linux 1.15 + Kubernetes"
+    talos_of: spark
+    talos_version: "1.15"
     models_from: spark
   spark-pair:                         # two Sparks as one server over the direct QSFP cable (200 Gb/s)
     label: 2x DGX Spark
