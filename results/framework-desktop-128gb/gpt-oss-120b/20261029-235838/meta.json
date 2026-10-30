@@ -23,8 +23,8 @@
       "VLLM_ROCM_USE_AITER_LINEAR": "0"
     }
   },
-  "started": "20261015-100348",
+  "started": "20261029-235838",
   "environment": {
-    "node0": "7.2.3\nkyuz0/vllm-therock-gfx1151@sha256:8002236ea7526491cf9b0b6a543408fb0be2baacbba656effc132aba2e44dd1d"
+    "node0": "7.3.0\nkyuz0/vllm-therock-gfx1151@sha256:8002236ea7526491cf9b0b6a543408fb0be2baacbba656effc132aba2e44dd1d"
   }
 }
