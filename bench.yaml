@@ -59,6 +59,13 @@ machines:
     talos_of: spark
     talos_version: "1.15"
     models_from: spark
+  spark-pair-talos:                   # the same two Sparks on Talos 1.14, booted with pci=pcie_bus_safe, tensor parallel 2 over both QSFP rails (RoCE)
+    label: 2x DGX Spark
+    family: NVIDIA
+    hardware: "2x NVIDIA DGX Spark (GB10), QSFP 200 Gb/s, tensor parallel 2, Talos Linux + Kubernetes"
+    talos_of: spark-pair
+    talos_version: "1.14"
+    models_from: spark-pair
   spark-pair:                         # two Sparks as one server over the direct QSFP cable (200 Gb/s)
     label: 2x DGX Spark
     family: NVIDIA

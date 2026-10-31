@@ -73,7 +73,7 @@
   <header class="qx-head">
     <h1>Talos Linux vs Ubuntu</h1>
     <p class="qx-lede">
-      The same QuietBox 2 and DGX Spark, reinstalled with Talos Linux and serving the same model builds as Kubernetes
+      The same QuietBox 2 and DGX Spark (alone and as a pair), reinstalled with Talos Linux and serving the same model builds as Kubernetes
       pods, against the Ubuntu runs on the main page. Each Talos test is paired with the identical Ubuntu test.
       Median change in throughput from Ubuntu: <span id="lede-systems">—</span>.
     </p>
@@ -132,6 +132,12 @@
           reaches the pod through CDI and the NVIDIA container toolkit's NRI plugin instead of a runtime class.</li>
         <li>The one large drop on Talos 1.15, gemma-4-31b at 32 users (about −24%), is a single run: every request
           finished, but each token took longer. Its other tests sit with the rest.</li>
+        <li>The 2x DGX Spark rows run tensor parallel 2 across both Sparks over the QSFP cable, with NCCL using RoCE on
+          both rails on Talos and on Ubuntu. The Talos nodes boot with <code>pci=pcie_bus_safe</code>: without it the
+          ConnectX-7 runs with a 128-byte PCIe payload and one rail tops out near 97 Gb/s instead of about 110 Gb/s.
+          The vLLM image's CUDA forward-compat libraries are loaded ahead of the host's 595 driver libraries; without
+          them NCCL crashes at startup on this image. Two models so far, gpt-oss-120b and Qwen3.5-122B-A10B;
+          Llama 3.3 70B has not been run on the pair under Talos.</li>
         <li>The QuietBox 2 rows use the builds that ran on Ubuntu: the v1 bundles, not the fused-decode rebuilds the
           main page shows, which only ran on Talos.</li>
         <li>Most QuietBox 2 differences are small, but under load several models reached their first token later on
@@ -151,8 +157,8 @@
 </div>
 
 <script>
-  const SYSTEMS = ['DGX Spark', 'QuietBox 2'];
-  const SYS_COLOR = { 'QuietBox 2': 0, 'DGX Spark': 1 };   // the main page's colors
+  const SYSTEMS = ['DGX Spark', '2x DGX Spark', 'QuietBox 2'];
+  const SYS_COLOR = { 'QuietBox 2': 0, 'DGX Spark': 1, '2x DGX Spark': 2 };   // the main page's colors
   const color = (s) => dash.colors[SYS_COLOR[s] ?? 5];
   const METRICS = {
     tok: { label: 'Throughput', key: 'tok_s', better: 1, title: 'Total output tokens per second',
@@ -336,7 +342,7 @@
     for (const id of ['model-chart', 'case-chart', 'heat']) {
       if (!empty) continue;
       const p = document.createElement('p'); p.className = 'qx-empty';
-      p.textContent = 'No system selected. Turn on the QuietBox 2 or the DGX Spark above.';
+      p.textContent = 'No system selected. Turn on a system above.';
       document.getElementById(id).replaceChildren(p);
     }
     document.getElementById('heat-key').hidden = empty;
