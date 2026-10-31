@@ -1,0 +1,30 @@
+{
+  "machine": "framework-desktop-128gb",
+  "hardware": "Framework Desktop (AMD Ryzen AI Max+ 395, Radeon 8060S, 128 GB unified memory, 96 GiB GTT)",
+  "model": "gpt-oss-20b",
+  "hf_id": "openai/gpt-oss-20b",
+  "serve": {
+    "serve": "openai/gpt-oss-20b",
+    "download_exclude": [
+      "original/*",
+      "metal/*"
+    ],
+    "args": [
+      "--max-model-len",
+      "40960",
+      "--gpu-memory-utilization",
+      "0.80",
+      "--attention-backend",
+      "TRITON_ATTN"
+    ],
+    "env": {
+      "USER": "bench",
+      "VLLM_ROCM_USE_AITER": "0",
+      "VLLM_ROCM_USE_AITER_LINEAR": "0"
+    }
+  },
+  "started": "20261029-230106",
+  "environment": {
+    "node0": "7.3.0\nkyuz0/vllm-therock-gfx1151@sha256:8002236ea7526491cf9b0b6a543408fb0be2baacbba656effc132aba2e44dd1d"
+  }
+}
